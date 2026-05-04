@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BMI Calculator - FitFusion</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #3a86ff, #00b4d8);
+            color: #333;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        /* Navbar */
+        
+        nav {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 15px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        nav h2 {
+            color: #3a86ff;
+            font-size: 22px;
+        }
+        
+        nav a {
+            margin-left: 20px;
+            text-decoration: none;
+            color: #333;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+        
+        nav a:hover {
+            color: #3a86ff;
+        }
+        /* Main Container */
+        
+        .container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 40px 20px;
+        }
+        
+        .calculator {
+            background: #fff;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0px 6px 20px rgba(0, 0, 0, 0.2);
+            max-width: 420px;
+            width: 100%;
+            text-align: center;
+            animation: fadeIn 1s ease-in-out;
+        }
+        
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        h1 {
+            margin-bottom: 15px;
+            color: #3a86ff;
+        }
+        
+        label {
+            display: block;
+            margin-top: 15px;
+            font-weight: bold;
+            text-align: left;
+        }
+        
+        input {
+            width: 100%;
+            padding: 10px;
+            margin-top: 8px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            outline: none;
+            transition: 0.3s;
+        }
+        
+        input:focus {
+            border-color: #3a86ff;
+            box-shadow: 0 0 5px rgba(58, 134, 255, 0.6);
+        }
+        
+        button {
+            margin-top: 20px;
+            background: #3a86ff;
+            color: #fff;
+            border: none;
+            padding: 12px;
+            width: 100%;
+            border-radius: 10px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        
+        button:hover {
+            background: #265ccf;
+        }
+        
+        .result {
+            margin-top: 20px;
+            font-size: 18px;
+            font-weight: bold;
+        }
+        
+        .category {
+            margin-top: 10px;
+            padding: 10px;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 500;
+        }
+        
+        .underweight {
+            background: #ffd6a5;
+            color: #8b4513;
+        }
+        
+        .normal {
+            background: #b9fbc0;
+            color: #006400;
+        }
+        
+        .overweight {
+            background: #ffadad;
+            color: #8b0000;
+        }
+        
+        .obese {
+            background: #ff6f61;
+            color: #fff;
+        }
+        /* BMI Chart */
+        
+        .bmi-chart {
+            margin-top: 40px;
+            background: #fff;
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0px 6px 20px rgba(0, 0, 0, 0.15);
+            max-width: 500px;
+            width: 100%;
+            text-align: center;
+        }
+        
+        .bmi-chart h2 {
+            margin-bottom: 15px;
+            color: #3a86ff;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        
+        th,
+        td {
+            padding: 12px;
+            text-align: center;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        th {
+            background: #3a86ff;
+            color: #fff;
+        }
+        
+        tr:hover {
+            background: #f1f1f1;
+            transition: 0.3s;
+        }
+        /* Footer */
+        
+        footer {
+            background: #222;
+            color: #fff;
+            text-align: center;
+            padding: 15px;
+            font-size: 14px;
+            margin-top: auto;
+        }
+        
+        @media (max-width: 600px) {
+            nav {
+                flex-direction: column;
+                text-align: center;
+            }
+            nav a {
+                margin: 8px 0;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Navbar -->
+    <nav>
+        <h2>FitFusion</h2>
+        <div>
+            <a href="#">Home</a>
+            <a href="#">Workouts</a>
+            <a href="#">Nutrition</a>
+            <a href="#">BMI Calculator</a>
+        </div>
+    </nav>
+
+    <!-- Main Section -->
+    <div class="container">
+        <div class="calculator">
+            <h1>BMI Calculator</h1>
+            <form id="bmiForm">
+                <label for="weight">Weight (kg):</label>
+                <input type="number" id="weight" required>
+
+                <label for="height">Height (cm):</label>
+                <input type="number" id="height" required>
+
+                <button type="submit">Calculate BMI</button>
+            </form>
+
+            <div class="result" id="result"></div>
+            <div class="category" id="category"></div>
+        </div>
+
+        <!-- BMI Chart -->
+        <div class="bmi-chart">
+            <h2>BMI Categories</h2>
+            <table>
+                <tr>
+                    <th>Category</th>
+                    <th>BMI Range</th>
+                </tr>
+                <tr>
+                    <td>Underweight</td>
+                    <td>Less than 18.5</td>
+                </tr>
+                <tr>
+                    <td>Normal weight</td>
+                    <td>18.5 – 24.9</td>
+                </tr>
+                <tr>
+                    <td>Overweight</td>
+                    <td>25 – 29.9</td>
+                </tr>
+                <tr>
+                    <td>Obese</td>
+                    <td>30 or greater</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        © 2025 FitFusion. All rights reserved.
+    </footer>
+
+    <script>
+        document.getElementById("bmiForm").addEventListener("submit", function(e) {
+            e.preventDefault();
+
+            let weight = parseFloat(document.getElementById("weight").value);
+            let height = parseFloat(document.getElementById("height").value) / 100;
+
+            if (weight > 0 && height > 0) {
+                let bmi = (weight / (height * height)).toFixed(1);
+                document.getElementById("result").innerText = `Your BMI: ${bmi}`;
+
+                let category = document.getElementById("category");
+                category.className = "category";
+
+                if (bmi < 18.5) {
+                    category.innerText = "Underweight";
+                    category.classList.add("underweight");
+                } else if (bmi >= 18.5 && bmi < 24.9) {
+                    category.innerText = "Normal weight";
+                    category.classList.add("normal");
+                } else if (bmi >= 25 && bmi < 29.9) {
+                    category.innerText = "Overweight";
+                    category.classList.add("overweight");
+                } else {
+                    category.innerText = "Obese";
+                    category.classList.add("obese");
+                }
+            } else {
+                alert("Please enter valid values!");
+            }
+        });
+    </script>
+</body>
+
+</html>

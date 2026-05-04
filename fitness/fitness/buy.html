@@ -1,0 +1,712 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Premium nutrient supplements for fitness and health goals. Shop high-quality protein, carbs, vitamins, and more.">
+    <meta name="keywords" content="nutrients, supplements, protein, fitness, health">
+    <title>NutriFit Pro - Premium Nutrient Supplements</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="icon" href="https://via.placeholder.com/32?text=NF" type="image/x-icon">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: #f8f9fa;
+            color: #333;
+            line-height: 1.6;
+        }
+        /* Header */
+        
+        header {
+            background: linear-gradient(135deg, #0077cc 0%, #005fa3 100%);
+            color: white;
+            padding: 1rem 0;
+            box-shadow: 0 2px 10px rgba(0, 119, 204, 0.2);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .header-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+        }
+        
+        .logo {
+            font-size: 28px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo i {
+            margin-right: 10px;
+            color: #ffd700;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+        
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        nav a:hover {
+            color: #ffd700;
+        }
+        
+        .cart-icon {
+            position: relative;
+            font-size: 24px;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+        
+        .cart-icon:hover {
+            color: #ffd700;
+        }
+        
+        .cart-count {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background: #ff4757;
+            color: white;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            font-size: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        /* Hero Section */
+        
+        .hero {
+            background: linear-gradient(rgba(0, 119, 204, 0.8), rgba(0, 119, 204, 0.8)), url('https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?auto=format&fit=crop&w=1920&q=80');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            text-align: center;
+            padding: 100px 20px;
+        }
+        
+        .hero h1 {
+            font-size: 48px;
+            margin-bottom: 1rem;
+            font-weight: 300;
+        }
+        
+        .hero p {
+            font-size: 20px;
+            margin-bottom: 2rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .cta-button {
+            background: #ffd700;
+            color: #0077cc;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 50px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+            text-decoration: none;
+            display: inline-block;
+        }
+        
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 215, 0, 0.4);
+        }
+        /* Search and Filters */
+        
+        .search-section {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 20px;
+            text-align: center;
+        }
+        
+        .search-box {
+            width: 100%;
+            max-width: 400px;
+            padding: 12px 20px;
+            border: 2px solid #ddd;
+            border-radius: 25px;
+            font-size: 16px;
+            margin-bottom: 20px;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+        
+        .search-box:focus {
+            border-color: #0077cc;
+        }
+        
+        .filters {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+        
+        .filter-btn {
+            background: white;
+            border: 2px solid #ddd;
+            padding: 10px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 500;
+        }
+        
+        .filter-btn.active,
+        .filter-btn:hover {
+            background: #0077cc;
+            color: white;
+            border-color: #0077cc;
+        }
+        /* Nutrient Grid */
+        
+        .nutrient-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+        
+        .nutrient-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        
+        .nutrient-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+        }
+        
+        .nutrient-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+        
+        .nutrient-card-content {
+            padding: 20px;
+        }
+        
+        .nutrient-card h3 {
+            font-size: 24px;
+            color: #333;
+            margin-bottom: 10px;
+        }
+        
+        .nutrient-card p {
+            color: #666;
+            font-size: 14px;
+            margin-bottom: 15px;
+            line-height: 1.5;
+        }
+        
+        .rating {
+            color: #ffd700;
+            margin-bottom: 10px;
+            font-size: 16px;
+        }
+        
+        .price {
+            font-size: 22px;
+            font-weight: bold;
+            color: #0077cc;
+            margin-bottom: 15px;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #0077cc, #005fa3);
+            color: white;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
+            transition: all 0.3s;
+            width: 100%;
+            margin-bottom: 10px;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 119, 204, 0.3);
+        }
+        
+        .btn-secondary {
+            background: transparent;
+            color: #0077cc;
+            border: 2px solid #0077cc;
+            padding: 8px 15px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.3s;
+        }
+        
+        .btn-secondary:hover {
+            background: #0077cc;
+            color: white;
+        }
+        /* Cart Modal */
+        
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            animation: fadeIn 0.3s;
+        }
+        
+        .modal-content {
+            background: white;
+            margin: 10% auto;
+            padding: 30px;
+            border-radius: 15px;
+            width: 90%;
+            max-width: 500px;
+            text-align: center;
+            position: relative;
+            animation: slideIn 0.3s;
+        }
+        
+        .close {
+            position: absolute;
+            right: 15px;
+            top: 15px;
+            font-size: 28px;
+            cursor: pointer;
+            color: #aaa;
+            transition: color 0.3s;
+        }
+        
+        .close:hover {
+            color: #333;
+        }
+        
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+        
+        @keyframes slideIn {
+            from {
+                transform: translateY(-50px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+        /* Footer */
+        
+        footer {
+            background: #222;
+            color: white;
+            padding: 40px 20px 20px;
+            margin-top: 60px;
+        }
+        
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-bottom: 20px;
+        }
+        
+        .footer-section h3 {
+            margin-bottom: 15px;
+            color: #ffd700;
+        }
+        
+        .footer-section p,
+        .footer-section ul {
+            color: #ccc;
+            line-height: 1.8;
+        }
+        
+        .footer-section ul {
+            list-style: none;
+        }
+        
+        .footer-section ul li a {
+            color: #ccc;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-section ul li a:hover {
+            color: #ffd700;
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 10px;
+        }
+        
+        .social-links a {
+            color: #ccc;
+            font-size: 20px;
+            transition: color 0.3s;
+        }
+        
+        .social-links a:hover {
+            color: #ffd700;
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid #444;
+            color: #999;
+            font-size: 14px;
+        }
+        /* Responsive */
+        
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 36px;
+            }
+            .header-container {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            nav ul {
+                gap: 1rem;
+            }
+            .filters {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <i class="fas fa-dumbbell"></i> NutriFit Pro
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#products">Products</a></li>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </nav>
+            <div class="cart-icon" onclick="openCart()">
+                <i class="fas fa-shopping-cart"></i>
+                <span class="cart-count" id="cartCount">0</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <h1>Unlock Your Peak Performance</h1>
+        <p>Discover premium nutrient supplements tailored for fitness enthusiasts and health-conscious individuals. Fuel your body with science-backed nutrition.</p>
+        <a href="#products" class="cta-button">Shop Now</a>
+    </section>
+
+    <!-- Search and Filters -->
+    <section class="search-section">
+        <input type="text" class="search-box" id="searchInput" placeholder="Search nutrients (e.g., Protein, Vitamins)...">
+        <div class="filters">
+            <button class="filter-btn active" onclick="filterProducts('all')">All</button>
+            <button class="filter-btn" onclick="filterProducts('protein')">Protein</button>
+            <button class="filter-btn" onclick="filterProducts('energy')">Energy</button>
+            <button class="filter-btn" onclick="filterProducts('health')">Health</button>
+        </div>
+    </section>
+
+    <!-- Products Grid -->
+    <section class="nutrient-grid" id="products">
+        <div class="nutrient-card" data-category="protein">
+            <img src="https://images.unsplash.com/photo-1598514983628-f6609c53a3fc?auto=format&fit=crop&w=800&q=80" alt="Protein Powder">
+            <div class="nutrient-card-content">
+                <h3>Premium Whey Protein</h3>
+                <p>High-quality whey isolate for muscle growth, recovery, and lean mass gains. 25g protein per serving.</p>
+                <div class="rating">
+                    <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i> (4.9/5)
+                </div>
+                <div class="price">$29.99 / 2lb</div>
+                <button class="btn-primary" onclick="addToCart('Premium Whey Protein', 29.99)">Add to Cart</button>
+                <button class="btn-secondary" onclick="viewDetails('Premium Whey Protein')">Details</button>
+            </div>
+        </div>
+
+        <div class="nutrient-card" data-category="energy">
+            <img src="https://images.unsplash.com/photo-1604908177522-4f1f8b7317c6?auto=format&fit=crop&w=800&q=80" alt="Complex Carbs">
+            <div class="nutrient-card-content">
+                <h3>Complex Carbohydrates</h3>
+                <p>Sustained energy from oats and quinoa blend. Ideal for pre-workout fueling without crashes.</p>
+                <div class="rating">
+                    <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="far fa-star"></i> (4.7/5)
+                </div>
+                <div class="price">$19.99 / 5lb</div>
+                <button class="btn-primary" onclick="addToCart('Complex Carbohydrates', 19.99)">Add to Cart</button>
+                <button class="btn-secondary" onclick="viewDetails('Complex Carbohydrates')">Details</button>
+            </div>
+        </div>
+
+        <div class="nutrient-card" data-category="health">
+            <img src="https://images.unsplash.com/photo-1621830029270-f00ab842ee8b?auto=format&fit=crop&w=800&q=80" alt="Healthy Fats">
+            <div class="nutrient-card-content">
+                <h3>Essential Healthy Fats</h3>
+                <p>Omega-rich blend for joint health, hormone balance, and sustained energy. Avocado and nut-based.</p>
+                <div class="rating">
+                    <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i> (4.8/5)
+                </div>
+                <div class="price">$24.99 / 1lb</div>
+                <button class="btn-primary" onclick="addToCart('Essential Healthy Fats', 24.99)">Add to Cart</button>
+                <button class="btn-secondary" onclick="viewDetails('Essential Healthy Fats')">Details</button>
+            </div>
+        </div>
+
+        <div class="nutrient-card" data-category="health">
+            <img src="https://images.unsplash.com/photo-1592928309192-f0d77582360b?auto=format&fit=crop&w=800&q=80" alt="Multivitamins">
+            <div class="nutrient-card-content">
+                <h3>Daily Multivitamins</h3>
+                <p>Comprehensive formula with vitamins A-Z for immune support, energy, and overall wellness.</p>
+                <div class="rating">
+                    <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="far fa-star"></i> (4.6/5)
+                </div>
+                <div class="price">$34.99 / 60 Caps</div>
+                <button class="btn-primary" onclick="addToCart('Daily Multivitamins', 34.99)">Add to Cart</button>
+                <button class="btn-secondary" onclick="viewDetails('Daily Multivitamins')">Details</button>
+            </div>
+        </div>
+
+        <div class="nutrient-card" data-category="health">
+            <img src="https://images.unsplash.com/photo-1609954647478-4d2b54c90ff0?auto=format&fit=crop&w=800&q=80" alt="Minerals">
+            <div class="nutrient-card-content">
+                <h3>Essential Minerals</h3>
+                <p>Calcium, magnesium, and zinc for bone health, muscle function, and metabolic support.</p>
+                <div class="rating">
+                    <i class="fas fa-star"></i> (4.7/5)
+                </div>
+                <div class="price">$29.99 / 60 Caps</div>
+                <button class="btn-primary" onclick="addToCart('Essential Minerals', 29.99)">Add to Cart</button>
+                <button class="btn-secondary" onclick="viewDetails('Essential Minerals')">Details</button>
+            </div>
+        </div>
+
+        <div class="nutrient-card" data-category="health">
+            <img src="https://images.unsplash.com/photo-1601235220139-d1a0b2ed3f63?auto=format&fit=crop&w=800&q=80" alt="Omega-3">
+            <div class="nutrient-card-content">
+                <h3>Omega-3 Fish Oil</h3>
+                <p>Supports heart health, brain function, and joint mobility with high-quality EPA & DHA.</p>
+                <div class="rating">
+                    <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="far fa-star"></i> (4.5/5)
+                </div>
+                <div class="price">$39.99 / 120 Caps</div>
+                <button class="btn-primary" onclick="addToCart('Omega-3 Fish Oil', 39.99)">Add to Cart</button>
+                <button class="btn-secondary" onclick="viewDetails('Omega-3 Fish Oil')">Details</button>
+            </div>
+        </div>
+
+        <div class="nutrient-card" data-category="energy">
+            <img src="https://images.unsplash.com/photo-1620210499340-0be80b44b6f4?auto=format&fit=crop&w=800&q=80" alt="Pre-Workout Energy">
+            <div class="nutrient-card-content">
+                <h3>Pre-Workout Energy</h3>
+                <p>Boosts energy and focus with natural caffeine, B-vitamins, and electrolytes for peak performance.</p>
+                <div class="rating">
+                    <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i><i class="far fa-star"></i> (4.4/5)
+                </div>
+                <div class="price">$27.99 / 30 Servings</div>
+                <button class="btn-primary" onclick="addToCart('Pre-Workout Energy', 27.99)">Add to Cart</button>
+                <button class="btn-secondary" onclick="viewDetails('Pre-Workout Energy')">Details</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Cart Modal -->
+    <div class="modal" id="cartModal">
+        <div class="modal-content">
+            <span class="close" onclick="closeCart()">&times;</span>
+            <h2>Your Cart</h2>
+            <ul id="cartItems" style="list-style:none; padding:0; margin:20px 0;"></ul>
+            <p><strong>Total: $<span id="cartTotal">0.00</span></strong></p>
+            <button class="btn-primary" onclick="checkout()">Checkout</button>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-container">
+            <div class="footer-section">
+                <h3>About NutriFit Pro</h3>
+                <p>Premium nutrient supplements to help you achieve your fitness and health goals with quality and science-backed nutrition.</p>
+            </div>
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#products">Products</a></li>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Follow Us</h3>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            &copy; 2025 NutriFit Pro. All rights reserved.
+        </div>
+    </footer>
+
+    <script>
+        let cart = [];
+        let cartCount = 0;
+        let cartTotal = 0;
+
+        function addToCart(productName, price) {
+            cart.push({
+                name: productName,
+                price: price
+            });
+            cartCount++;
+            cartTotal += price;
+            document.getElementById('cartCount').innerText = cartCount;
+            alert(`${productName} added to cart!`);
+        }
+
+        function openCart() {
+            const modal = document.getElementById('cartModal');
+            const cartItems = document.getElementById('cartItems');
+            cartItems.innerHTML = '';
+            cart.forEach((item, index) => {
+                cartItems.innerHTML += `<li>${item.name} - $${item.price.toFixed(2)} <button onclick="removeFromCart(${index})" style="margin-left:10px;">Remove</button></li>`;
+            });
+            document.getElementById('cartTotal').innerText = cartTotal.toFixed(2);
+            modal.style.display = 'block';
+        }
+
+        function closeCart() {
+            document.getElementById('cartModal').style.display = 'none';
+        }
+
+        function removeFromCart(index) {
+            cartTotal -= cart[index].price;
+            cart.splice(index, 1);
+            cartCount = cart.length;
+            document.getElementById('cartCount').innerText = cartCount;
+            openCart();
+        }
+
+        function checkout() {
+            if (cart.length === 0) {
+                alert("Your cart is empty!");
+                return;
+            }
+            alert(`Thank you for your purchase! Total: $${cartTotal.toFixed(2)}`);
+            cart = [];
+            cartCount = 0;
+            cartTotal = 0;
+            document.getElementById('cartCount').innerText = cartCount;
+            closeCart();
+        }
+
+        function filterProducts(category) {
+            const cards = document.querySelectorAll('.nutrient-card');
+            const buttons = document.querySelectorAll('.filter-btn');
+            buttons.forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+
+            cards.forEach(card => {
+                if (category === 'all' || card.dataset.category === category) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+
+        function viewDetails(productName) {
+            alert(`Details for ${productName} coming soon!`);
+        }
+
+        // Search functionality
+        document.getElementById('searchInput').addEventListener('input', function() {
+            const searchValue = this.value.toLowerCase();
+            const cards = document.querySelectorAll('.nutrient-card');
+            cards.forEach(card => {
+                const title = card.querySelector('h3').innerText.toLowerCase();
+                if (title.includes(searchValue)) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        });
+
+        // Close modal on outside click
+        window.onclick = function(event) {
+            const modal = document.getElementById('cartModal');
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+    </script>
+</body>
+
+</html>

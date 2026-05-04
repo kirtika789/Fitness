@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Diabetes Management</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Roboto', sans-serif;
+            background: #f9f9f9;
+            color: #333333;
+        }
+        
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+        /* Header */
+        
+        header {
+            position: relative;
+            background: rgb(218, 97, 23);
+            /* changed background to solid orange */
+            color: white;
+            /* keep text white for contrast */
+            padding: 100px 20px;
+            text-align: center;
+        }
+        
+        header h1 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+        
+        header p {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+        }
+        
+        .cta-button {
+            background: #ffffff;
+            color: #ff4d4d;
+            padding: 15px 30px;
+            border-radius: 30px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        
+        .cta-button:hover {
+            background: #ffe6e6;
+        }
+        /* Features Section */
+        
+        .features {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 30px;
+            padding: 60px 20px;
+            background: #fff0f0;
+        }
+        
+        .feature-card {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            width: 300px;
+            text-align: center;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 12px 25px rgba(0, 0, 0, 0.2);
+        }
+        
+        .feature-card img.main-img {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+            border-radius: 12px;
+            margin-bottom: 15px;
+        }
+        
+        .feature-card img.icon {
+            width: 50px;
+            margin-bottom: 10px;
+        }
+        
+        .feature-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+            color: #ff4d4d;
+        }
+        
+        .feature-card p {
+            font-size: 1rem;
+            color: #555;
+        }
+        /* Benefits */
+        
+        .benefits {
+            padding: 60px 20px;
+            text-align: center;
+            background: #ffe6e6;
+        }
+        
+        .benefits h2 {
+            font-size: 2.5rem;
+            color: #ff4d4d;
+            margin-bottom: 40px;
+        }
+        
+        .benefits p {
+            max-width: 800px;
+            margin: 0 auto;
+            font-size: 1.1rem;
+            line-height: 1.8;
+        }
+        /* Video Section */
+        
+        .video-section {
+            padding: 60px 20px;
+            text-align: center;
+            background: #fff0f0;
+        }
+        
+        .video-section h2 {
+            font-size: 2rem;
+            color: #ff4d4d;
+            margin-bottom: 30px;
+        }
+        
+        .video-section iframe {
+            width: 80%;
+            max-width: 700px;
+            height: 400px;
+            border-radius: 12px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+        }
+        /* Footer */
+        
+        footer {
+            background: #333;
+            color: white;
+            text-align: center;
+            padding: 40px 20px;
+        }
+        
+        footer a {
+            color: #ffb84d;
+            font-weight: bold;
+        }
+        /* Modal Styles */
+        
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .modal-content {
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            max-width: 400px;
+            width: 90%;
+            text-align: center;
+            position: relative;
+        }
+        
+        .modal-content h2 {
+            margin-bottom: 20px;
+            color: #ff4d4d;
+        }
+        
+        .modal-content input {
+            width: 80%;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+        }
+        
+        .modal-content button {
+            background: #ff4d4d;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            margin-top: 10px;
+            transition: 0.3s;
+        }
+        
+        .modal-content button:hover {
+            background: #ffb84d;
+            color: #333;
+        }
+        
+        .close {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            font-size: 20px;
+            cursor: pointer;
+        }
+        
+        @media(max-width:900px) {
+            .features {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <h1>Diabetes Management</h1>
+        <p>Manage diabetes & explore reversal under qualified & experienced coaches.</p>
+        <button class="cta-button" id="openModal">Get Started</button>
+    </header>
+
+    <section class="features">
+        <div class="feature-card">
+            <img src="https://img.icons8.com/color/48/000000/doctor-male.png" class="icon" alt="Expert Coaches Icon">
+            <!-- <img src="https://images.unsplash.com/photo-1588776814546-22788d8877e7?auto=format&fit=crop&w=600&q=80" class="main-img" alt="Expert Coaches"> -->
+            <h3>Expert Coaches</h3>
+            <p>Certified health coaches experienced in diabetes management and lifestyle modification.</p>
+        </div>
+        <div class="feature-card">
+            <img src="https://img.icons8.com/color/48/000000/meal.png" class="icon" alt="Nutrition Icon">
+            <!-- <img src="https://images.unsplash.com/photo-1599058917215-d4c4f6c10254?auto=format&fit=crop&w=600&q=80" class="main-img" alt="Personalized Nutrition"> -->
+            <h3>Personalized Nutrition</h3>
+            <p>Customized meal plans designed to stabilize blood sugar levels and improve overall health.</p>
+        </div>
+        <div class="feature-card">
+            <img src="https://img.icons8.com/color/48/000000/running.png" class="icon" alt="Activity Icon">
+            <!-- <img src="https://images.unsplash.com/photo-1599058917215-d4c4f6c10254?auto=format&fit=crop&w=600&q=80" class="main-img" alt="Activity Tracking"> -->
+            <h3>Activity Tracking</h3>
+            <p>Monitor progress with exercise routines, daily tracking, and actionable insights.</p>
+        </div>
+        <div class="feature-card">
+            <img src="https://img.icons8.com/color/48/000000/pill.png" class="icon" alt="Medication Icon">
+            <!-- <img src="https://images.unsplash.com/photo-1588776814546-22788d8877e7?auto=format&fit=crop&w=600&q=80" class="main-img" alt="Medication Tracking"> -->
+            <h3>Medication Tracking</h3>
+            <p>Keep track of medications and insulin schedules to ensure proper diabetes management.</p>
+        </div>
+        <div class="feature-card">
+            <img src="https://img.icons8.com/color/48/000000/conference-call.png" class="icon" alt="Community Icon">
+            <!-- <img src="https://images.unsplash.com/photo-1537432376769-00a7d7c4d9b2?auto=format&fit=crop&w=600&q=80" class="main-img" alt="Community Support"> -->
+            <h3>Community Support</h3>
+            <p>Join a supportive community for sharing experiences, tips, and motivation.</p>
+        </div>
+        <div class="feature-card">
+            <img src="https://img.icons8.com/color/48/000000/books.png" class="icon" alt="Education Icon">
+            <!-- <img src="https://images.unsplash.com/photo-1588776814546-22788d8877e7?auto=format&fit=crop&w=600&q=80" class="main-img" alt="Educational Resources"> -->
+            <h3>Educational Resources</h3>
+            <p>Access guides, webinars, and articles to learn more about managing and reversing diabetes.</p>
+        </div>
+        <div class="feature-card">
+            <img src="https://img.icons8.com/color/48/000000/calendar.png" class="icon" alt="Check-in Icon">
+            <!-- <img src="https://images.unsplash.com/photo-1556228724-4dc6b4b7b933?auto=format&fit=crop&w=600&q=80" class="main-img" alt="Regular Check-ins"> -->
+            <h3>Regular Check-ins</h3>
+            <p>Schedule regular consultations to track progress and adjust your program accordingly.</p>
+        </div>
+    </section>
+
+    <section class="video-section">
+        <h2>Watch Our Program Overview</h2>
+        <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" title="Program Video" frameborder="0" allowfullscreen></iframe>
+    </section>
+
+    <section class="benefits">
+        <h2>Why Choose Our Program?</h2>
+        <p>
+            Our diabetes management program combines expert coaching, personalized nutrition, medication tracking, and community support to help you achieve better blood sugar control. Learn sustainable lifestyle changes, reduce dependency on medications, and explore
+            reversal strategies under professional guidance.
+        </p>
+    </section>
+
+    <!-- Modal -->
+    <div class="modal" id="signupModal">
+        <div class="modal-content">
+            <span class="close" id="closeModal">&times;</span>
+            <h2>Sign Up for Consultation</h2>
+            <input type="text" placeholder="Your Name">
+            <input type="email" placeholder="Email">
+            <input type="number" placeholder="Age">
+            <button id="submitForm">Submit</button>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2025 Diabetes Management. All rights reserved.</p>
+        <p>Follow us on <a href="#">Instagram</a> | <a href="#">Facebook</a> | <a href="#">Twitter</a></p>
+    </footer>
+
+    <script>
+        const modal = document.getElementById("signupModal");
+        const openBtn = document.getElementById("openModal");
+        const closeBtn = document.getElementById("closeModal");
+        const submitBtn = document.getElementById("submitForm");
+
+        openBtn.onclick = () => modal.style.display = "flex";
+        closeBtn.onclick = () => modal.style.display = "none";
+        window.onclick = (e) => {
+            if (e.target === modal) modal.style.display = "none";
+        }
+
+        submitBtn.onclick = () => {
+            alert("Thank you! Our coach will contact you soon.");
+            modal.style.display = "none";
+        };
+    </script>
+
+</body>
+
+</html>

@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Personalized Consultation</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+            color: #fff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            margin: 20px 0;
+            text-align: center;
+            text-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
+        }
+        
+        .consultants {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            max-width: 1000px;
+            margin: 30px 0;
+            width: 100%;
+        }
+        
+        .consultant-card {
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 15px;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .consultant-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .consultant-card img {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 15px;
+            border: 3px solid #fff;
+        }
+        
+        .consultant-card h3 {
+            margin: 10px 0 5px;
+        }
+        
+        .consultant-card p {
+            font-size: 0.9rem;
+            color: #f0f0f0;
+        }
+        
+        .booking-form {
+            background: rgba(255, 255, 255, 0.15);
+            padding: 25px;
+            border-radius: 15px;
+            max-width: 500px;
+            width: 100%;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+        }
+        
+        .booking-form h2 {
+            margin-bottom: 15px;
+            text-align: center;
+        }
+        
+        .booking-form input,
+        .booking-form select,
+        .booking-form textarea {
+            width: 100%;
+            padding: 12px;
+            border-radius: 10px;
+            border: none;
+            margin-bottom: 15px;
+            font-size: 1rem;
+            outline: none;
+            color: #333;
+        }
+        
+        .booking-form button {
+            width: 100%;
+            padding: 12px;
+            background: #fff;
+            color: #2575fc;
+            font-size: 1.1rem;
+            font-weight: bold;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .booking-form button:hover {
+            background: #2575fc;
+            color: #fff;
+            transform: scale(1.05);
+        }
+        
+        .confirmation {
+            margin-top: 20px;
+            padding: 15px;
+            background: rgba(0, 0, 0, 0.4);
+            border-radius: 10px;
+            text-align: center;
+            display: none;
+        }
+        /* Modal Styles */
+        
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 999;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background: rgba(0, 0, 0, 0.7);
+            padding-top: 50px;
+        }
+        
+        .modal-content {
+            background: #fff;
+            color: #333;
+            margin: auto;
+            padding: 30px;
+            border-radius: 15px;
+            max-width: 600px;
+            animation: fadeIn 0.4s;
+            position: relative;
+        }
+        
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .close {
+            color: #333;
+            position: absolute;
+            right: 20px;
+            top: 15px;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        
+        .modal-content img {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 15px;
+            border: 3px solid #2575fc;
+        }
+        
+        .modal-content h2 {
+            margin: 10px 0;
+        }
+        
+        .modal-content p {
+            margin: 10px 0;
+            line-height: 1.5;
+        }
+        
+        .certifications {
+            margin-top: 15px;
+            background: #f0f0f0;
+            padding: 10px;
+            border-radius: 8px;
+        }
+        
+        .certifications strong {
+            display: block;
+            margin-bottom: 5px;
+        }
+        /* Footer Styles */
+        
+        .footer {
+            width: 100%;
+            background-color: #111;
+            color: #fff;
+            padding: 40px 0 20px;
+            font-family: Arial, sans-serif;
+        }
+        
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+        }
+        
+        .footer-section {
+            flex: 1 1 250px;
+            margin-bottom: 20px;
+        }
+        
+        .footer h2,
+        .footer h3 {
+            color: #fff;
+        }
+        
+        .footer p,
+        .footer li {
+            color: #ccc;
+            font-size: 14px;
+        }
+        
+        .footer ul {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .footer a {
+            text-decoration: none;
+            color: #ccc;
+        }
+        
+        .footer a:hover {
+            color: #4cc3ff;
+        }
+        
+        #consultationBtn {
+            background-color: #4cc3ff;
+            color: #000;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        
+        #consultationBtn:hover {
+            background-color: #38b2e0;
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            color: #888;
+            margin-top: 30px;
+            border-top: 1px solid #333;
+            padding-top: 20px;
+            font-size: 13px;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Personalized Consultation</h1>
+
+    <!-- Consultant Profiles -->
+    <div class="consultants">
+        <div class="consultant-card" onclick="openProfile('rahul')">
+            <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Consultant">
+            <h3>Dr. Rahul Sharma</h3>
+            <p>Certified Nutritionist with 10+ years of experience.</p>
+        </div>
+        <div class="consultant-card" onclick="openProfile('priya')">
+            <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Consultant">
+            <h3>Dr. Priya Mehta</h3>
+            <p>Fitness & Wellness Coach specializing in holistic health.</p>
+        </div>
+        <div class="consultant-card" onclick="openProfile('arjun')">
+            <img src="https://randomuser.me/api/portraits/men/65.jpg" alt="Consultant">
+            <h3>Dr. Arjun Verma</h3>
+            <p>Sports Nutrition Expert for muscle gain & performance.</p>
+        </div>
+    </div>
+
+    <!-- Booking Form -->
+    <div class="booking-form">
+        <h2>Book a Consultation</h2>
+        <form id="consultationForm">
+            <input type="text" id="name" placeholder="Your Name" required>
+            <input type="email" id="email" placeholder="Email Address" required>
+            <select id="consultant" required>
+        <option value="" disabled selected>Select a consultant</option>
+        <option value="Dr. Rahul Sharma">Dr. Rahul Sharma</option>
+        <option value="Dr. Priya Mehta">Dr. Priya Mehta</option>
+        <option value="Dr. Arjun Verma">Dr. Arjun Verma</option>
+      </select>
+            <input type="date" id="date" required>
+            <textarea id="message" rows="4" placeholder="Any specific concerns?"></textarea>
+            <button type="submit">Book Now</button>
+        </form>
+
+        <div class="confirmation" id="confirmationMessage">
+            ✅ Thank you! Your consultation has been booked successfully.
+        </div>
+    </div>
+
+    <!-- Profile Modal -->
+    <div id="profileModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <img id="profileImage" src="" alt="Consultant">
+            <h2 id="profileName"></h2>
+            <p id="profileBio"></p>
+            <div class="certifications">
+                <strong>Certifications:</strong>
+                <ul id="certList"></ul>
+            </div>
+        </div>
+    </div>
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-container">
+            <!-- Branding -->
+            <div class="footer-section">
+                <h2>NutriTrack</h2>
+                <p>Your personalized guide to healthy eating and fitness.</p>
+            </div>
+
+            <!-- Quick Links -->
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="#">Home</a></li>
+                    <li><a href="#">Meal Plans</a></li>
+                    <li><a href="#">Nutrition</a></li>
+                    <li><a href="#">Consultation</a></li>
+                    <li><a href="#">Contact</a></li>
+                </ul>
+            </div>
+
+            <!-- Follow Us -->
+            <div class="footer-section">
+                <h3>Follow Us</h3>
+                <p>(Social media links here)</p>
+            </div>
+
+            <!-- Consultation -->
+            <div class="footer-section">
+                <h3>Consultation</h3>
+                <button id="consultationBtn">Get Consultation</button>
+            </div>
+        </div>
+
+        <!-- Footer Bottom -->
+        <div class="footer-bottom">
+            © 2025 NutriTrack. All rights reserved.
+        </div>
+    </footer>
+
+    <script>
+        const consultants = {
+            rahul: {
+                name: "Dr. Rahul Sharma",
+                image: "https://randomuser.me/api/portraits/men/32.jpg",
+                bio: "Certified Nutritionist with over 10 years of experience in helping people achieve weight management, healthy lifestyles, and balanced nutrition.",
+                certifications: [
+                    "Certified Clinical Nutritionist (CCN)",
+                    "M.Sc. in Dietetics & Nutrition",
+                    "Member of Indian Dietetic Association"
+                ]
+            },
+            priya: {
+                name: "Dr. Priya Mehta",
+                image: "https://randomuser.me/api/portraits/women/44.jpg",
+                bio: "Fitness & Wellness Coach with a focus on holistic health, yoga, mindfulness, and balanced diets.",
+                certifications: [
+                    "Certified Fitness Trainer (ACE)",
+                    "Yoga & Wellness Specialist",
+                    "Diploma in Holistic Nutrition"
+                ]
+            },
+            arjun: {
+                name: "Dr. Arjun Verma",
+                image: "https://randomuser.me/api/portraits/men/65.jpg",
+                bio: "Sports Nutrition Expert specializing in muscle gain, endurance training, and performance enhancement for athletes.",
+                certifications: [
+                    "Certified Sports Nutritionist (ISSN)",
+                    "PhD in Sports Science",
+                    "Official Nutrition Consultant for National Athletes"
+                ]
+            }
+        };
+
+        function openProfile(id) {
+            const consultant = consultants[id];
+            document.getElementById('profileName').textContent = consultant.name;
+            document.getElementById('profileImage').src = consultant.image;
+            document.getElementById('profileBio').textContent = consultant.bio;
+
+            const certList = document.getElementById('certList');
+            certList.innerHTML = "";
+            consultant.certifications.forEach(cert => {
+                const li = document.createElement('li');
+                li.textContent = cert;
+                certList.appendChild(li);
+            });
+
+            document.getElementById('profileModal').style.display = 'block';
+        }
+
+        function closeModal() {
+            document.getElementById('profileModal').style.display = 'none';
+        }
+
+        const form = document.getElementById('consultationForm');
+        const confirmation = document.getElementById('confirmationMessage');
+
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+            confirmation.style.display = 'block';
+            form.reset();
+            setTimeout(() => {
+                confirmation.style.display = 'none';
+            }, 4000);
+        });
+
+        // Close modal on outside click
+        window.onclick = function(event) {
+                if (event.target == document.getElementById('profileModal')) {
+                    closeModal();
+                }
+            } <
+            script >
+            document.getElementById('consultationBtn').addEventListener('click', function() {
+                alert('Redirecting to the consultation page...');
+                // window.location.href = '/consultation'; // Uncomment to actually redirect
+            });
+    </script>
+</body>
+
+</html>

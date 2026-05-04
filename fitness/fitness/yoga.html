@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yoga Exercises</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', Arial, Helvetica, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #e3f2fd 0%, #f3e5f5 100%);
+            color: #333;
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+        
+        h1 {
+            text-align: center;
+            font-size: 48px;
+            margin: 30px 0 15px;
+            color: #4a148c;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+            font-weight: 700;
+        }
+        
+        p {
+            text-align: center;
+            margin-bottom: 40px;
+            font-size: 20px;
+            color: #666;
+            font-weight: 300;
+        }
+        
+        .exercise-section {
+            max-width: 1200px;
+            margin: 0 auto 50px;
+            padding: 0 20px;
+        }
+        
+        .section-title {
+            text-align: center;
+            font-size: 32px;
+            margin-bottom: 40px;
+            color: #4a148c;
+            font-weight: 600;
+        }
+        
+        .exercise-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+        }
+        
+        .exercise-card {
+            background: linear-gradient(145deg, #ffffff 0%, #f8f9fa 100%);
+            border-radius: 15px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            transition: all 0.4s ease;
+            text-align: center;
+            position: relative;
+        }
+        
+        .exercise-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+        }
+        
+        .exercise-card img {
+            width: 100%;
+            height: 220px;
+            object-fit: cover;
+            transition: transform 0.4s ease;
+        }
+        
+        .exercise-card:hover img {
+            transform: scale(1.1);
+        }
+        
+        .exercise-card h3 {
+            padding: 20px 15px 10px;
+            font-size: 22px;
+            color: #333;
+            font-weight: 600;
+        }
+        
+        .btn {
+            display: inline-block;
+            background: linear-gradient(45deg, #0077cc 0%, #005fa3 100%);
+            color: white;
+            padding: 12px 25px;
+            text-decoration: none;
+            border-radius: 25px;
+            margin: 15px 10px 20px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: none;
+            font-weight: 500;
+            box-shadow: 0 4px 15px rgba(0, 119, 204, 0.3);
+        }
+        
+        .btn:hover {
+            background: linear-gradient(45deg, #005fa3 0%, #004080 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 119, 204, 0.4);
+        }
+        
+        .filter-buttons {
+            text-align: center;
+            margin: 30px 0 40px;
+            max-width: 1200px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .filter-btn {
+            background: linear-gradient(145deg, #f8f9fa 0%, #e9ecef 100%);
+            border: 2px solid #ddd;
+            padding: 12px 25px;
+            margin: 0 8px;
+            cursor: pointer;
+            border-radius: 25px;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+        
+        .filter-btn.active,
+        .filter-btn:hover {
+            background: linear-gradient(45deg, #4a148c 0%, #6a1b9a 100%);
+            color: white;
+            border-color: #4a148c;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(74, 20, 140, 0.3);
+        }
+        
+        footer {
+            background: linear-gradient(135deg, #333 0%, #555 100%);
+            color: #fff;
+            padding: 50px 20px;
+            margin-top: 60px;
+            position: relative;
+        }
+        
+        footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(90deg, #0077cc 0%, #4a148c 50%, #0077cc 100%);
+        }
+        
+        footer h3,
+        footer h4 {
+            color: #fff;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+        
+        footer a {
+            color: #b0c4de;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        
+        footer a:hover {
+            color: #fff;
+        }
+        /* Responsive Design */
+        
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 36px;
+            }
+            .exercise-grid {
+                grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+                gap: 20px;
+            }
+            .filter-btn {
+                padding: 10px 20px;
+                margin: 0 5px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Yoga Exercises</h1>
+    <p>Improve flexibility, balance, and mental calm with these effective yoga exercises. Filter by level or explore trending yoga below.</p>
+
+    <div class="filter-buttons">
+        <button class="filter-btn active" onclick="filterExercises('all')">All Levels</button>
+        <button class="filter-btn" onclick="filterExercises('beginner')">Beginner</button>
+        <button class="filter-btn" onclick="filterExercises('intermediate')">Intermediate</button>
+        <button class="filter-btn" onclick="filterExercises('advanced')">Advanced</button>
+    </div>
+
+    <div class="exercise-section">
+        <h2 class="section-title">BEST YOGA POSES</h2>
+        <div class="exercise-grid">
+            <!-- Yoga Exercises (18 unique poses) -->
+            <div class="exercise-card" data-level="beginner">
+                <img src="https://media2.giphy.com/media/v1.Y2lkPTZjMDliOTUyajAwenVua3Nod2Q3MTZxc3Vob3Y0Zm9rbmZhdmhiOWI4MWl1aGtmMCZlcD12MV92aWRlb3Nfc2VhcmNoJmN0PXY/fSIsaAVn6gNSP9YSlV/200w.gif" alt="Mountain Pose">
+                <h3>Mountain Pose</h3>
+                <button class="btn" onclick="viewExercise('Mountain Pose', 'Basic standing pose, improves posture and balance.')">View Exercise</button>
+            </div>
+            <div class="exercise-card" data-level="beginner">
+                <img src="https://media1.giphy.com/media/v1.Y2lkPTZjMDliOTUyZWJvbm1obzhheHNlcmx1MzFtaHV6Y3N3NWIzaHQxY2E5cTBpMXRkYiZlcD12MV9naWZzX3NlYXJjaCZjdD1n/3ov9k97jYdt3orlRwA/200w.gif" alt="Tree Pose">
+                <h3>Tree Pose</h3>
+                <button class="btn" onclick="viewExercise('Tree Pose', 'Balance on one leg and stretch your arms upwards.')">View Exercise</button>
+            </div>
+            <div class="exercise-card" data-level="intermediate">
+                <img src="https://downloads.ctfassets.net/6ilvqec50fal/1ZvASyqAoSAsEqp7KOibcw/46e03abb914942dcdc486c9153f43790/warrior_2_reverse.gif" alt="Warrior II Pose">
+                <h3>Warrior II Pose</h3>
+                <button class="btn" onclick="viewExercise('Warrior II Pose', 'Strengthens legs and arms while improving focus.')">View Exercise</button>
+            </div>
+            <div class="exercise-card" data-level="intermediate">
+                <img src="https://i.pinimg.com/originals/01/b0/e2/01b0e26f1d8a1915859295ab1313cf92.gif" alt="Triangle Pose">
+                <h3>Triangle Pose</h3>
+                <button class="btn" onclick="viewExercise('Triangle Pose', 'Stretches the sides of the body and strengthens legs.')">View Exercise</button>
+            </div>
+            <div class="exercise-card" data-level="advanced">
+                <img src="https://media.self.com/photos/63eff7eec15ab81b7d3367d2/master/w_1600%2Cc_limit/SELF_c0141.gif" alt="Headstand">
+                <h3>Headstand</h3>
+                <button class="btn" onclick="viewExercise('Headstand', 'Advanced inversion pose for balance and core strength.')">View Exercise</button>
+            </div>
+            <div class="exercise-card" data-level="intermediate">
+                <img src="https://media.tenor.com/eTcytFUmakwAAAAM/exercise.gif" alt="Cobra Pose">
+                <h3>Cobra Pose</h3>
+                <button class="btn" onclick="viewExercise('Cobra Pose', 'Opens the chest and strengthens the spine.')">View Exercise</button>
+            </div>
+            <div class="exercise-card" data-level="beginner">
+                <img src="https://media1.tenor.com/m/-wXXHLdS4nYAAAAC/workout-working-out.gif" alt="Cat-Cow Pose">
+                <h3>Cat-Cow Pose</h3>
+                <button class="btn" onclick="viewExercise('Cat-Cow Pose', 'Gentle spinal warm-up for flexibility.')">View Exercise</button>
+            </div>
+            <div class="exercise-card" data-level="intermediate">
+                <img src="https://media-cldnry.s-nbcnews.com/image/upload/newscms/2021_38/1779111/bridge-pose-kb-main-210923.gif" alt="Bridge Pose">
+                <h3>Bridge Pose</h3>
+                <button class="btn" onclick="viewExercise('Bridge Pose', 'Strengthens back and glutes, opens chest.')">View Exercise</button>
+            </div>
+            <div class="exercise-card" data-level="advanced">
+                <img src="https://www.verywellfit.com/thmb/ByHd3ybp61ogpYBy374xRf9ojKU=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/37-3567070-Crow-Pose-GIF-d1c4388f0dbd4e0db69db0e4df4326f9.gif" alt="Crow Pose">
+                <h3>Crow Pose</h3>
+                <button class="btn" onclick="viewExercise('Crow Pose', 'Arm balance pose, improves core and focus.')">View Exercise</button>
+            </div>
+            <div class="exercise-card" data-level="beginner">
+                <img src="https://media.post.rvohealth.io/wp-content/uploads/2023/05/Seated-Forward-Bend.gif" alt="Seated Forward Bend">
+                <h3>Seated Forward Bend</h3>
+                <button class="btn" onclick="viewExercise('Seated Forward Bend', 'Stretches the back and hamstrings.')">View Exercise</button>
+            </div>
+            <div class="exercise-card" data-level="intermediate">
+                <img src="https://64.media.tumblr.com/tumblr_m79mq2pFKQ1rysr6eo1_400.gif" alt="Boat Pose">
+                <h3>Boat Pose</h3>
+                <button class="btn" onclick="viewExercise('Boat Pose', 'Strengthens core and improves balance.')">View Exercise</button>
+            </div>
+            <div class="exercise-card" data-level="advanced">
+                <img src="https://www.verywellfit.com/thmb/HTU6J7QgU7qGuVTKDYL9maJM6kI=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/Verywell-07-3567179-Pigeon02-133-598b72f5b501e80012e733ab.gif" alt="King Pigeon Pose">
+                <h3>King Pigeon Pose</h3>
+                <button class="btn" onclick="viewExercise('King Pigeon Pose', 'Advanced backbend and hip opener.')">View Exercise</button>
+            </div>
+            <!-- Additional Exercises -->
+            <div class="exercise-card" data-level="beginner">
+                <img src="https://media.tenor.com/G6UOVsD9bs4AAAAM/workout-working-out.gif" alt="Child's Pose">
+                <h3>Child's Pose</h3>
+                <button class="btn" onclick="viewExercise('Child\'s Pose', 'Restorative pose for relaxation and stress relief.')">View Exercise</button>
+            </div>
+            <div class="exercise-card" data-level="intermediate">
+                <img src="https://cdn.dribbble.com/userupload/28035038/file/original-29fbd9038d2f4d6a502cc961558cf09a.gif" alt="Downward Dog">
+                <h3>Downward Dog</h3>
+                <button class="btn" onclick="viewExercise('Downward Dog', 'Strengthens arms and legs, stretches the back.')">View Exercise</button>
+            </div>
+            <div class="exercise-card" data-level="intermediate">
+                <img src="https://cdn.dribbble.com/userupload/22815558/file/original-d524ba104f22cbdf653d98f890692ab0.gif" alt="Warrior III">
+                <h3>Warrior III</h3>
+                <button class="btn" onclick="viewExercise('Warrior III', 'Builds balance and strengthens legs and core.')">View Exercise</button>
+            </div>
+            <div class="exercise-card" data-level="advanced">
+                <img src="https://media2.giphy.com/media/v1.Y2lkPTZjMDliOTUyOGgzbW5vdTcwcDVoNHhkN2Y2bWxzZnpkMmFrcDg5MzZneGQ3cm8xbyZlcD12MV9naWZzX3NlYXJjaCZjdD1n/mRkBcuSCnD533U2JXO/giphy.gif" alt="Lotus Pose">
+                <h3>Lotus Pose</h3>
+                <button class="btn" onclick="viewExercise('Lotus Pose', 'Meditation pose for deep focus and flexibility.')">View Exercise</button>
+            </div>
+            <div class="exercise-card" data-level="beginner">
+                <img src="https://media.tenor.com/09zEdCGXxdcAAAAM/adbminal.gif" alt="Seated Twist">
+                <h3>Seated Twist</h3>
+                <button class="btn" onclick="viewExercise('Seated Twist', 'Improves spinal mobility and digestion.')">View Exercise</button>
+            </div>
+            <div class="exercise-card" data-level="beginner">
+                <img src="https://media-cldnry.s-nbcnews.com/image/upload/t_fit-1240w,f_auto,q_auto:best/newscms/2021_45/1802889/dancer-main-jc-211111.gif" alt="Easy Pose">
+                <h3>Easy Pose</h3>
+                <button class="btn" onclick="viewExercise('Easy Pose', 'Simple seated pose for meditation and grounding.')">View Exercise</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div style="max-width:1200px; margin:auto; display:flex; flex-wrap:wrap; justify-content:space-between; gap:20px;">
+            <!-- About -->
+            <div style="flex:1; min-width:250px;">
+                <h3>YogaHub</h3>
+                <p>Your go-to resource for yoga poses, exercises, and wellness tips. Explore and enhance your practice.</p>
+            </div>
+
+            <!-- Quick Links -->
+            <div style="flex:1; min-width:150px;">
+                <h4>Quick Links</h4>
+                <ul style="list-style:none; padding:0; line-height:2;">
+                    <li><a href="#trending">Trending Poses</a></li>
+                    <li><a href="#new">What's New</a></li>
+                    <li><a href="#discussed">Discussed</a></li>
+                    <li><a href="#az">A-Z Poses</a></li>
+                </ul>
+            </div>
+
+            <!-- Contact -->
+            <div style="flex:1; min-width:200px;">
+                <h4>Contact Us</h4>
+                <p>Email: support@yogahub.com</p>
+                <p>Phone: +1 123-456-7890</p>
+                <div style="margin-top:10px;">
+                    <a href="https://www.facebook.com">Facebook</a> |
+                    <a href="https://www.instagram.com">Instagram</a> |
+                    <a href="https://www.twitter.com">Twitter</a>
+                </div>
+            </div>
+        </div>
+
+        <div style="text-align:center; margin-top:30px; font-size:14px; color:#aaa;">
+            &copy; 2025 YogaHub. All Rights Reserved.
+        </div>
+    </footer>
+
+    <script>
+        function viewExercise(name, description) {
+            alert(name + "\n\n" + description);
+        }
+
+        function filterExercises(level) {
+            const cards = document.querySelectorAll('.exercise-card');
+            const buttons = document.querySelectorAll('.filter-btn');
+            buttons.forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+
+            cards.forEach(card => {
+                if (level === 'all' || card.dataset.level === level) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+    </script>

@@ -1,0 +1,759 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shoulder Workouts</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* =========================
+   GLOBAL STYLES
+========================= */
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+        
+        body {
+            background: #f4f6f9;
+            color: #333;
+            line-height: 1.6;
+        }
+        /* HEADINGS */
+        
+        h1 {
+            text-align: center;
+            font-size: 42px;
+            margin: 20px 0 10px;
+            color: #222;
+        }
+        
+        p {
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 18px;
+            color: #555;
+        }
+        /* =========================
+   SEARCH BOX
+========================= */
+        
+        .search-container {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        
+        .search-box {
+            padding: 10px 15px;
+            width: 80%;
+            max-width: 400px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        /* =========================
+   FILTER BUTTONS
+========================= */
+        
+        .filter-buttons {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .filter-btn {
+            background: #f1f1f1;
+            border: 2px solid #ddd;
+            padding: 10px 20px;
+            margin: 0 5px;
+            cursor: pointer;
+            border-radius: 5px;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+        
+        .filter-btn:hover,
+        .filter-btn.active {
+            background: #0077cc;
+            color: #fff;
+            border-color: #0077cc;
+        }
+        /* =========================
+   EXERCISE GRID CARDS
+========================= */
+        
+        .exercise-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            max-width: 1200px;
+            margin: 0 auto 40px;
+            padding: 0 20px;
+        }
+        
+        .exercise-card {
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            transition: transform 0.3s, box-shadow 0.3s;
+            text-align: center;
+        }
+        
+        .exercise-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+        }
+        
+        .exercise-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+        
+        .exercise-card h3 {
+            padding: 15px;
+            font-size: 20px;
+            color: #333;
+        }
+        
+        .btn {
+            display: inline-block;
+            background: #0077cc;
+            color: #fff;
+            padding: 10px 20px;
+            margin: 10px;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background 0.3s;
+        }
+        
+        .btn:hover {
+            background: #005fa3;
+        }
+        /* =========================
+   TABS
+========================= */
+        
+        .tabs {
+            display: flex;
+            justify-content: center;
+            background: #f1f1f1;
+            border-bottom: 2px solid #ddd;
+            margin-bottom: 20px;
+            max-width: 1200px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .tab {
+            flex: 1;
+            max-width: 200px;
+            text-align: center;
+            padding: 14px;
+            cursor: pointer;
+            font-size: 15px;
+            font-weight: bold;
+            border-right: 1px solid #ddd;
+            transition: background 0.3s, color 0.3s;
+        }
+        
+        .tab:last-child {
+            border-right: none;
+        }
+        
+        .tab:hover,
+        .tab.active {
+            background: #fff;
+            color: #0077cc;
+        }
+        /* =========================
+   DETAILED EXERCISE CARDS
+========================= */
+        
+        .exercise-container {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            padding: 20px;
+            max-width: 1200px;
+            margin: 0 auto 40px;
+        }
+        
+        .exercise-card-detailed {
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .exercise-card-detailed:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+        }
+        
+        .exercise-card-detailed img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+        
+        .exercise-info {
+            padding: 15px;
+        }
+        
+        .exercise-title {
+            font-size: 22px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #222;
+        }
+        
+        .meta {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 10px;
+            color: #777;
+            font-size: 14px;
+        }
+        
+        .tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        
+        .tag {
+            background: #f1f1f1;
+            padding: 6px 12px;
+            border-radius: 4px;
+            font-size: 13px;
+            font-weight: bold;
+            color: #555;
+        }
+        
+        .tag span {
+            display: block;
+            font-size: 11px;
+            color: #999;
+            font-weight: normal;
+        }
+        /* =========================
+   MODAL
+========================= */
+        
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.6);
+        }
+        
+        .modal-content {
+            background-color: #fff;
+            margin: 5% auto;
+            padding: 20px;
+            border-radius: 10px;
+            width: 80%;
+            max-width: 600px;
+            text-align: center;
+            position: relative;
+        }
+        
+        .modal-content img {
+            width: 100%;
+            border-radius: 10px;
+            margin-bottom: 15px;
+        }
+        
+        .close {
+            color: #aaa;
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        
+        .close:hover {
+            color: #000;
+        }
+        /* =========================
+   FOOTER
+========================= */
+        
+        footer {
+            background: #222;
+            color: #fff;
+            padding: 40px 20px;
+            margin-top: 40px;
+        }
+        
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            gap: 20px;
+        }
+        
+        .footer-about,
+        .footer-links,
+        .footer-contact {
+            flex: 1;
+            min-width: 250px;
+        }
+        
+        .footer-about h3,
+        .footer-links h4,
+        .footer-contact h4 {
+            margin-bottom: 10px;
+            color: #fff;
+        }
+        
+        .footer-links ul {
+            list-style: none;
+            padding: 0;
+            line-height: 2;
+        }
+        
+        .footer-links ul li a,
+        .footer-contact .social-links a {
+            color: #fff;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-links ul li a:hover,
+        .footer-contact .social-links a:hover {
+            color: #0077cc;
+        }
+        
+        .footer-contact .social-links a {
+            margin-right: 10px;
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            margin-top: 30px;
+            font-size: 14px;
+            color: #aaa;
+        }
+        /* =========================
+   RESPONSIVE
+========================= */
+        
+        @media (max-width: 768px) {
+            .exercise-grid,
+            .exercise-container {
+                grid-template-columns: 1fr;
+            }
+            .tabs {
+                flex-direction: column;
+            }
+            .tab {
+                border-right: none;
+                border-bottom: 1px solid #ddd;
+            }
+            .meta {
+                flex-direction: column;
+                gap: 5px;
+            }
+            .footer-container {
+                flex-direction: column;
+                gap: 30px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>Shoulder Workouts</h1>
+    <p>Build strong and defined shoulders with these top exercises. Use the search or filter by level.</p>
+
+    <div class="search-container">
+        <input type="text" class="search-box" id="searchInput" placeholder="Search exercises...">
+    </div>
+
+    <div class="filter-buttons">
+        <button class="filter-btn active" onclick="filterExercises('all')">All Levels</button>
+        <button class="filter-btn" onclick="filterExercises('beginner')">Beginner</button>
+        <button class="filter-btn" onclick="filterExercises('intermediate')">Intermediate</button>
+        <button class="filter-btn" onclick="filterExercises('advanced')">Advanced</button>
+    </div>
+
+    <div class="exercise-grid" id="exerciseGrid">
+        <!-- Exercise Cards -->
+        <div class="exercise-card" data-level="beginner" data-search="lateral raises">
+            <img src="https://media.self.com/photos/5f7f2a51f38ae4894a208c9f/master/w_1600%2Cc_limit/dumbbells-lateral-raise-Cookie_062.gif" alt="Lateral Raises">
+            <h3>Lateral Raises</h3>
+            <a href="#" class="btn" onclick="openModal('Lateral Raises','https://www.bodybuilding.com/images/2017/june/lateral-raise-header-830x467.jpg','Targets side delts. Lift dumbbells to sides.')">View Exercise</a>
+        </div>
+        <div class="exercise-card" data-level="beginner" data-search="front raises">
+            <img src="https://cdn.jefit.com/assets/img/exercises/gifs/413.gif" alt="Front Raises">
+            <h3>Front Raises</h3>
+            <a href="#" class="btn" onclick="openModal('Front Raises','https://www.bodybuilding.com/images/2017/june/front-raise-header-830x467.jpg','Front delt isolation. Lift dumbbells in front.')">View Exercise</a>
+        </div>
+        <div class="exercise-card" data-level="intermediate" data-search="overhead press">
+            <img src="https://i0.wp.com/www.strengthlog.com/wp-content/uploads/2020/11/Seated-dumbbell-shoulder-press.gif?resize=600%2C600&ssl=1" alt="Overhead Press">
+            <h3>Overhead Press</h3>
+            <a href="#" class="btn" onclick="openModal('Overhead Press','https://www.bodybuilding.com/images/2017/june/overhead-press-header-830x467.jpg','Compound movement for delts. Press barbell overhead.')">View Exercise</a>
+        </div>
+        <div class="exercise-card" data-level="intermediate" data-search="rear delt fly">
+            <img src="https://media.tenor.com/HTvjufujuJAAAAAM/rear-raise-rear.gif" alt="Rear Delt Fly">
+            <h3>Rear Delt Fly</h3>
+            <a href="#" class="btn" onclick="openModal('Rear Delt Fly','https://www.bodybuilding.com/images/2017/june/rear-delt-fly-header-830x467.jpg','Targets rear delts. Bend forward, lift dumbbells out.')">View Exercise</a>
+        </div>
+        <div class="exercise-card" data-level="intermediate" data-search="upright row">
+            <img src="https://www.verywellfit.com/thmb/DM2IcOa3NMPZLXjWof74LQMjZUs=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/19-3498316-Upright-Row-6ba2b98d9e8e4e178ab00a3b2e241123.gif" alt="Upright Row">
+            <h3>Upright Row</h3>
+            <a href="#" class="btn" onclick="openModal('Upright Row','https://www.bodybuilding.com/images/2017/june/upright-row-header-830x467.jpg','Pull barbell to chin. Traps and delts.')">View Exercise</a>
+        </div>
+        <div class="exercise-card" data-level="advanced" data-search="arnold press">
+            <img src="https://media3.giphy.com/media/v1.Y2lkPTZjMDliOTUyYTV4ZXh5ZW15MzR6bGdtbTdtMjVmNzd6dGRhNGpxZXVqMnJwbWg2eiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/jtVqKOyQqglvJ9itlo/giphy.gif" alt="Arnold Press">
+            <h3>Arnold Press</h3>
+            <a href="#" class="btn" onclick="openModal('Arnold Press','https://www.bodybuilding.com/images/2017/june/arnold-press-header-830x467.jpg','Rotating press for delts. Start palms facing you.')">View Exercise</a>
+        </div>
+        <div class="exercise-card" data-level="beginner" data-search="dumbbell shrugs">
+            <img src="https://i.pinimg.com/originals/36/1d/5c/361d5cc869dfda52383556ef9cab1934.gif" alt="Dumbbell Shrugs">
+            <h3>Dumbbell Shrugs</h3>
+            <a href="#" class="btn" onclick="openModal('Dumbbell Shrugs','https://www.bodybuilding.com/images/2017/june/dumbbell-shrug-header-830x467.jpg','Shrugs for traps. Lift shoulders with dumbbells.')">View Exercise</a>
+        </div>
+        <div class="exercise-card" data-level="intermediate" data-search="face pulls">
+            <img src="https://i.pinimg.com/originals/64/b8/65/64b865cac817f257f94bb26eab1f9531.gif" alt="Face Pulls">
+            <h3>Face Pulls</h3>
+            <a href="#" class="btn" onclick="openModal('Face Pulls','https://www.bodybuilding.com/images/2017/june/face-pulls-header-830x467.jpg','Pull cable to face. Targets rear delts and traps.')">View Exercise</a>
+        </div>
+        <div class="exercise-card" data-level="advanced" data-search="push press">
+            <img src="https://hips.hearstapps.com/hmg-prod/images/workouts/2017/04/pushpress-1491916740.gif" alt="Push Press">
+            <h3>Push Press</h3>
+            <a href="#" class="btn" onclick="openModal('Push Press','https://www.bodybuilding.com/images/2017/june/push-press-header-830x467.jpg','Explosive press. Combines legs and shoulders.')">View Exercise</a>
+        </div>
+        <div class="exercise-card" data-level="intermediate" data-search="cable lateral raise">
+            <img src="https://www.garagegymreviews.com/wp-content/uploads/2023/07/cable-lateral-raise.gif" alt="Cable Lateral Raise">
+            <h3>Cable Lateral Raise</h3>
+            <a href="#" class="btn" onclick="openModal('Cable Lateral Raise','https://www.bodybuilding.com/images/2017/june/lateral-raise-header-830x467.jpg','Isolation for side delts using cable.')">View Exercise</a>
+        </div>
+        <div class="exercise-card" data-level="beginner" data-search="front plate raise">
+            <img src="https://kaisimonfitness.com/wp-content/uploads/weight-plate-front-raises-kai-simon.gif" alt="Front Plate Raise">
+            <h3>Front Plate Raise</h3>
+            <a href="#" class="btn" onclick="openModal('Front Plate Raise','https://www.bodybuilding.com/images/2017/june/front-raise-header-830x467.jpg','Front delt isolation with weight plate.')">View Exercise</a>
+        </div>
+    </div>
+    <div class="tabs">
+        <div class="tab active" onclick="switchTab('trending')">TRENDING</div>
+
+    </div>
+
+    <!-- Detailed Exercise Cards (20 total, kept the same count) -->
+    <div class="exercise-container" id="trending">
+        <!-- 1 -->
+        <div class="exercise-card-detailed" data-level="beginner">
+            <img src="https://i.pinimg.com/originals/be/f9/11/bef9113356bcd30298e53da7529062d0.gif" alt="Dumbbell Bench Press">
+            <div class="exercise-info">
+                <div class="exercise-title">Dumbbell Bench Press</div>
+                <div class="meta">
+                    <div>6.9M Views</div>
+                    <div>106 Comments</div>
+                </div>
+                <div class="tags">
+                    <div class="tag"><span>TYPE</span> STRENGTH</div>
+                    <div class="tag"><span>EQUIPMENT</span> DUMBBELL</div>
+                    <div class="tag"><span>LEVEL</span> BEGINNER</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 2 -->
+        <div class="exercise-card-detailed" data-level="intermediate">
+            <img src="https://cdn.jefit.com/assets/img/exercises/gifs/375.gif" alt="Dumbbell Pullover">
+            <div class="exercise-info">
+                <div class="exercise-title">Dumbbell Pullover</div>
+                <div class="meta">
+                    <div>5.9M Views</div>
+                    <div>125 Comments</div>
+                </div>
+                <div class="tags">
+                    <div class="tag"><span>TYPE</span> STRENGTH</div>
+                    <div class="tag"><span>EQUIPMENT</span> DUMBBELL</div>
+                    <div class="tag"><span>LEVEL</span> INTERMEDIATE</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 3 -->
+        <div class="exercise-card-detailed" data-level="intermediate">
+            <img src="https://images.squarespace-cdn.com/content/v1/54f9e84de4b0d13f30bba4cb/1528488712624-CH2H2PZAK8FS8GZR8ABG/BenchPress.mov+%281%29.gif" alt="Barbell Bench Press">
+            <div class="exercise-info">
+                <div class="exercise-title">Barbell Bench Press</div>
+                <div class="meta">
+                    <div>12.4M Views</div>
+                    <div>205 Comments</div>
+                </div>
+                <div class="tags">
+                    <div class="tag"><span>TYPE</span> STRENGTH</div>
+                    <div class="tag"><span>EQUIPMENT</span> BARBELL</div>
+                    <div class="tag"><span>LEVEL</span> INTERMEDIATE</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 4 -->
+        <div class="exercise-card-detailed" data-level="beginner">
+            <img src="https://i.pinimg.com/originals/f4/72/94/f47294c0af7d4dc0e55b83a6ce56167b.gif" alt="Incline Dumbbell Press">
+            <div class="exercise-info">
+                <div class="exercise-title">Incline Dumbbell Press</div>
+                <div class="meta">
+                    <div>7.2M Views</div>
+                    <div>145 Comments</div>
+                </div>
+                <div class="tags">
+                    <div class="tag"><span>TYPE</span> STRENGTH</div>
+                    <div class="tag"><span>EQUIPMENT</span> DUMBBELL</div>
+                    <div class="tag"><span>LEVEL</span> BEGINNER</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 5 -->
+        <div class="exercise-card-detailed" data-level="intermediate">
+            <img src="https://www.garagegymreviews.com/wp-content/uploads/2023/06/Cable-crossover.gif" alt="Cable Crossover">
+            <div class="exercise-info">
+                <div class="exercise-title">Cable Crossover</div>
+                <div class="meta">
+                    <div>4.1M Views</div>
+                    <div>80 Comments</div>
+                </div>
+                <div class="tags">
+                    <div class="tag"><span>TYPE</span> ISOLATION</div>
+                    <div class="tag"><span>EQUIPMENT</span> CABLE</div>
+                    <div class="tag"><span>LEVEL</span> INTERMEDIATE</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 6 -->
+        <div class="exercise-card-detailed" data-level="beginner">
+            <img src="https://cdn.jefit.com/assets/img/exercises/gifs/45.gif" alt="Pec Deck Machine ">
+            <div class="exercise-info ">
+                <div class="exercise-title ">Pec Deck Machine</div>
+                <div class="meta ">
+                    <div>3.5M Views</div>
+                    <div>66 Comments</div>
+                </div>
+                <div class="tags ">
+                    <div class="tag "><span>TYPE</span> ISOLATION</div>
+                    <div class="tag "><span>EQUIPMENT</span> MACHINE</div>
+                    <div class="tag "><span>LEVEL</span> BEGINNER</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 7 -->
+        <div class="exercise-card-detailed " data-level="all ">
+            <img src=" https://www.mitrecsports.com/assets/Push-Ups-Gif.gif" alt="Push-Ups ">
+            <div class="exercise-info ">
+                <div class="exercise-title ">Push-Ups</div>
+                <div class="meta ">
+                    <div>15M Views</div>
+                    <div>500 Comments</div>
+                </div>
+                <div class="tags ">
+                    <div class="tag "><span>TYPE</span> BODYWEIGHT</div>
+                    <div class="tag "><span>EQUIPMENT</span> NONE</div>
+                    <div class="tag "><span>LEVEL</span> ALL</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 8 -->
+        <div class="exercise-card-detailed " data-level="beginner ">
+            <img src="https://www.verywellfit.com/thmb/GG7EXAUxQvwxiu4QAzDBPu6yy44=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/90-3120038--Incline-PushupsGIF-d321334ec54849539010832028d5635a.gif" alt="Incline Push-Ups ">
+            <div class="exercise-info ">
+                <div class="exercise-title ">Incline Push-Ups</div>
+                <div class="meta ">
+                    <div>8.2M Views</div>
+                    <div>200 Comments</div>
+                </div>
+                <div class="tags ">
+                    <div class="tag "><span>TYPE</span> BODYWEIGHT</div>
+                    <div class="tag "><span>EQUIPMENT</span> NONE</div>
+                    <div class="tag "><span>LEVEL</span> BEGINNER</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 9 -->
+        <div class="exercise-card-detailed " data-level="intermediate ">
+            <img src="https://i.pinimg.com/originals/ec/f3/3d/ecf33d10ca3d096b18f5c46f2dfa7a7b.gif " alt="Decline Push-Ups ">
+            <div class="exercise-info ">
+                <div class="exercise-title ">Decline Push-Ups</div>
+                <div class="meta ">
+                    <div>6.5M Views</div>
+                    <div>120 Comments</div>
+                </div>
+                <div class="tags ">
+                    <div class="tag "><span>TYPE</span> BODYWEIGHT</div>
+                    <div class="tag "><span>EQUIPMENT</span> NONE</div>
+                    <div class="tag "><span>LEVEL</span> INTERMEDIATE</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 10 -->
+        <div class="exercise-card-detailed " data-level="advanced ">
+            <img src=" https://barbend.com/wp-content/uploads/2023/12/weighted-dips-with-dumbbell-barbend-movement-gif-masters.gif" alt="Weighted Dips ">
+            <div class="exercise-info ">
+                <div class="exercise-title ">Weighted Dips</div>
+                <div class="meta ">
+                    <div>4.5M Views</div>
+                    <div>90 Comments</div>
+                </div>
+                <div class="tags ">
+                    <div class="tag "><span>TYPE</span> STRENGTH</div>
+                    <div class="tag "><span>EQUIPMENT</span> DIP BAR</div>
+                    <div class="tag "><span>LEVEL</span> ADVANCED</div>
+                </div>
+            </div>
+        </div>
+        <!-- Footer -->
+    </div>
+    <!-- closes #trending .exercise-container -->
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-container ">
+            <div class="footer-about ">
+                <h3>ShoulderFit</h3>
+                <p>Ultimate guide to shoulder exercises, workouts, and tips to build strength and stability.</p>
+            </div>
+            <div class="footer-links ">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="#exerciseGrid ">Exercises</a></li>
+                    <li><a href="#searchInput ">Search</a></li>
+                    <li><a href="#contact ">Contact Us</a></li>
+                </ul>
+            </div>
+            <div class="footer-contact ">
+                <h4>Follow Us</h4>
+                <div class="social-links ">
+                    <a href="# "><i class="fab fa-facebook-f "></i></a>
+                    <a href="# "><i class="fab fa-twitter "></i></a>
+                    <a href="# "><i class="fab fa-instagram "></i></a>
+                </div>
+                <p>Email: info@shoulderfit.com</p>
+                <p>Phone: +91 123-456-7890</p>
+            </div>
+        </div>
+        <div class="footer-bottom ">
+            &copy; 2025 ShoulderFit. All Rights Reserved.
+        </div>
+    </footer>
+
+
+    <!-- JS -->
+    <script>
+        // ========================
+        // MODAL FUNCTION
+        // ========================
+        function openModal(title, imgSrc, desc) {
+            // Create modal element
+            let modal = document.createElement('div');
+            modal.classList.add('modal');
+            modal.innerHTML = `
+        <div class="modal-content ">
+            <span class="close ">&times;</span>
+            <img src="${imgSrc} " alt="${title} ">
+            <h2>${title}</h2>
+            <p>${desc}</p>
+        </div>
+    `;
+            document.body.appendChild(modal);
+
+            // Show modal
+            modal.style.display = 'block';
+
+            // Close modal on X click
+            modal.querySelector('.close').onclick = function() {
+                modal.remove();
+            };
+
+            // Close modal if clicked outside content
+            modal.onclick = function(e) {
+                if (e.target === modal) modal.remove();
+            };
+        }
+
+        // ========================
+        // FILTER EXERCISES BY LEVEL
+        // ========================
+        function filterExercises(level) {
+            const cards = document.querySelectorAll('.exercise-card');
+            cards.forEach(card => {
+                if (level === 'all' || card.dataset.level === level) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+
+            // Update active button
+            document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+        }
+
+        // ========================
+        // SEARCH FUNCTION
+        // ========================
+        const searchInput = document.getElementById('searchInput');
+        searchInput.addEventListener('input', () => {
+            const query = searchInput.value.toLowerCase();
+            document.querySelectorAll('.exercise-card').forEach(card => {
+                const name = card.dataset.search.toLowerCase();
+                card.style.display = name.includes(query) ? 'block' : 'none';
+            });
+        });
+
+        // ========================
+        // TAB SWITCHING FUNCTION
+        // ========================
+        function switchTab(tabId) {
+            // Hide all exercise containers
+            document.querySelectorAll('.exercise-container').forEach(c => c.style.display = 'none');
+
+            // Remove active from all tabs
+            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+
+            // Show selected container
+            const container = document.getElementById(tabId);
+            if (container) container.style.display = 'grid';
+
+            // Activate clicked tab
+            event.target.classList.add('active');
+        }
+
+        // ========================
+        // INITIALIZE PAGE
+        // ========================
+        document.addEventListener('DOMContentLoaded', () => {
+            // Show first tab by default
+            const firstContainer = document.querySelector('.exercise-container');
+            if (firstContainer) firstContainer.style.display = 'grid';
+        });
+    </script>
+
+</body>
+
+</html>

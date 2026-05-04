@@ -1,0 +1,739 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Back Exercises</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+        
+        body {
+            background: #f4f6f9;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        h1 {
+            text-align: center;
+            font-size: 42px;
+            margin: 20px 0 10px;
+            color: #222;
+        }
+        
+        p {
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 18px;
+            color: #555;
+        }
+        /* Search Bar */
+        
+        .search-container {
+            max-width: 1200px;
+            margin: 0 auto 20px;
+            padding: 0 20px;
+            text-align: center;
+        }
+        
+        .search-box {
+            width: 100%;
+            max-width: 500px;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 25px;
+            font-size: 16px;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+        
+        .search-box:focus {
+            border-color: #0077cc;
+        }
+        /* Filter Buttons */
+        
+        .filter-buttons {
+            text-align: center;
+            margin: 20px 0;
+            max-width: 1200px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .filter-btn {
+            background: #f1f1f1;
+            border: 2px solid #ddd;
+            padding: 10px 20px;
+            margin: 0 5px;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background 0.3s, border-color 0.3s;
+        }
+        
+        .filter-btn.active,
+        .filter-btn:hover {
+            background: #0077cc;
+            color: white;
+            border-color: #0077cc;
+        }
+        /* Tabs */
+        
+        .tabs {
+            display: flex;
+            justify-content: center;
+            background: #f1f1f1;
+            border-bottom: 2px solid #ddd;
+            margin-bottom: 20px;
+            max-width: 1200px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .tab {
+            flex: 1;
+            max-width: 200px;
+            text-align: center;
+            padding: 14px;
+            cursor: pointer;
+            font-size: 15px;
+            font-weight: bold;
+            border-right: 1px solid #ddd;
+            transition: background 0.3s, color 0.3s;
+        }
+        
+        .tab:last-child {
+            border-right: none;
+        }
+        
+        .tab:hover,
+        .tab.active {
+            background: #fff;
+            color: #0077cc;
+        }
+        /* Exercise Grid */
+        
+        .exercise-section {
+            max-width: 1200px;
+            margin: 0 auto 40px;
+            padding: 0 20px;
+        }
+        
+        .section-title {
+            text-align: center;
+            font-size: 28px;
+            margin-bottom: 30px;
+            color: #222;
+        }
+        
+        .exercise-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+        
+        .exercise-card {
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            text-align: center;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .exercise-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+        }
+        
+        .exercise-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+        
+        .exercise-card h3 {
+            padding: 15px;
+            font-size: 20px;
+            color: #333;
+        }
+        
+        .btn {
+            display: inline-block;
+            background: #0077cc;
+            color: white;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 5px;
+            margin: 10px 0 20px;
+            transition: background 0.3s;
+        }
+        
+        .btn:hover {
+            background: #005fa3;
+        }
+        /* Workout Plans Section */
+        
+        .workout-plans {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+        
+        .workout-plans .section-title {
+            margin-bottom: 20px;
+        }
+        
+        .plan-card {
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        
+        .plan-card h3 {
+            color: #222;
+            margin-bottom: 10px;
+        }
+        
+        .plan-card ul {
+            list-style: none;
+            text-align: left;
+        }
+        
+        .plan-card li {
+            padding: 5px 0;
+            border-bottom: 1px solid #eee;
+        }
+        /* Tips Section */
+        
+        .tips-section {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 20px;
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .tips-section .section-title {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        
+        .tips-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            padding: 20px;
+        }
+        
+        .tip-card {
+            padding: 15px;
+            border-left: 4px solid #0077cc;
+            background: #f9f9f9;
+            border-radius: 5px;
+        }
+        
+        .tip-card i {
+            color: #0077cc;
+            margin-right: 10px;
+        }
+        /* Detailed Exercise Container */
+        
+        .exercise-container {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            padding: 20px;
+            max-width: 1200px;
+            margin: auto;
+        }
+        
+        .exercise-card-detailed {
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            transition: transform 0.3s;
+        }
+        
+        .exercise-card-detailed:hover {
+            transform: translateY(-5px);
+        }
+        
+        .exercise-card-detailed img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+        
+        .exercise-info {
+            padding: 15px;
+        }
+        
+        .exercise-title {
+            font-size: 22px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #222;
+        }
+        
+        .meta {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 10px;
+            color: #777;
+            font-size: 14px;
+        }
+        
+        .tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        
+        .tag {
+            background: #f1f1f1;
+            padding: 6px 12px;
+            border-radius: 4px;
+            font-size: 13px;
+            font-weight: bold;
+            color: #555;
+        }
+        
+        .tag span {
+            display: block;
+            font-size: 11px;
+            color: #999;
+            font-weight: normal;
+        }
+        /* Modal */
+        
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            animation: fadeIn 0.3s;
+        }
+        
+        .modal-content {
+            background-color: #fff;
+            margin: 5% auto;
+            padding: 20px;
+            border-radius: 10px;
+            width: 80%;
+            max-width: 600px;
+            text-align: center;
+            position: relative;
+            animation: slideIn 0.3s;
+        }
+        
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+            position: absolute;
+            top: 10px;
+            right: 15px;
+        }
+        
+        .close:hover {
+            color: #000;
+        }
+        
+        .modal img {
+            width: 100%;
+            max-height: 300px;
+            object-fit: cover;
+            border-radius: 5px;
+            margin-bottom: 15px;
+        }
+        
+        .modal h2 {
+            color: #222;
+            margin-bottom: 10px;
+        }
+        
+        .modal p {
+            color: #555;
+            margin-bottom: 15px;
+        }
+        
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+        
+        @keyframes slideIn {
+            from {
+                transform: translateY(-50px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+        /* Footer */
+        
+        footer {
+            background: #222;
+            color: #fff;
+            padding: 40px 20px;
+            margin-top: 40px;
+        }
+        
+        .footer-container {
+            max-width: 1200px;
+            margin: auto;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            gap: 20px;
+        }
+        
+        .footer-about,
+        .footer-links,
+        .footer-contact {
+            flex: 1;
+            min-width: 250px;
+        }
+        
+        .footer-about h3,
+        .footer-links h4,
+        .footer-contact h4 {
+            margin-bottom: 10px;
+        }
+        
+        .footer-links ul {
+            list-style: none;
+            padding: 0;
+            line-height: 2;
+        }
+        
+        .footer-links ul li a,
+        .footer-contact .social-links a {
+            color: #fff;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-links ul li a:hover,
+        .footer-contact .social-links a:hover {
+            color: #0077cc;
+        }
+        
+        .footer-contact .social-links a {
+            margin-right: 10px;
+            font-size: 20px;
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            margin-top: 30px;
+            font-size: 14px;
+            color: #aaa;
+        }
+        
+        @media (max-width: 768px) {
+            .exercise-container,
+            .exercise-grid,
+            .tips-grid {
+                grid-template-columns: 1fr;
+            }
+            .tabs {
+                flex-direction: column;
+            }
+            .tab {
+                border-right: none;
+                border-bottom: 1px solid #ddd;
+            }
+            .meta {
+                flex-direction: column;
+                gap: 5px;
+            }
+            .footer-container {
+                flex-direction: column;
+                gap: 30px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Back Exercises</h1>
+    <p>Build a strong, defined back with these effective exercises. Filter by level, search for specific moves, or explore trending workouts below.</p>
+
+    <!-- Search Bar -->
+    <div class="search-container">
+        <input type="text" class="search-box" id="searchInput" placeholder="Search for back exercises (e.g., Pull-up, Row)...">
+    </div>
+
+    <!-- Filter Buttons -->
+    <div class="filter-buttons">
+        <button class="filter-btn active" onclick="filterExercises('all')">All Levels</button>
+        <button class="filter-btn" onclick="filterExercises('beginner')">Beginner</button>
+        <button class="filter-btn" onclick="filterExercises('intermediate')">Intermediate</button>
+        <button class="filter-btn" onclick="filterExercises('advanced')">Advanced</button>
+    </div>
+
+    <div class="exercise-section">
+        <h2 class="section-title">BEST BACK EXERCISES</h2>
+        <div class="exercise-grid">
+            <div class="exercise-card" data-level="intermediate" data-search="pull ups">
+                <img src="https://media3.giphy.com/media/v1.Y2lkPTZjMDliOTUyZDc1Zm5rd2tkN3dtcmEzdzd3cG56aTJiejFoMjNicGJmYzMxZ2ZjNCZlcD12MV9naWZzX3NlYXJjaCZjdD1n/q3aUlQotsrLzH5fj8H/giphy.gif" alt="Pull-Ups">
+                <h3>Pull-Ups</h3>
+                <a href="#" class="btn" onclick="openModal('Pull-Ups', 'https://www.bodybuilding.com/images/2017/june/pull-up-header-830x467.jpg', 'Bodyweight exercise targeting lats and upper back. Hang from bar, pull chest to bar, lower controlled.')">View Exercise</a>
+            </div>
+
+            <div class="exercise-card" data-level="beginner" data-search="lat pulldown">
+                <img src="https://www.vidafitness.com.au/wp-content/uploads/2020/03/58-3498309-Lat-Pulldown-GIF-26427b91730d4039a39d557e21c9e494.gif" alt="Lat Pulldown">
+                <h3>Lat Pulldown</h3>
+                <a href="#" class="btn" onclick="openModal('Lat Pulldown', 'https://www.bodybuilding.com/images/2017/june/lat-pulldown-header-830x467.jpg', 'Machine exercise for lats. Pull bar to chest with wide grip, squeeze back.')">View Exercise</a>
+            </div>
+
+            <div class="exercise-card" data-level="advanced" data-search="deadlift">
+                <img src="https://i0.wp.com/post.medicalnewstoday.com/wp-content/uploads/sites/3/2022/10/HL-01.03.BarbellDeadlift.gif?h=840" alt="Deadlift">
+                <h3>Deadlift</h3>
+                <a href="#" class="btn" onclick="openModal('Deadlift', 'https://www.bodybuilding.com/images/2017/june/deadlift-header-830x467.jpg', 'Compound lift for entire back. Hinge at hips, lift barbell from ground, drive through heels.')">View Exercise</a>
+            </div>
+
+            <div class="exercise-card" data-level="intermediate" data-search="bent over row">
+                <img src="https://www.garagegymreviews.com/wp-content/uploads/2023/06/wide-grip-bent-over-row.gif" alt="Bent-Over Row">
+                <h3>Bent-Over Row</h3>
+                <a href="#" class="btn" onclick="openModal('Bent-Over Row', 'https://www.bodybuilding.com/images/2017/june/bent-over-row-header-830x467.jpg', 'Targets mid-back. Hinge forward, row barbell to torso, keep back flat.')">View Exercise</a>
+            </div>
+
+            <div class="exercise-card" data-level="beginner" data-search="seated row">
+                <img src="https://media.tenor.com/GHfaIDctHYQAAAAM/seated-row-nigel-sylvester.gif" alt="Seated Row">
+                <h3>Seated Row</h3>
+                <a href="#" class="btn" onclick="openModal('Seated Row', 'https://www.bodybuilding.com/images/2017/june/seated-row-header-830x467.jpg', 'Cable machine for rhomboids. Pull handles to abdomen, squeeze shoulder blades.')">View Exercise</a>
+            </div>
+
+            <div class="exercise-card" data-level="intermediate" data-search="face pulls">
+                <img src="https://www.verywellfit.com/thmb/B27cSOEMh_R_mnRMg9Lnn_zgDvo=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/face-pulls-6dc71b049756464486be3204f23d185a.gif" alt="Face Pulls">
+                <h3>Face Pulls</h3>
+                <a href="#" class="btn" onclick="openModal('Face Pulls', 'https://www.bodybuilding.com/images/2017/june/face-pull-header-830x467.jpg', 'Improves rear delts and upper back. Pull rope to face, elbows high.')">View Exercise</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tabs -->
+    <div class="tabs">
+        <div class="tab active" onclick="switchTab('trending')">TRENDING</div>
+
+    </div>
+
+    <!-- Detailed Exercise Cards (20 total) -->
+    <div class="exercise-container" id="trending">
+        <!-- 1 -->
+        <div class="exercise-card-detailed" data-level="intermediate" data-search="pull ups">
+            <img src="https://media3.giphy.com/media/v1.Y2lkPTZjMDliOTUyZDc1Zm5rd2tkN3dtcmEzdzd3cG56aTJiejFoMjNicGJmYzMxZ2ZjNCZlcD12MV9naWZzX3NlYXJjaCZjdD1n/q3aUlQotsrLzH5fj8H/giphy.gif" alt="Pull-Ups">
+            <div class="exercise-info">
+                <div class="exercise-title">Pull-Ups</div>
+                <div class="meta">
+                    <div>10.2M Views</div>
+                    <div>250 Comments</div>
+                </div>
+                <div class="tags">
+                    <div class="tag"><span>TYPE</span> STRENGTH</div>
+                    <div class="tag"><span>EQUIPMENT</span> BAR</div>
+                    <div class="tag"><span>LEVEL</span> INTERMEDIATE</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 2 -->
+        <div class="exercise-card-detailed" data-level="beginner" data-search="lat pulldown">
+            <img src="https://www.garagegymreviews.com/wp-content/uploads/2023/09/reverse-grip-lat-pulldown.gif" alt="Lat Pulldown">
+            <div class="exercise-info">
+                <div class="exercise-title">Lat Pulldown</div>
+                <div class="meta">
+                    <div>8.4M Views</div>
+                    <div>180 Comments</div>
+                </div>
+                <div class="tags">
+                    <div class="tag"><span>TYPE</span> STRENGTH</div>
+                    <div class="tag"><span>EQUIPMENT</span> MACHINE</div>
+                    <div class="tag"><span>LEVEL</span> BEGINNER</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 3 -->
+        <div class="exercise-card-detailed" data-level="advanced" data-search="deadlift">
+            <img src="https://images.squarespace-cdn.com/content/v1/592be33120099e2f4b14a4d0/1507083963350-N5XEAIB45JO3H2JKN47C/MICHAEL-CUNICO_HERO_DEADLIFT+%281%29.gif" alt="Deadlift">
+            <div class="exercise-info">
+                <div class="exercise-title">Deadlift</div>
+                <div class="meta">
+                    <div>12.7M Views</div>
+                    <div>310 Comments</div>
+                </div>
+                <div class="tags">
+                    <div class="tag"><span>TYPE</span> STRENGTH</div>
+                    <div class="tag"><span>EQUIPMENT</span> BARBELL</div>
+                    <div class="tag"><span>LEVEL</span> ADVANCED</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 4 -->
+        <div class="exercise-card-detailed" data-level="intermediate" data-search="bent over row">
+            <img src="https://i.pinimg.com/originals/1e/db/7b/1edb7b8deff8a3e53db126d706b931ab.gif" alt="Bent-Over Row">
+            <div class="exercise-info">
+                <div class="exercise-title">Bent-Over Row</div>
+                <div class="meta">
+                    <div>9.1M Views</div>
+                    <div>200 Comments</div>
+                </div>
+                <div class="tags">
+                    <div class="tag"><span>TYPE</span> STRENGTH</div>
+                    <div class="tag"><span>EQUIPMENT</span> BARBELL</div>
+                    <div class="tag"><span>LEVEL</span> INTERMEDIATE</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 5 -->
+        <div class="exercise-card-detailed" data-level="beginner" data-search="seated row">
+            <img src="https://media.tenor.com/GHfaIDctHYQAAAAM/seated-row-nigel-sylvester.gif" alt="Seated Row">
+            <div class="exercise-info">
+                <div class="exercise-title">Seated Row</div>
+                <div class="meta">
+                    <div>7.5M Views</div>
+                    <div>150 Comments</div>
+                </div>
+                <div class="tags">
+                    <div class="tag"><span>TYPE</span> STRENGTH</div>
+                    <div class="tag"><span>EQUIPMENT</span> MACHINE</div>
+                    <div class="tag"><span>LEVEL</span> BEGINNER</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 6 -->
+        <div class="exercise-card-detailed" data-level="intermediate" data-search="face pulls">
+            <img src="https://i0.wp.com/www.strengthlog.com/wp-content/uploads/2020/03/cable-rear-delt-row.gif?resize=600%2C600&ssl=1" alt="Face Pulls">
+            <div class="exercise-info">
+                <div class="exercise-title">Face Pulls</div>
+                <div class="meta">
+                    <div>6.8M Views</div>
+                    <div>120 Comments</div>
+                </div>
+                <div class="tags">
+                    <div class="tag"><span>TYPE</span> STRENGTH</div>
+                    <div class="tag"><span>EQUIPMENT</span> CABLE</div>
+                    <div class="tag"><span>LEVEL</span> INTERMEDIATE</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 7 -->
+        <div class="exercise-card-detailed" data-level="beginner" data-search="superman">
+            <img src="https://hips.hearstapps.com/hmg-prod/images/766/fitgif-friday-superman-slider-thumbnail-override-0-1492696801.gif" alt="Superman">
+            <div class="exercise-info">
+                <div class="exercise-title">Superman</div>
+                <div class="meta">
+                    <div>5.2M Views</div>
+                    <div>80 Comments</div>
+                </div>
+                <div class="tags">
+                    <div class="tag"><span>TYPE</span> BODYWEIGHT</div>
+                    <div class="tag"><span>EQUIPMENT</span> NONE</div>
+                    <div class="tag"><span>LEVEL</span> BEGINNER</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Repeat similar structure for 8-20 with other back exercises -->
+
+    </div>
+
+    <!-- Modal -->
+    <div class="modal" id="exerciseModal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <img id="modalImg" src="" alt="">
+            <h2 id="modalTitle"></h2>
+            <p id="modalDesc"></p>
+        </div>
+    </div>
+
+    <script>
+        function openModal(title, img, desc) {
+            document.getElementById('modalTitle').innerText = title;
+            document.getElementById('modalImg').src = img;
+            document.getElementById('modalDesc').innerText = desc;
+            document.getElementById('exerciseModal').style.display = 'block';
+        }
+
+        function closeModal() {
+            document.getElementById('exerciseModal').style.display = 'none';
+        }
+
+        // Filter exercises
+        function filterExercises(level) {
+            const cards = document.querySelectorAll('.exercise-card, .exercise-card-detailed');
+            cards.forEach(card => {
+                if (level === 'all' || card.dataset.level === level) {
+                    card.style.display = '';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+
+            const buttons = document.querySelectorAll('.filter-btn');
+            buttons.forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+        }
+
+        // Search exercises
+        document.getElementById('searchInput').addEventListener('input', function() {
+            const query = this.value.toLowerCase();
+            const cards = document.querySelectorAll('.exercise-card, .exercise-card-detailed');
+            cards.forEach(card => {
+                if (card.dataset.search.includes(query)) {
+                    card.style.display = '';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        });
+
+        // Tabs
+        function switchTab(tabId) {
+            const tabs = document.querySelectorAll('.tab');
+            tabs.forEach(tab => tab.classList.remove('active'));
+            event.target.classList.add('active');
+
+            const containers = document.querySelectorAll('.exercise-container');
+            containers.forEach(c => c.style.display = 'none');
+            const activeContainer = document.getElementById(tabId);
+            if (activeContainer) activeContainer.style.display = 'grid';
+        }
+
+        // Initialize first tab
+        switchTab('trending');
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>AI Powered Fitness Website</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+    <link rel="stylesheet" href="style.css" />
+    <style>
+        /* Ensure social icons are visible and styled */
+        
+        .social-links a {
+            color: #f9f5f8;
+            /* dark color for visibility */
+            font-size: 24px;
+            /* bigger size */
+            margin-right: 15px;
+            transition: color 0.3s ease;
+            text-decoration: none;
+        }
+        
+        .social-links a:hover {
+            color: #0b0e12;
+            /* highlight color on hover */
+        }
+    </style>
+</head>
+
+<body>
+    <!-- 🔹 Navigation -->
+    <nav>
+        <h1 class="logo">AI Powered Fitness Website</h1>
+        <div class="right-nav">
+            <!-- Dropdown -->
+            <div class="select-box">
+                <div class="select-heading"> <span id="selected-text">Workouts</span> <img src="downarrow.svg" alt="dropdown arrow" class="arrow" /> </div>
+                <div class="options">
+                    <a href="Mixwrkout.html" class="option"> Workout</a>
+
+                    <a href="chest.html" class="option">
+                                        Chest Workout</a>
+
+
+                    <a href="leg.html" class="option">Legs Workout</a>
+                    <a href="shoulder.html" class="option">Shoulder Workout</a>
+                    <a href="BT.html" class="option">Biceps and triceps</a>
+
+                    <a href="back.html" class="option">Back Workout</a>
+                    <a href="yoga.html" class="option">Yoga</a>
+
+
+                </div>
+            </div>
+            <!-- Chatbot icon --><img src="chatbot.svg" alt="chatbot" id="chatbot-toggle" title="Open Chatbot" /> </div>
+    </nav>
+    <!-- 🔹 Floating Chatbot -->
+    <div class="chat-box" id="chat-box-wrapper">
+        <div class="chat-header">
+            <h3>Fitness AI Bot</h3> <span id="close-chat" title="Close Chat">✖</span> </div>
+        <div class="chat-container" id="chat-container">
+            <div class="ai-chat-box">
+                <p class="text">Welcome! How can I help you with your fitness goals today?</p>
+            </div>
+        </div>
+        <div class="input-area"> <input type="text" class="prompt" id="user-input" placeholder="Type a message..." autocomplete="off" /> <button id="send-btn" title="Send"> <img src="send.svg" alt="send" /> </button> </div>
+    </div>
+    <div>
+        <section class="best-lives-section">
+            <div class="text-content">
+                <h2>
+                    Helping people live<br> their <span>BEST LIVES</span>
+                </h2>
+                <p>
+                    Health on your mind? We have you covered. With more than 300,000+ successful transformations, FITTR is leading the health and fitness revolution in the world!
+                </p>
+            </div>
+
+            <div class="image-showcase">
+                <div class="card"><img src="https://i.pinimg.com/236x/d5/88/9c/d5889cd575128c579eba438a18f425fe.jpg" alt="featured"></div>
+                <div class="card"><img src="https://media.wellnesspulse.com/2025/06/physical-fitness.jpg" alt="progress"></div>
+                <div class="card"><img src="https://tonal.com/cdn/shop/articles/Progress_Thumbnail_6ee2898c-1c66-4215-8dfa-937bfc8c81e4.png?v=1746057499&width=1000" alt="progress"></div>
+                <div class="card"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQtIJiMn0V3MTF0K_ttIG2r2v_dPbKYR4Z5Mw&s" alt="progress"></div>
+
+            </div>
+        </section>
+
+
+        <div class="content-wrapper">
+            <section class="services">
+                <div class="service-card">
+                    <div class="img-box orange"> <img src="fit.png" alt="Fitness & Nutrition"> </div>
+                    <h3>Fitness & Nutrition
+
+                    </h3>
+                    <p>Unlock your dream body with the right diet & workouts</p>
+                    <button class="view-btn" onclick="window.location.href='nutrient.html'">View Coaches</button>
+                </div>
+                <div class="service-card">
+                    <div class="img-box green"> <img src="traning.png" alt="Online Personal Training"> </div>
+                    <h3>Online Personal Training</h3>
+                    <p>1-on-1 online sessions for Yoga, Zumba & more!</p>
+                    <button class="view-btn" onclick="window.location.href='onlinetraning.html'">
+  View Coaches
+</button>
+                </div>
+
+                <div class="service-card">
+                    <div class="img-box pink">
+                        <img src="rehlab.png" alt="Injury Rehabilitation">
+                    </div>
+                    <h3>Injury Rehabilitation</h3>
+                    <p>Bid pain goodbye with our expert physiotherapists</p>
+                    <button class="view-btn" onclick="window.location.href='injury.html'">
+    View Coaches
+  </button>
+                </div>
+                <div class="service-card">
+                    <div class="img-box blue">
+                        <img src="kid.png" alt="FITTR Kids">
+                    </div>
+                    <h3>FITTR Kids</h3>
+                    <p>Gift your kids a healthier, happier future</p>
+                    <button class="view-btn" onclick="window.location.href='kid.html'">
+    View Coaches
+  </button>
+                </div>
+
+
+                <div class="service-card">
+                    <div class="img-box blue">
+                        <img src="dia.png" alt="Diabetes Management">
+                    </div>
+                    <h3>Diabetes Management</h3>
+                    <p>Manage diabetes & explore reversal under qualified & experienced coaches</p>
+                    <button class="view-btn" onclick="window.location.href='dia.html'">
+    View Coaches
+  </button>
+                </div>
+
+
+            </section>
+        </div>
+        <section class="judgment-section">
+            <div class="text-area">
+                <h1>A judgment-free<br>space for everyone</h1>
+            </div>
+            <div class="image-collage">
+                <div class="img-card gray"><img src="https://media.istockphoto.com/id/2027278927/photo/young-athletic-woman-exercising-with-barbell-during-sports-training-in-a-gym.jpg?s=612x612&w=0&k=20&c=ifFL7Mqc8NwTj25PAx4ONy1OOQZvc1S_kVOofsbLgFw=" alt=""></div>
+                <div class="img-card color"><img src="https://images.pexels.com/photos/841130/pexels-photo-841130.jpeg?cs=srgb&dl=pexels-victorfreitas-841130.jpg&fm=jpg" alt=""></div>
+                <div class="img-card gray"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQLgxxCqk55b6VlAx4t3kh-tTaKJUAkaMZtTQ&s" alt=""></div>
+                <div class="img-card color"><img src="https://media.istockphoto.com/id/2027281054/photo/young-sportswoman-doing-side-sit-ups-with-medicine-ball-while-exercising-in-health-club.jpg?s=612x612&w=0&k=20&c=TM8DPYR-2TYdqXVWVRYv_Yr8QaJyCsMFBn8Bo9OViIE=" alt=""></div>
+                <div class="img-card gray">
+                    <img src="https://www.jamesallenphoto.com/uploads/7/8/3/1/78318796/fitness-photography-the-temple-21-2000-px_1_orig.jpg" alt=" "></div>
+                <div class="img-card color "><img src="https://t4.ftcdn.net/jpg/01/79/81/77/360_F_179817756_QzTocli57q9G6a1Oe7kJtoMS5dNMU8cl.jpg " alt=" "></div>
+                <div class="img-card gray "><img src="https://media.post.rvohealth.io/wp-content/uploads/2025/06/woman-working-out-barbell-weight-lifting-at-gym-732x549-thumbnail.jpg " alt=" "></div>
+                <div class="img-card color "><img src="https://media.istockphoto.com/id/2027281054/photo/young-sportswoman-doing-side-sit-ups-with-medicine-ball-while-exercising-in-health-club.jpg?s=612x612&w=0&k=20&c=TM8DPYR-2TYdqXVWVRYv_Yr8QaJyCsMFBn8Bo9OViIE= " alt=" "></div>
+                <div class="img-card gray "><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTlQE2CSvaQHm1zEYh6Ha5MSQz411Ip5cPkYw&s " alt=" "></div>
+            </div>
+        </section>
+
+        <section class="health-section ">
+            <h2>Your Health Matters!</h2>
+
+            <p>
+                FITTR isn’t just another fitness company. It is an extended community of friends that you can always count on. We value your time and money and will make sure we deliver the best possible health, fitness, and nutrition services possible.
+            </p>
+
+            <p>
+                We’re proud to have helped thousands of clients manage and even reverse their high sugar and would love to do the same for you too! Our online diabetes coaching program is designed to provide you with the knowledge and support you need to manage your
+                diabetes effectively. Whether you have type 1 or type 2 diabetes, our diabetes specialists are here to help you every step of the way.
+            </p>
+
+            <p>
+                Our diabetes management guidelines and science-backed practices provide you with the best possible diabetes care and support. Our online diabetes coaches have a proven track record of helping people with this lifestyle disease manage their condition effectively
+                and even reverse the condition in specific cases.
+            </p>
+
+            <p>
+                And why is this solution necessary? Well, diabetes affects you in more ways than you can imagine! Diabetes is a complex medical condition that affects every aspect of your life, and prolonged medication dependence might do more harm than good. Our diabetes
+                specialist will help you learn the science behind diabetic remission and apply it to your life. Learn to manage your blood sugar levels and deal with diabetes symptoms, stress, and comorbidities with FITTR Diabetes Coaching. Once you enrol
+                for FITTR Diabetes Lifestyle Management, your online diabetes consultant will provide you with expert guidance on diabetes nutrition and help you create a balanced diabetic meal plan that works for you. Additionally, our online diabetes
+                coaches can help you work in consultation with a diabetes doctor near you to incorporate physical activity into your daily routine and address diabetes weight loss and other goals. Our diabetes experts are highly qualified and experienced
+                in online diabetes management. Get to know our diabetes coaches by chatting with them for free and learn more about their experience in helping people with diabetes before you enrol. And if you ever have any questions, shoot us an email
+                on
+                <a href="renew:support@aifitness.com ">renew:support@aifitness.com</a> and we’ll get back to you in a jiffy!
+            </p>
+        </section>
+
+
+
+        <footer>
+            <div class="footer-container ">
+                <div class="footer-col ">
+                    <h3>AI Fitness</h3>
+                    <p>Empowering your fitness journey with AI-powered guidance and smart workout plans.</p>
+                </div>
+                <div class="footer-col ">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="# ">Home</a></li>
+                        <li><a href="# ">Workouts</a></li>
+                        <li><a href="# ">Nutrition</a></li>
+                        <li><a href="# ">Progress Tracker</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col ">
+                    <h4>Support</h4>
+                    <ul>
+                        <li><a href="# ">FAQs</a></li>
+                        <li><a href="# ">Help Center</a></li>
+                        <li><a href="# ">Privacy Policy</a></li>
+                        <li><a href="# ">Terms of Use</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col ">
+                    <h4>Follow Us</h4>
+                    <div class="social-links "> <a href="# " aria-label="Facebook "><i class="fa-brands fa-facebook-f "></i></a> <a href="# " aria-label="Instagram "><i class="fa-brands fa-instagram "></i></a> <a href="# " aria-label="Twitter
+                        "><i class="fa-brands fa-twitter "></i></a>
+                        <a href="# " aria-label="YouTube "><i class="fa-brands fa-youtube "></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom "> &copy; 2025 AI Powered Fitness Website. All rights reserved. </div>
+        </footer>
+        <script src="script.js "></script>
+</body>
+
+</html>

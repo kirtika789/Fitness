@@ -1,0 +1,996 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>FitFusion - Meal Planner</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+         :root {
+            --primary: #3a86ff;
+            --secondary: #ef4444;
+            --background: #f8fafc;
+            --card-bg: #ffffff;
+            --text-primary: #0f172a;
+            --text-secondary: #475569;
+            --accent: #f59e0b;
+            --success: #10b981;
+            --border: #e2e8f0;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.07);
+            --shadow-hover: 0 10px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #1e3a8a, #3b82f6);
+            color: var(--text-primary);
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+        }
+        
+        header {
+            background: #fff;
+            box-shadow: var(--shadow);
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: .75rem;
+        }
+        
+        .logo h1 {
+            color: var(--primary);
+            font-size: 1.75rem;
+            font-weight: 700;
+        }
+        
+        .logo-icon {
+            color: var(--primary);
+            font-size: 2rem;
+        }
+        
+        .hero {
+            text-align: center;
+            margin: 3rem 0;
+            color: #fff;
+        }
+        
+        .hero h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            opacity: .9;
+        }
+        
+        .personalized-planner {
+            background: var(--background);
+            border-radius: 16px;
+            padding: 2.5rem;
+            box-shadow: var(--shadow);
+            margin-bottom: 3rem;
+        }
+        
+        .section-title {
+            text-align: center;
+            color: var(--text-primary);
+            font-size: 2rem;
+            margin-bottom: 2rem;
+            position: relative;
+            padding-bottom: 1rem;
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: var(--primary);
+            border-radius: 2px;
+        }
+        
+        .personalized-controls {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+            margin-bottom: 2rem;
+        }
+        
+        .styled-select,
+        .personalized-controls input {
+            padding: 0.8rem 1.2rem;
+            border: 2px solid var(--border);
+            border-radius: 10px;
+            font-size: 1rem;
+            background: var(--card-bg);
+        }
+        
+        .personalized-controls label {
+            display: flex;
+            flex-direction: column;
+            font-weight: 500;
+            font-size: 0.9rem;
+        }
+        
+        #generatePlanBtn {
+            background: var(--primary);
+            color: #fff;
+            border: 2px solid var(--primary);
+            padding: 0.7rem 1.5rem;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            display: block;
+            margin: 2rem auto 0 auto;
+        }
+        
+        #generatePlanBtn:hover {
+            background: #265edc;
+            border-color: #1c4db7;
+        }
+        
+        .meal-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 1.8rem;
+            margin-top: 2rem;
+        }
+        
+        .meal-card {
+            background: var(--card-bg);
+            border-radius: 16px;
+            box-shadow: var(--shadow);
+            padding: 1.2rem;
+            text-align: center;
+            transition: .3s;
+            border: 1px solid var(--border);
+            position: relative;
+        }
+        
+        .meal-card:hover {
+            transform: translateY(-6px);
+            box-shadow: var(--shadow-hover);
+            border-color: var(--primary);
+        }
+        
+        .meal-image {
+            width: 100%;
+            height: 170px;
+            object-fit: cover;
+            border-radius: 12px;
+            margin-bottom: 1rem;
+        }
+        
+        .veg-indicator {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-size: .8rem;
+            font-weight: bold;
+        }
+        
+        .veg {
+            background: var(--success);
+        }
+        
+        .nonveg {
+            background: var(--secondary);
+        }
+        
+        .calorie-count {
+            display: inline-block;
+            background: var(--primary);
+            color: #fff;
+            padding: .4rem .8rem;
+            border-radius: 20px;
+            font-weight: 600;
+            margin-bottom: .7rem;
+        }
+        
+        .calorie-summary {
+            text-align: center;
+            margin-top: 3rem;
+            font-size: 1.3rem;
+            background: #fff;
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: var(--shadow);
+        }
+        
+        #personalTotalCalories,
+        #personalTotalProtein,
+        #personalTotalCarbs,
+        #personalTotalFat {
+            color: var(--primary);
+            font-size: 1.5rem;
+        }
+        
+        footer {
+            background: #0f172a;
+            color: #cbd5e1;
+            padding: 3rem 1rem 2rem;
+            margin-top: 4rem;
+            font-family: 'Segoe UI', sans-serif;
+        }
+        
+        footer .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+        }
+        
+        footer .footer-grid h4 {
+            color: #fff;
+            margin-bottom: 1rem;
+        }
+        
+        footer .footer-grid a {
+            color: #cbd5e1;
+            text-decoration: none;
+        }
+        
+        footer .social-icons {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        /* Table Container */
+        
+        h2 {
+            text-align: center;
+            color: #f4f4f4;
+            /* Optional: keep the green color */
+            font-size: 2rem;
+            margin: 30px 0 20px 0;
+            /* Space above and below */
+            text-transform: uppercase;
+            /* Optional styling */
+            letter-spacing: 1px;
+        }
+        
+        .meal-table {
+            width: 80%;
+            /* Adjust width */
+            margin: 30px auto;
+            /* Center table */
+            border-collapse: collapse;
+            border-radius: 20px;
+            /* Rounded corners */
+            overflow: hidden;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+            /* Subtle shadow */
+            font-family: 'Segoe UI', sans-serif;
+            background: #fff;
+            transition: all 0.3s ease-in-out;
+        }
+        /* Table Header */
+        
+        .meal-table th {
+            background: #3b8cd4;
+            /* Green header */
+            color: #fff;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-size: 1rem;
+            padding: 15px 20px;
+            transition: all 0.3s ease;
+        }
+        /* Table Cells */
+        
+        .meal-table td {
+            padding: 15px 20px;
+            font-size: 0.95rem;
+            color: #34495e;
+            transition: all 0.3s ease;
+        }
+        /* Row Striping */
+        
+        .meal-table tr:nth-child(even) td {
+            background: #f9f9f9;
+        }
+        /* Hover Effect on Rows */
+        
+        .meal-table tr:hover td {
+            background: #eafaf1;
+            /* Light green background on hover */
+            transform: scale(1.02);
+            /* Slight zoom */
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+            /* Shadow on hover */
+        }
+        /* Meal Type Cell */
+        
+        .meal-type {
+            font-weight: bold;
+            color: #27ae60;
+            font-size: 1rem;
+        }
+        /* Responsive Design */
+        
+        @media (max-width: 768px) {
+            .meal-table,
+            .meal-table thead,
+            .meal-table tbody,
+            .meal-table th,
+            .meal-table td,
+            .meal-table tr {
+                display: block;
+            }
+            .meal-table tr {
+                margin-bottom: 15px;
+                box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+                border-radius: 10px;
+                overflow: hidden;
+            }
+            .meal-table td {
+                text-align: right;
+                padding-left: 50%;
+                position: relative;
+                border: none;
+            }
+            .meal-table td::before {
+                content: attr(data-label);
+                position: absolute;
+                left: 15px;
+                font-weight: bold;
+                color: #27ae60;
+                text-transform: uppercase;
+            }
+            .meal-table th {
+                display: none;
+            }
+        }
+    </style>
+</head>
+
+
+<body>
+
+    <body>
+        <header>
+            <div class="container header-content">
+                <div class="logo">
+                    <i class="fas fa-utensils logo-icon"></i>
+                    <h1>FitFusion</h1>
+                </div>
+            </div>
+        </header>
+
+        <main class="container">
+            <div class="hero">
+                <h2>Plan Your Perfect Meal</h2>
+                <p>Select your meals and track your calorie & nutrient intake for a healthier lifestyle</p>
+            </div>
+
+            <section class="personalized-planner">
+                <h2 class="section-title">Personalized Plan</h2>
+
+                <div class="personalized-controls">
+                    <label>Age:
+                    <input type="number" id="ageInput" min="10" max="100" placeholder="e.g., 25">
+                </label>
+                    <label>Height (cm):
+                    <input type="number" id="heightInput" min="50" max="250" placeholder="e.g., 170">
+                </label>
+                    <label>Weight (kg):
+                    <input type="number" id="weightInput" min="30" max="200" placeholder="e.g., 70">
+                </label>
+                    <label>Goal:
+                    <select id="goalSelect" class="styled-select">
+                        <option value="maintain">Maintain Weight</option>
+                        <option value="lose">Lose Weight</option>
+                        <option value="gain">Gain Weight</option>
+                    </select>
+                </label>
+                    <label>Diet:
+                    <select id="dietFilter" class="styled-select">
+                        <option value="both">Both Veg & Non-Veg</option>
+                        <option value="veg">Vegetarian Only</option>
+                        <option value="nonveg">Non-Vegetarian Only</option>
+                    </select>
+                </label>
+                    <label>Meal Type:
+                    <select id="mealTypeSelect" class="styled-select">
+                        <option value="breakfast">Breakfast</option>
+                        <option value="lunch">Lunch</option>
+                        <option value="dinner">Dinner</option>
+                        <option value="snacks">Snacks</option>
+                        <option value="drinks">Drinks</option>
+                        <option value="all">All Meals</option>
+                        <option value="Cheat_Meal">Cheat_Meal </option>
+                    </select>
+                </label>
+                </div>
+
+                <button id="generatePlanBtn">Generate Plan</button>
+                <div id="personalizedMealList" class="meal-list"></div>
+
+                <div class="calorie-summary">
+                    <strong>Totals (Calories | Protein | Carbs | Fat):</strong>
+                    <span id="personalTotalCalories">0</span> kcal |
+                    <span id="personalTotalProtein">0</span> g |
+                    <span id="personalTotalCarbs">0</span> g |
+                    <span id="personalTotalFat">0</span> g
+                </div>
+            </section>
+        </main>
+
+        </head>
+        <h2>Weekly Vegetarian Meal Plan</h2>
+        <table class="meal-table">
+            <thead>
+                <tr>
+                    <th>Day</th>
+                    <th>Breakfast</th>
+                    <th>Lunch</th>
+                    <th>Dinner</th>
+                    <th>Snacks</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="meal-type">Monday</td>
+                    <td data-label="Breakfast">Oatmeal with Fruits</td>
+                    <td data-label="Lunch">Paneer Butter Masala with Roti</td>
+                    <td data-label="Dinner">Vegetable Biryani with Raita</td>
+                    <td data-label="Snacks">Fruit Salad</td>
+                </tr>
+                <tr>
+                    <td class="meal-type">Tuesday</td>
+                    <td data-label="Breakfast">Poha with Peanuts</td>
+                    <td data-label="Lunch">Chole with Rice</td>
+                    <td data-label="Dinner">Dal Tadka with Chapati</td>
+                    <td data-label="Snacks">Sprouts Chaat</td>
+                </tr>
+                <tr>
+                    <td class="meal-type">Wednesday</td>
+                    <td data-label="Breakfast">Idli with Sambar</td>
+                    <td data-label="Lunch">Veg Pulao with Boondi Raita</td>
+                    <td data-label="Dinner">Palak Paneer with Roti</td>
+                    <td data-label="Snacks">Roasted Makhana</td>
+                </tr>
+                <tr>
+                    <td class="meal-type">Thursday</td>
+                    <td data-label="Breakfast">Vegetable Upma</td>
+                    <td data-label="Lunch">Rajma Chawal</td>
+                    <td data-label="Dinner">Aloo Gobi with Phulka</td>
+                    <td data-label="Snacks">Banana Smoothie</td>
+                </tr>
+                <tr>
+                    <td class="meal-type">Friday</td>
+                    <td data-label="Breakfast">Stuffed Paratha with Curd</td>
+                    <td data-label="Lunch">Vegetarian Thali (Dal, Sabzi, Roti, Rice)</td>
+                    <td data-label="Dinner">Matar Paneer with Jeera Rice</td>
+                    <td data-label="Snacks">Mixed Dry Fruits</td>
+                </tr>
+                <tr>
+                    <td class="meal-type">Saturday</td>
+                    <td data-label="Breakfast">Vegetable Sandwich</td>
+                    <td data-label="Lunch">Bhindi Masala with Chapati</td>
+                    <td data-label="Dinner">Dal Fry with Jeera Rice</td>
+                    <td data-label="Snacks">Vegetable Soup</td>
+                </tr>
+                <tr>
+                    <td class="meal-type">Sunday</td>
+                    <td data-label="Breakfast">Masala Dosa with Coconut Chutney</td>
+                    <td data-label="Lunch">Veg Biryani with Cucumber Raita</td>
+                    <td data-label="Dinner">Stuffed Capsicum with Roti</td>
+                    <td data-label="Snacks">Cut Seasonal Fruits</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <footer>
+            <div class="container footer-grid">
+                <div>
+                    <h4>About FitFusion</h4>
+                    <p>FitFusion helps you plan meals and track calories for a balanced lifestyle.</p>
+                </div>
+                <div>
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="#">Home</a></li>
+                        <li><a href="#">Workouts</a></li>
+                        <li><a href="#">Meal Plans</a></li>
+                        <li><a href="#">Progress</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4>Contact</h4>
+                    <ul>
+                        <li>Email: support@fitfusion.com</li>
+                        <li>Phone: +91 98765 43210</li>
+                    </ul>
+                    <div class="social-icons">
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">© 2025 FitFusion | Eat Healthy, Live Healthy</div>
+        </footer>
+
+        <script>
+            const meals = {
+                breakfast: [{
+                    name: "Oatmeal with Fruits",
+                    veg: true,
+                    calories: 180,
+                    protein: 6,
+                    carbs: 32,
+                    fat: 4,
+                    image: "https://tse3.mm.bing.net/th/id/OIP.daQREMtGcLwERhHVIPs1IwHaFj?pid=Api"
+                }, {
+                    name: "Egg Sandwich",
+                    veg: false,
+                    calories: 250,
+                    protein: 12,
+                    carbs: 28,
+                    fat: 8,
+                    image: "https://tse1.mm.bing.net/th/id/OIP.1FErjD7vmRMJQpf_3FKpWgHaIy?pid=Api"
+                }, {
+                    name: "Greek Yogurt Bowl",
+                    veg: true,
+                    calories: 200,
+                    protein: 10,
+                    carbs: 20,
+                    fat: 5,
+                    image: "https://tse2.mm.bing.net/th/id/OIP.1B0mwo6ln2Sxe1fZF8VDHgHaLH?pid=Api"
+                }, {
+                    name: "Pancakes with Syrup",
+                    veg: true,
+                    calories: 220,
+                    protein: 5,
+                    carbs: 40,
+                    fat: 6,
+                    image: "pancake.jpg"
+                }, {
+                    name: "Avocado Toast",
+                    veg: true,
+                    calories: 210,
+                    protein: 6,
+                    carbs: 25,
+                    fat: 12,
+                    image: "https://tse1.mm.bing.net/th/id/OIP.VSz0gllb_0SWk0AoQrsyyAHaLH?pid=Api"
+                }, {
+                    name: "Banana Smoothie",
+                    veg: true,
+                    calories: 180,
+                    protein: 4,
+                    carbs: 30,
+                    fat: 3,
+                    image: "banana.jpg"
+                }, {
+                    name: "Muesli Bowl",
+                    veg: true,
+                    calories: 200,
+                    protein: 5,
+                    carbs: 35,
+                    fat: 6,
+                    image: "Muesli.jpg"
+                }, {
+                    name: "Fruit Salad",
+                    veg: true,
+                    calories: 150,
+                    protein: 2,
+                    carbs: 35,
+                    fat: 1,
+                    image: "fruit.jpg"
+                }, {
+                    name: "Toast with Peanut Butter",
+                    veg: true,
+                    calories: 210,
+                    protein: 7,
+                    carbs: 25,
+                    fat: 10,
+                    image: "tost.jpg"
+                }],
+                lunch: [{
+                    name: "Grilled Chicken Salad",
+                    veg: false,
+                    calories: 400,
+                    protein: 35,
+                    carbs: 15,
+                    fat: 18,
+                    image: "grilledchicken.jpg"
+                }, {
+                    name: "Veggie Wrap",
+                    veg: true,
+                    calories: 300,
+                    protein: 12,
+                    carbs: 45,
+                    fat: 8,
+                    image: "wrap.jpg"
+                }, {
+                    name: "Paneer Tikka",
+                    veg: true,
+                    calories: 350,
+                    protein: 20,
+                    carbs: 20,
+                    fat: 18,
+                    image: "panner.jpg"
+                }, {
+                    name: "Beef Stir Fry",
+                    veg: false,
+                    calories: 450,
+                    protein: 30,
+                    carbs: 20,
+                    fat: 22,
+                    image: "beef.jpg"
+                }, {
+                    name: "Quinoa Salad",
+                    veg: true,
+                    calories: 280,
+                    protein: 10,
+                    carbs: 35,
+                    fat: 9,
+                    image: "salad.jpg"
+                }, {
+                    name: "Chickpea Curry",
+                    veg: true,
+                    calories: 320,
+                    protein: 12,
+                    carbs: 40,
+                    fat: 10,
+                    image: "curry.jpg"
+                }, {
+                    name: "Veggie Pasta",
+                    veg: true,
+                    calories: 370,
+                    protein: 15,
+                    carbs: 50,
+                    fat: 12,
+                    image: "veggie.jpg"
+                }, {
+                    name: "Tofu Stir Fry",
+                    veg: true,
+                    calories: 300,
+                    protein: 18,
+                    carbs: 28,
+                    fat: 10,
+                    image: "tofu.jpg"
+                }, {
+                    name: "Stuffed Bell Peppers",
+                    veg: true,
+                    calories: 310,
+                    protein: 12,
+                    carbs: 35,
+                    fat: 11,
+                    image: "bell.jpg"
+                }],
+                dinner: [{
+                    name: "Grilled Salmon",
+                    veg: false,
+                    calories: 420,
+                    protein: 35,
+                    carbs: 10,
+                    fat: 20,
+                    image: "salmon.jpg"
+                }, {
+                    name: "Veggie Stir Fry",
+                    veg: true,
+                    calories: 300,
+                    protein: 12,
+                    carbs: 40,
+                    fat: 8,
+                    image: "vegii.jpg"
+                }, {
+                    name: "Paneer Butter Masala",
+                    veg: true,
+                    calories: 380,
+                    protein: 18,
+                    carbs: 25,
+                    fat: 20,
+                    image: "buttter.jpg"
+                }, {
+                    name: "Chicken Curry",
+                    veg: false,
+                    calories: 450,
+                    protein: 35,
+                    carbs: 20,
+                    fat: 22,
+                    image: "chicken.jpg"
+                }, {
+                    name: "Vegetable Soup",
+                    veg: true,
+                    calories: 200,
+                    protein: 6,
+                    carbs: 30,
+                    fat: 5,
+                    image: "soup.jpg"
+                }, {
+                    name: "Grilled Tofu",
+                    veg: true,
+                    calories: 320,
+                    protein: 20,
+                    carbs: 15,
+                    fat: 15,
+                    image: "griledtofu.png"
+                }, {
+                    name: "Veggie Pizza",
+                    veg: true,
+                    calories: 400,
+                    protein: 15,
+                    carbs: 45,
+                    fat: 18,
+                    image: "pizza.jpg"
+                }, {
+                    name: "Fish Curry",
+                    veg: false,
+                    calories: 430,
+                    protein: 30,
+                    carbs: 15,
+                    fat: 20,
+                    image: "fish.jpg"
+                }, {
+                    name: "Stuffed Mushrooms",
+                    veg: true,
+                    calories: 290,
+                    protein: 12,
+                    carbs: 25,
+                    fat: 14,
+                    image: "mush.png"
+                }],
+                snacks: [{
+                    name: "Protein Bar",
+                    veg: true,
+                    calories: 150,
+                    protein: 10,
+                    carbs: 20,
+                    fat: 4,
+                    image: "bar.jpg"
+                }, {
+                    name: "Fruit Smoothie",
+                    veg: true,
+                    calories: 180,
+                    protein: 4,
+                    carbs: 35,
+                    fat: 2,
+                    image: "smoo.jpg"
+                }, {
+                    name: "Trail Mix",
+                    veg: true,
+                    calories: 200,
+                    protein: 6,
+                    carbs: 25,
+                    fat: 10,
+                    image: "mixx.jpg"
+                }, {
+                    name: "Yogurt Parfait",
+                    veg: true,
+                    calories: 160,
+                    protein: 8,
+                    carbs: 22,
+                    fat: 4,
+                    image: "yog.jpg"
+                }, {
+                    name: "Veggie Chips",
+                    veg: true,
+                    calories: 140,
+                    protein: 2,
+                    carbs: 28,
+                    fat: 5,
+                    image: "chips.jpg"
+                }],
+                drinks: [{
+                    name: "Green Tea",
+                    veg: true,
+                    calories: 0,
+                    protein: 0,
+                    carbs: 0,
+                    fat: 0,
+                    image: "tea.jpg"
+                }, {
+                    name: "Coffee",
+                    veg: true,
+                    calories: 2,
+                    protein: 0,
+                    carbs: 0,
+                    fat: 0,
+                    image: "coffee.jpg"
+                }, {
+                    name: "Protein Shake",
+                    veg: true,
+                    calories: 150,
+                    protein: 20,
+                    carbs: 8,
+                    fat: 3,
+                    image: "shake.jpg"
+                }, {
+                    name: "Smoothie Bowl",
+                    veg: true,
+                    calories: 180,
+                    protein: 5,
+                    carbs: 35,
+                    fat: 4,
+                    image: "smoothie.jpg"
+                }, {
+                    name: "Lemon Water",
+                    veg: true,
+                    calories: 5,
+                    protein: 0,
+                    carbs: 2,
+                    fat: 0,
+                    image: "lemon.jpg"
+                }],
+                Cheat_Meal: [{
+                    name: "Dosa",
+                    veg: true,
+                    calories: 200,
+                    protein: 4,
+                    carbs: 28,
+                    fat: 7,
+                    image: "dosa.jpg"
+                }, {
+                    name: "Pav Bhaji",
+                    veg: true,
+                    calories: 250,
+                    protein: 2,
+                    carbs: 45,
+                    fat: 14,
+                    image: "pav.jpg"
+                }, {
+                    name: "Momos",
+                    veg: true,
+                    calories: 200,
+                    protein: 6,
+                    carbs: 30,
+                    fat: 12,
+                    image: "momos.jpg"
+                }, {
+                    name: "Noodles",
+                    veg: true,
+                    calories: 138,
+                    protein: 5,
+                    carbs: 25,
+                    fat: 2,
+                    image: "noodles.jpg"
+                }, {
+                    name: "Burger",
+                    veg: true,
+                    calories: 250,
+                    protein: 12,
+                    carbs: 34,
+                    fat: 13,
+                    image: "burger.jpg"
+                }, {
+                    name: "Chole Bhature",
+                    veg: true,
+                    calories: 450,
+                    protein: 12,
+                    carbs: 60,
+                    fat: 20,
+                    image: "chole.jpg"
+                }, {
+                    name: "Loaded Cheese Nachos",
+                    veg: true,
+                    calories: 300,
+                    protein: 5,
+                    carbs: 35,
+                    fat: 22,
+                    image: "nachos.jpg"
+                }, {
+                    name: "Rasmalai",
+                    veg: true,
+                    calories: 187,
+                    protein: 0,
+                    carbs: 18,
+                    fat: 10,
+                    image: "rasmalai.jpg"
+                }, {
+                    name: "Gulab Jamun",
+                    veg: true,
+                    calories: 400,
+                    protein: 5,
+                    carbs: 75,
+                    fat: 12,
+                    image: "gulab.jpg"
+                }, {
+                    name: "Ice Cream",
+                    veg: true,
+                    calories: 250,
+                    protein: 5,
+                    carbs: 35,
+                    fat: 15,
+                    image: "ice.jpg"
+                }]
+
+            };
+
+            // Rest of your generate plan code remains unchanged
+            document.getElementById("generatePlanBtn").addEventListener("click", () => {
+                const mealType = document.getElementById("mealTypeSelect").value;
+                const diet = document.getElementById("dietFilter").value;
+                if (mealType === "Cheat Meal") {
+                    mealType = "Cheat_Meal";
+                }
+                const personalizedMealList = document.getElementById("personalizedMealList");
+                const personalTotalCalories = document.getElementById("personalTotalCalories");
+                const personalTotalProtein = document.getElementById("personalTotalProtein");
+                const personalTotalCarbs = document.getElementById("personalTotalCarbs");
+                const personalTotalFat = document.getElementById("personalTotalFat");
+
+                personalizedMealList.innerHTML = "";
+
+                let totalC = 0,
+                    totalP = 0,
+                    totalCarb = 0,
+                    totalF = 0;
+
+                const typesToGenerate = mealType === "all" ? Object.keys(meals) : [mealType];
+
+                typesToGenerate.forEach(type => {
+                    let filteredMeals = meals[type].filter(m => {
+                        if (diet === "both") return true;
+                        if (diet === "veg") return m.veg;
+                        if (diet === "nonveg") return !m.veg;
+                    });
+
+                    filteredMeals.forEach(meal => {
+                        totalC += meal.calories;
+                        totalP += meal.protein;
+                        totalCarb += meal.carbs;
+                        totalF += meal.fat;
+
+                        const mealCard = document.createElement("div");
+                        mealCard.classList.add("meal-card");
+
+                        mealCard.innerHTML = `
+                <img class="meal-image" src="${meal.image}" alt="${meal.name}">
+                <div class="veg-indicator ${meal.veg ? "veg" : "nonveg"}">${meal.veg ? "V" : "NV"}</div>
+                <h3>${meal.name}</h3>
+                <div class="calorie-count">${meal.calories} kcal</div>
+                <p>Protein: ${meal.protein} g | Carbs: ${meal.carbs} g | Fat: ${meal.fat} g</p>
+            `;
+                        personalizedMealList.appendChild(mealCard);
+                    });
+                });
+
+                personalTotalCalories.textContent = totalC;
+                personalTotalProtein.textContent = totalP;
+                personalTotalCarbs.textContent = totalCarb;
+                personalTotalFat.textContent = totalF;
+            });
+        </script>
+
+    </body>
+
+</html>

@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Nutrient Plans</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet" />
+    <style>
+        /* Body with subtle gradient background */
+        
+        body {
+            font-family: 'Roboto', sans-serif;
+            background: linear-gradient(135deg, #16a085 0%, #1abc9c 100%);
+            color: #fff;
+            margin: 0;
+            min-height: 100vh;
+            padding: 40px 20px 100px;
+            /* bottom padding for footer */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            box-sizing: border-box;
+        }
+        
+        h1 {
+            font-weight: 700;
+            font-size: 2.8rem;
+            margin-bottom: 10px;
+            text-align: center;
+            text-shadow: 0 2px 6px rgba(0, 0, 0, 0.5);
+        }
+        
+        p.subtitle {
+            font-size: 1.2rem;
+            margin-bottom: 40px;
+            max-width: 700px;
+            text-align: center;
+            text-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
+            line-height: 1.4;
+        }
+        
+        form {
+            background: rgba(255, 255, 255, 0.15);
+            padding: 30px 25px;
+            border-radius: 20px;
+            max-width: 500px;
+            width: 100%;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+            margin-bottom: 40px;
+            transition: box-shadow 0.3s ease;
+        }
+        
+        form:focus-within {
+            box-shadow: 0 8px 30px rgba(255, 255, 255, 0.6);
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 700;
+            font-size: 1rem;
+        }
+        
+        select {
+            width: 100%;
+            padding: 12px 18px;
+            border-radius: 30px;
+            border: none;
+            font-size: 1rem;
+            margin-bottom: 25px;
+            outline: none;
+            transition: box-shadow 0.3s ease;
+            cursor: pointer;
+            background: rgba(255, 255, 255, 0.9);
+            color: #16a085;
+            font-weight: 700;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            background-image: linear-gradient(45deg, transparent 50%, #16a085 50%), linear-gradient(135deg, #16a085 50%, transparent 50%);
+            background-position: calc(100% - 20px) calc(1em + 2px), calc(100% - 15px) calc(1em + 2px);
+            background-size: 5px 5px, 5px 5px;
+            background-repeat: no-repeat;
+        }
+        
+        select:focus {
+            box-shadow: 0 0 12px #fff;
+            background-color: #fff;
+            color: #16a085;
+        }
+        
+        button {
+            background: #fff;
+            color: #16a085;
+            border: none;
+            padding: 14px 30px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            border-radius: 30px;
+            cursor: pointer;
+            width: 100%;
+            transition: background 0.3s ease, color 0.3s ease, transform 0.2s ease;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            user-select: none;
+        }
+        
+        button:hover,
+        button:focus {
+            background: #13876f;
+            color: #fff;
+            outline: none;
+            transform: scale(1.05);
+        }
+        
+        .plan-container {
+            max-width: 700px;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 20px;
+            padding: 30px 25px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+            color: #fff;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.5s ease, transform 0.5s ease;
+            will-change: opacity, transform;
+        }
+        
+        .plan-container.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .plan-container h2 {
+            margin-bottom: 20px;
+            font-size: 2rem;
+            text-align: center;
+            text-shadow: 0 2px 6px rgba(0, 0, 0, 0.5);
+        }
+        
+        .plan-section {
+            margin-bottom: 20px;
+        }
+        
+        .plan-section h3 {
+            font-size: 1.4rem;
+            margin-bottom: 10px;
+            border-bottom: 2px solid #fff;
+            padding-bottom: 6px;
+        }
+        
+        .plan-section ul {
+            list-style: disc inside;
+            margin: 0;
+            padding-left: 0;
+            color: #d1f2eb;
+            font-size: 1.1rem;
+        }
+        
+        .plan-section ul li {
+            margin-bottom: 8px;
+        }
+        /* ===== Footer ===== */
+        
+        footer {
+            background: rgba(0, 0, 0, 0.85);
+            padding: 50px 20px 20px;
+            color: #fff;
+            font-size: 0.95rem;
+            width: 100%;
+            box-sizing: border-box;
+            user-select: none;
+        }
+        
+        .footer-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 30px;
+            max-width: 1200px;
+            margin: 0 auto 30px;
+            text-align: left;
+            width: 100%;
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+            padding-top: 15px;
+            font-size: 0.9rem;
+            color: #ccc;
+            width: 100%;
+        }
+        
+        .footer-section h3,
+        .footer-section h4 {
+            margin-bottom: 15px;
+            font-size: 1.2rem;
+            color: #16a085;
+        }
+        
+        .footer-section p {
+            line-height: 1.5;
+        }
+        
+        .footer-links ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        
+        .footer-links ul li {
+            margin-bottom: 8px;
+        }
+        
+        .footer-links ul li a {
+            color: #fff;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        
+        .footer-links ul li a:hover,
+        .footer-links ul li a:focus {
+            color: #16a085;
+            outline: none;
+        }
+        
+        .footer-contact p {
+            margin-bottom: 8px;
+        }
+        
+        .footer-contact a {
+            color: #fff;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        
+        .footer-contact a:hover,
+        .footer-contact a:focus {
+            color: #16a085;
+            outline: none;
+        }
+        
+        .social-icons {
+            margin-top: 10px;
+            display: flex;
+            gap: 15px;
+        }
+        
+        .social-icons a {
+            color: #fff;
+            font-size: 1.4rem;
+            transition: color 0.3s ease, transform 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .social-icons a:hover,
+        .social-icons a:focus {
+            color: #16a085;
+            outline: none;
+            transform: scale(1.2);
+        }
+        
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 2rem;
+            }
+            .plan-container h2 {
+                font-size: 1.6rem;
+            }
+            .footer-container {
+                text-align: center;
+            }
+            .footer-links ul li {
+                display: inline-block;
+                margin: 0 10px 8px;
+            }
+            .social-icons {
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Nutrient Plans</h1>
+    <p class="subtitle">Select your dietary goal to see a tailored nutrient plan designed to help you achieve it.</p>
+
+    <form id="planForm" aria-label="Select dietary goal form">
+        <label for="goal">Choose Your Goal</label>
+        <select id="goal" name="goal" required aria-required="true">
+      <option value="" disabled selected>Select a goal</option>
+      <option value="weight_loss">Weight Loss</option>
+      <option value="muscle_gain">Muscle Gain</option>
+      <option value="maintenance">Maintenance</option>
+      <option value="balanced">Balanced Nutrition</option>
+    </select>
+
+        <button type="submit" aria-label="Get nutrient plan">Get Nutrient Plan</button>
+    </form>
+
+    <section id="planDisplay" class="plan-container" aria-live="polite" aria-atomic="true" hidden>
+        <h2 id="planTitle"></h2>
+
+        <div class="plan-section">
+            <h3>Daily Calorie Intake</h3>
+            <p id="calories"></p>
+        </div>
+
+        <div class="plan-section">
+            <h3>Macronutrient Breakdown</h3>
+            <ul id="macrosList"></ul>
+        </div>
+
+        <div class="plan-section">
+            <h3>Sample Foods</h3>
+            <ul id="foodsList"></ul>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-container">
+            <div class="footer-section about">
+                <h3>Fitness & Nutrition</h3>
+                <p>Your trusted partner for personalized nutrient and fitness plans to help you achieve your goals.</p>
+            </div>
+
+            <div class="footer-section footer-links links">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="#planForm">Nutrient Plans</a></li>
+                    <li><a href="#contactForm">Contact</a></li>
+                    <li><a href="#trainers">Trainers</a></li>
+                    <li><a href="#">Blog</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-section footer-contact contact">
+                <h4>Contact Us</h4>
+                <p>Email: <a href="mailto:info@fitnessnutrition.com">info@fitnessnutrition.com</a></p>
+                <p>Phone: <a href="tel:+1234567890">+1 (234) 567-890</a></p>
+                <div class="social-icons" aria-label="Social media links">
+                    <a href="#" aria-label="Facebook" target="_blank" rel="noopener noreferrer" class="social-link" tabindex="0">
+                        <svg width="24" height="24" fill="currentColor" aria-hidden="true" viewBox="0 0 24 24">
+              <path d="M22 12a10 10 0 1 0-11.5 9.9v-7h-2v-3h2v-2c0-2 1-3 3-3h2v3h-2c-.5 0-1 .5-1 1v1h3l-1 3h-2v7A10 10 0 0 0 22 12z" />
+            </svg>
+                    </a>
+                    <a href="#" aria-label="Twitter" target="_blank" rel="noopener noreferrer" class="social-link" tabindex="0">
+                        <svg width="24" height="24" fill="currentColor" aria-hidden="true" viewBox="0 0 24 24">
+              <path d="M22.46 6c-.77.35-1.6.58-2.46.69a4.3 4.3 0 0 0 1.88-2.37 8.59 8.59 0 0 1-2.72 1.04 4.28 4.28 0 0 0-7.3 3.9A12.14 12.14 0 0 1 3.15 4.6a4.28 4.28 0 0 0 1.33 5.7 4.25 4.25 0 0 1-1.94-.54v.05a4.28 4.28 0 0 0 3.44 4.2 4.3 4.3 0 0 1-1.93.07 4.28 4.28 0 0 0 4 3 8.6 8.6 0 0 1-5.3 1.83A8.7 8.7 0 0 1 2 18.13a12.13 12.13 0 0 0 6.56 1.92c7.88 0 12.2-6.53 12.2-12.2 0-.19 0-.37-.01-.56A8.7 8.7 0 0 0 22.46 6z" />
+            </svg>
+                    </a>
+                    <a href="#" aria-label="Instagram" target="_blank" rel="noopener noreferrer" class="social-link" tabindex="0">
+                        <svg width="24" height="24" fill="currentColor" aria-hidden="true" viewBox="0 0 24 24">
+              <path d="M7 2C4.243 2 2 4.243 2 7v10c0 2.757 2.243 5 5 5h10c2.757 0 5-2.243 5-5V7c0-2.757-2.243-5-5-5H7zm10 2a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm-5 2a5 5 0 1 1 0 10 5 5 0 0 1 0-10zm0 2a3 3 0 1 0 0 6 3 3 0 0 0 0-6z" />
+            </svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            &copy; <span id="footerYear"></span> Fitness & Nutrition. All rights reserved.
+        </div>
+    </footer>
+
+    <script>
+        const plans = {
+            weight_loss: {
+                title: "Weight Loss Plan",
+                calories: "1,500 - 1,800 kcal per day",
+                macros: [
+                    "Protein: 30% of total calories",
+                    "Carbohydrates: 40% of total calories",
+                    "Fats: 30% of total calories"
+                ],
+                foods: [
+                    "Lean chicken breast, turkey, fish",
+                    "Vegetables: broccoli, spinach, kale",
+                    "Whole grains: quinoa, brown rice, oats",
+                    "Healthy fats: avocado, nuts, olive oil",
+                    "Fruits: berries, apples, oranges"
+                ]
+            },
+            muscle_gain: {
+                title: "Muscle Gain Plan",
+                calories: "2,500 - 3,000 kcal per day",
+                macros: [
+                    "Protein: 35% of total calories",
+                    "Carbohydrates: 45% of total calories",
+                    "Fats: 20% of total calories"
+                ],
+                foods: [
+                    "Lean meats: chicken, beef, fish",
+                    "Complex carbs: sweet potatoes, brown rice, oats",
+                    "Dairy: Greek yogurt, cottage cheese",
+                    "Healthy fats: nuts, seeds, olive oil",
+                    "Vegetables and fruits for vitamins and minerals"
+                ]
+            },
+            maintenance: {
+                title: "Maintenance Plan",
+                calories: "2,000 - 2,500 kcal per day",
+                macros: [
+                    "Protein: 25% of total calories",
+                    "Carbohydrates: 50% of total calories",
+                    "Fats: 25% of total calories"
+                ],
+                foods: [
+                    "Balanced portions of lean protein",
+                    "Whole grains and starchy vegetables",
+                    "Healthy fats from nuts, seeds, and oils",
+                    "A variety of fruits and vegetables"
+                ]
+            },
+            balanced: {
+                title: "Balanced Nutrition Plan",
+                calories: "2,000 kcal per day (adjust as needed)",
+                macros: [
+                    "Protein: 30% of total calories",
+                    "Carbohydrates: 40% of total calories",
+                    "Fats: 30% of total calories"
+                ],
+                foods: [
+                    "Lean proteins: chicken, fish, legumes",
+                    "Whole grains: brown rice, quinoa, oats",
+                    "Healthy fats: avocado, nuts, olive oil",
+                    "Fruits and vegetables for fiber and nutrients"
+                ]
+            }
+        };
+
+        const form = document.getElementById('planForm');
+        const planDisplay = document.getElementById('planDisplay');
+        const planTitle = document.getElementById('planTitle');
+        const calories = document.getElementById('calories');
+        const macrosList = document.getElementById('macrosList');
+        const foodsList = document.getElementById('foodsList');
+
+        // Handle form submit
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const goal = document.getElementById('goal').value;
+
+            if (plans[goal]) {
+                const plan = plans[goal];
+
+                // Update title & calories
+                planTitle.textContent = plan.title;
+                calories.textContent = plan.calories;
+
+                // Clear old lists
+                macrosList.innerHTML = "";
+                foodsList.innerHTML = "";
+
+                // Populate macros
+                plan.macros.forEach(macro => {
+                    const li = document.createElement('li');
+                    li.textContent = macro;
+                    macrosList.appendChild(li);
+                });
+
+                // Populate foods
+                plan.foods.forEach(food => {
+                    const li = document.createElement('li');
+                    li.textContent = food;
+                    foodsList.appendChild(li);
+                });
+
+                // Show container
+                planDisplay.hidden = false;
+                planDisplay.classList.add('visible');
+            }
+        });
+
+        // Dynamic year in footer
+        document.getElementById('footerYear').textContent = new Date().getFullYear();
+    </script>
+</body>
+
+</html>

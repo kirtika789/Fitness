@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FITTR Kids - Healthier & Happier Kids</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f0f8ff;
+            color: #333;
+        }
+        
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+        /* Header */
+        
+        header {
+            background: linear-gradient(90deg, #ff8c00, #ffcc00);
+            color: white;
+            padding: 60px 20px;
+            text-align: center;
+        }
+        
+        header h1 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+        }
+        
+        header p {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+        }
+        
+        .cta-button {
+            background-color: #ffffff;
+            color: #ff8c00;
+            padding: 15px 30px;
+            border-radius: 30px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        
+        .cta-button:hover {
+            background-color: #ffe680;
+        }
+        /* Features section */
+        
+        .features {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            padding: 60px 20px;
+            gap: 30px;
+            background-color: #e6f7ff;
+        }
+        
+        .feature-card {
+            background-color: white;
+            border-radius: 15px;
+            padding: 30px;
+            width: 280px;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 12px 25px rgba(0, 0, 0, 0.2);
+        }
+        
+        .feature-card img {
+            width: 80px;
+            margin-bottom: 20px;
+        }
+        
+        .feature-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: #ff8c00;
+        }
+        
+        .feature-card p {
+            font-size: 1rem;
+            color: #555;
+        }
+        /* Benefits Section */
+        
+        .benefits {
+            padding: 60px 20px;
+            text-align: center;
+        }
+        
+        .benefits h2 {
+            font-size: 2.5rem;
+            color: #ff8c00;
+            margin-bottom: 40px;
+        }
+        
+        .benefits p {
+            max-width: 800px;
+            margin: 0 auto;
+            font-size: 1.1rem;
+            line-height: 1.8;
+        }
+        /* Footer */
+        
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 40px 20px;
+        }
+        
+        footer a {
+            color: #ffcc00;
+            font-weight: bold;
+        }
+        /* Modal Styles */
+        
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .modal-content {
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            max-width: 400px;
+            width: 90%;
+            text-align: center;
+            position: relative;
+        }
+        
+        .modal-content h2 {
+            margin-bottom: 20px;
+            color: #ff8c00;
+        }
+        
+        .modal-content input {
+            width: 80%;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+        }
+        
+        .modal-content button {
+            background: #ff8c00;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            margin-top: 10px;
+            transition: 0.3s;
+        }
+        
+        .modal-content button:hover {
+            background: #ffcc00;
+            color: #333;
+        }
+        
+        .close {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            font-size: 20px;
+            cursor: pointer;
+        }
+        
+        @media (max-width: 900px) {
+            .features {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <h1>FITTR Kids</h1>
+        <p>Gift your kids a healthier, happier future with fun fitness and nutrition plans designed just for them!</p>
+        <button class="cta-button" id="openModal">Get Started</button>
+    </header>
+
+    <section class="features">
+        <div class="feature-card">
+            <img src="https://img.icons8.com/color/96/healthy-food.png" alt="Healthy Eating">
+            <h3>Healthy Eating</h3>
+            <p>Fun, nutritious meal plans that kids will actually love, helping them build lifelong healthy habits.</p>
+        </div>
+        <div class="feature-card">
+            <img src="https://img.icons8.com/color/96/exercise.png" alt="Fun Workouts">
+            <h3>Fun Workouts</h3>
+            <p>Exciting physical activities designed to keep kids active, energetic, and strong while having fun.</p>
+        </div>
+        <div class="feature-card">
+            <img src="https://img.icons8.com/color/96/brain.png" alt="Mental Wellness">
+            <h3>Mental Wellness</h3>
+            <p>Games and exercises that promote focus, confidence, and emotional well-being for your child.</p>
+        </div>
+    </section>
+
+    <section class="benefits">
+        <h2>Why FITTR Kids?</h2>
+        <p>
+            FITTR Kids combines nutrition, fitness, and mental wellness into a comprehensive program tailored for children. Our approach ensures that kids develop healthy habits early, stay active, and enjoy a balanced lifestyle. With our engaging and safe programs,
+            children not only improve their physical health but also gain confidence, focus, and emotional resilience.
+        </p>
+    </section>
+
+    <!-- Modal -->
+    <div class="modal" id="signupModal">
+        <div class="modal-content">
+            <span class="close" id="closeModal">&times;</span>
+            <h2>Sign Up for FITTR Kids</h2>
+            <input type="text" placeholder="Your Name">
+            <input type="email" placeholder="Email">
+            <input type="number" placeholder="Child's Age">
+            <button id="submitForm">Submit</button>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2025 FITTR Kids. All rights reserved.</p>
+        <p>Follow us on <a href="#">Instagram</a> | <a href="#">Facebook</a> | <a href="#">Twitter</a></p>
+    </footer>
+
+    <script>
+        // Modal functionality
+        const modal = document.getElementById("signupModal");
+        const openBtn = document.getElementById("openModal");
+        const closeBtn = document.getElementById("closeModal");
+        const submitBtn = document.getElementById("submitForm");
+
+        openBtn.onclick = () => modal.style.display = "flex";
+        closeBtn.onclick = () => modal.style.display = "none";
+        window.onclick = (e) => {
+            if (e.target === modal) modal.style.display = "none";
+        }
+
+        submitBtn.onclick = () => {
+            alert("Thank you for signing up! We'll contact you soon.");
+            modal.style.display = "none";
+        };
+
+        // Smooth scroll (if needed for internal links)
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
+
+</body>
+
+</html>

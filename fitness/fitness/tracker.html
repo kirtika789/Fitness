@@ -1,0 +1,974 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FitPro - Professional Fitness Tracker</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+         :root {
+            --primary-blue: #3a86ff;
+            --primary-dark-blue: #023e8a;
+            --accent: #ffd60a;
+            --accent-hover: #ffea3d;
+            --background-light: #f8fafc;
+            --background-white: #ffffff;
+            --text-dark: #1e293b;
+            --text-light: #64748b;
+            --text-white: #f8fafc;
+            --shadow-sm: 0 4px 6px rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 10px 15px rgba(0, 0, 0, 0.1);
+            --shadow-lg: 0 20px 25px rgba(0, 0, 0, 0.15);
+            --border-radius: 12px;
+            --transition: all 0.3s ease;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            color: var(--text-dark);
+            background: var(--background-white);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        /* Header */
+        
+        header {
+            padding: 1.5rem 0;
+            background: var(--background-white);
+            box-shadow: var(--shadow-sm);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary-blue);
+        }
+        
+        .logo-icon {
+            color: var(--accent);
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+        
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-dark);
+            font-weight: 500;
+            transition: var(--transition);
+        }
+        
+        .nav-links a:hover {
+            color: var(--primary-blue);
+        }
+        
+        .sign-in-btn {
+            background: var(--primary-blue);
+            color: white;
+            border: none;
+            padding: 0.6rem 1.5rem;
+            border-radius: var(--border-radius);
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .sign-in-btn:hover {
+            background: var(--primary-dark-blue);
+        }
+        /* Hero Section */
+        
+        .hero {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 5rem 0;
+            background: linear-gradient(135deg, var(--primary-blue) 0%, var(--primary-dark-blue) 100%);
+            color: var(--text-white);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -10%;
+            width: 600px;
+            height: 600px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.05);
+        }
+        
+        .hero-content {
+            max-width: 50%;
+            z-index: 2;
+        }
+        
+        .hero h1 {
+            font-size: 3.2rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            line-height: 1.2;
+        }
+        
+        .hero h1 span {
+            color: var(--accent);
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            max-width: 500px;
+            opacity: 0.9;
+        }
+        
+        .hero-btn {
+            background: var(--accent);
+            color: var(--primary-dark-blue);
+            font-weight: 600;
+            padding: 1rem 2rem;
+            border-radius: var(--border-radius);
+            text-decoration: none;
+            display: inline-block;
+            box-shadow: var(--shadow-md);
+            transition: var(--transition);
+        }
+        
+        .hero-btn:hover {
+            background: var(--accent-hover);
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-lg);
+        }
+        
+        .hero-image {
+            position: relative;
+            z-index: 2;
+        }
+        
+        .hero-image img {
+            width: 450px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-lg);
+            transition: var(--transition);
+        }
+        
+        .hero-image img:hover {
+            transform: translateY(-5px);
+        }
+        
+        .stats {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 3rem;
+            max-width: 80%;
+        }
+        
+        .stat-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--accent);
+        }
+        
+        .stat-label {
+            font-size: 1rem;
+            opacity: 0.8;
+        }
+        /* Reviews Section */
+        
+        .reviews {
+            background: var(--text-dark);
+            color: var(--text-white);
+            padding: 5rem 0;
+            text-align: center;
+        }
+        
+        .review-carousel {
+            display: flex;
+            transition: transform 0.6s ease;
+            width: 100%;
+        }
+        
+        .review-card {
+            min-width: 100%;
+            padding: 3rem 10%;
+            box-sizing: border-box;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: var(--border-radius);
+        }
+        
+        .quote-icon {
+            font-size: 2.5rem;
+            color: var(--accent);
+            margin-bottom: 1.5rem;
+        }
+        
+        .review-card .quote {
+            font-size: 1.5rem;
+            font-style: italic;
+            margin-bottom: 1.5rem;
+            line-height: 1.5;
+        }
+        
+        .review-card .name {
+            color: var(--accent);
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+        
+        .carousel-controls {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 2.5rem;
+            gap: 1rem;
+        }
+        
+        .carousel-controls button {
+            background: transparent;
+            color: var(--accent);
+            border: 2px solid var(--accent);
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .dots {
+            display: flex;
+            gap: 0.7rem;
+        }
+        
+        .dots .dot {
+            width: 12px;
+            height: 12px;
+            background: #777;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .dots .dot.active {
+            background: var(--accent);
+        }
+        /* Steps Section */
+        
+        .steps {
+            padding: 6rem 0;
+            background: var(--background-light);
+        }
+        
+        .steps .section-title {
+            text-align: center;
+            color: var(--text-dark);
+        }
+        
+        .step-row {
+            display: flex;
+            align-items: center;
+            gap: 4rem;
+            margin-bottom: 5rem;
+            background: var(--background-white);
+            padding: 2.5rem;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-sm);
+            transition: var(--transition);
+        }
+        
+        .step-row:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-md);
+        }
+        
+        .step-row.reverse {
+            flex-direction: row-reverse;
+        }
+        
+        .step-img img {
+            width: 350px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-md);
+            transition: var(--transition);
+        }
+        
+        .step-img img:hover {
+            transform: scale(1.03);
+        }
+        
+        .step-text {
+            max-width: 450px;
+        }
+        
+        .step-number {
+            display: inline-block;
+            background: var(--primary-blue);
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 50px;
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+        
+        .step-text h4 {
+            font-size: 1.7rem;
+            margin-bottom: 1rem;
+            color: var(--text-dark);
+        }
+        
+        .step-text p {
+            color: var(--text-light);
+            line-height: 1.6;
+        }
+        /* FAQ Section */
+        
+        .faq {
+            padding: 6rem 0;
+            background: var(--background-white);
+        }
+        
+        .faq .section-title {
+            text-align: center;
+            color: var(--text-dark);
+        }
+        
+        .faq-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .faq-item {
+            background: var(--background-white);
+            margin-bottom: 1rem;
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: var(--shadow-sm);
+            transition: var(--transition);
+        }
+        
+        .faq-item:hover {
+            box-shadow: var(--shadow-md);
+        }
+        
+        .faq-question {
+            background: var(--primary-blue);
+            color: var(--text-white);
+            width: 100%;
+            text-align: left;
+            padding: 1.3rem 1.5rem;
+            border: none;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: var(--transition);
+        }
+        
+        .faq-question:hover {
+            background: var(--primary-dark-blue);
+        }
+        
+        .faq-question i {
+            transition: var(--transition);
+        }
+        
+        .faq-question.active i {
+            transform: rotate(180deg);
+        }
+        
+        .faq-answer {
+            max-height: 0;
+            opacity: 0;
+            overflow: hidden;
+            padding: 0 1.5rem;
+            color: var(--text-light);
+            line-height: 1.6;
+            transition: max-height 0.4s ease, opacity 0.4s ease, padding 0.4s ease;
+        }
+        
+        .faq-answer.active {
+            max-height: 300px;
+            opacity: 1;
+            padding: 1.5rem;
+        }
+        /* App Download Section */
+        
+        .download {
+            background: linear-gradient(to right, var(--primary-blue), var(--primary-dark-blue));
+            padding: 5rem 0;
+            color: var(--text-white);
+            text-align: center;
+        }
+        
+        .download-content {
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        
+        .download h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .download p {
+            font-size: 1.2rem;
+            margin-bottom: 2.5rem;
+            opacity: 0.9;
+        }
+        
+        .app-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+        }
+        
+        .app-btn {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            color: white;
+            padding: 1rem 1.8rem;
+            border-radius: var(--border-radius);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+        
+        .app-btn:hover {
+            background: rgba(255, 255, 255, 0.25);
+            transform: translateY(-3px);
+        }
+        
+        .app-btn i {
+            font-size: 1.8rem;
+        }
+        
+        .app-btn-text {
+            display: flex;
+            flex-direction: column;
+            text-align: left;
+        }
+        
+        .app-btn-text span:first-child {
+            font-size: 0.8rem;
+        }
+        
+        .app-btn-text span:last-child {
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+        /* Footer */
+        
+        footer {
+            background: var(--text-dark);
+            color: var(--text-light);
+            padding: 4rem 0 2rem;
+        }
+        
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+        
+        .footer-column {
+            flex: 1;
+            min-width: 200px;
+        }
+        
+        .footer-column h3 {
+            color: var(--text-white);
+            margin-bottom: 1.5rem;
+            font-size: 1.2rem;
+        }
+        
+        .footer-links {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 0.8rem;
+        }
+        
+        .footer-links a {
+            color: var(--text-light);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+        
+        .footer-links a:hover {
+            color: var(--accent);
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+        
+        .social-links a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            color: var(--text-white);
+            transition: var(--transition);
+        }
+        
+        .social-links a:hover {
+            background: var(--accent);
+            color: var(--text-dark);
+            transform: translateY(-3px);
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        /* Responsive Styles */
+        
+        @media (max-width: 1024px) {
+            .hero-content {
+                max-width: 45%;
+            }
+            .hero-image img {
+                width: 380px;
+            }
+        }
+        
+        @media (max-width: 900px) {
+            .hero {
+                flex-direction: column;
+                text-align: center;
+                padding: 3rem 0;
+            }
+            .hero-content,
+            .hero-image {
+                max-width: 100%;
+            }
+            .hero-content {
+                margin-bottom: 3rem;
+            }
+            .hero p {
+                margin: 0 auto 2rem;
+            }
+            .stats {
+                max-width: 100%;
+                justify-content: space-around;
+            }
+            .step-row,
+            .step-row.reverse {
+                flex-direction: column;
+                text-align: center;
+            }
+            .step-img img {
+                width: 100%;
+                max-width: 400px;
+            }
+            .app-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+        
+        @media (max-width: 600px) {
+            .header-content {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            .nav-links {
+                gap: 1.5rem;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            .hero-image img {
+                width: 100%;
+                max-width: 320px;
+            }
+            .stats {
+                flex-direction: column;
+                gap: 1.5rem;
+            }
+            .footer-content {
+                flex-direction: column;
+            }
+            .review-card .quote {
+                font-size: 1.2rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container header-content">
+            <div class="logo">
+                <i class="fas fa-heart-pulse logo-icon"></i>
+                <span>FitPro</span>
+            </div>
+            <ul class="nav-links">
+                <li><a href="#">Home</a></li>
+                <li><a href="#">Features</a></li>
+                <li><a href="#">Pricing</a></li>
+                <li><a href="#">Community</a></li>
+                <li><a href="#">Blog</a></li>
+            </ul>
+
+        </div>
+    </header>
+
+    <!-- HERO SECTION -->
+    <section class="hero">
+        <div class="container" style="display: flex; align-items: center; justify-content: space-between;">
+            <div class="hero-content">
+                <h1>FitFusion <span>Let's check</span></h1>
+                <p>Make progress with the all-in-one food, exercise, and calorie tracker.</p>
+                <a href="track.html" class="hero-btn">START TODAY - IT'S FREE</a>
+
+                <div class="stats">
+                    <div class="stat-item">
+                        <div class="stat-number">5M+</div>
+                        <div class="stat-label">Active Users</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">97%</div>
+                        <div class="stat-label">Success Rate</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">4.9</div>
+                        <div class="stat-label">App Rating</div>
+                    </div>
+                </div>
+            </div>
+            <div class="hero-image">
+                <img src="main.jpg" alt="FitPro app dashboard showing nutrition tracking and workout statistics">
+            </div>
+        </div>
+    </section>
+
+    <!-- REVIEWS CAROUSEL -->
+    <section class="reviews">
+        <div class="container">
+            <h2 class="section-title">What Our Users Say</h2>
+
+            <div class="review-carousel">
+                <div class="review-card">
+                    <div class="quote-icon"><i class="fas fa-quote-left"></i></div>
+                    <p class="quote">“Can’t lose weight and stay on track without it. The macro tracking feature changed everything for me.”</p>
+                    <p class="subtitle">- Lost 15 lbs in 3 months</p>
+                    <p class="name">— Jennie S.</p>
+                </div>
+                <div class="review-card">
+                    <div class="quote-icon"><i class="fas fa-quote-left"></i></div>
+                    <p class="quote">“This app made me consistent for the first time in years. The reminders and progress charts keep me motivated.”</p>
+                    <p class="subtitle">- Consistent for 1 year</p>
+                    <p class="name">— Ryan M.</p>
+                </div>
+                <div class="review-card">
+                    <div class="quote-icon"><i class="fas fa-quote-left"></i></div>
+                    <p class="quote">“Simple, intuitive and incredibly motivating. I've tried them all and this is by far the best.”</p>
+                    <p class="subtitle">- Best app experience</p>
+                    <p class="name">— Alisha P.</p>
+                </div>
+            </div>
+
+            <div class="carousel-controls">
+                <button id="prevBtn"><i class="fas fa-chevron-left"></i></button>
+                <div class="dots"></div>
+                <button id="nextBtn"><i class="fas fa-chevron-right"></i></button>
+            </div>
+        </div>
+    </section>
+
+    <!-- STEPS SECTION -->
+    <section class="steps">
+        <div class="container">
+            <h2 class="section-title">Hit your health goals in 1-2-3</h2>
+
+            <div class="step-row">
+                <div class="step-img">
+                    <img src="image.png" alt="Person scanning food barcode with smartphone for nutrition information ">
+                </div>
+                <div class="step-text ">
+                    <span class="step-number ">1</span>
+                    <h4>Track calories, macros & more</h4>
+                    <p>Log even faster with tools like barcode scan & the NEW voice log. Our database has over 10 million foods to choose from.</p>
+                </div>
+            </div>
+
+            <div class="step-row reverse ">
+                <div class="step-img ">
+                    <img src="image2.png" alt="Smartphone screen showing fitness goal setting interface with progress charts ">
+                </div>
+                <div class="step-text ">
+                    <span class="step-number ">2</span>
+                    <h4>Set your goals and stay consistent</h4>
+                    <p>Personalize your calorie, water, and fitness goals and track daily progress with smart reminders and achievements.</p>
+                </div>
+            </div>
+
+            <div class="step-row ">
+                <div class="step-img ">
+                    <img src="image3.png" alt="Tablet displaying fitness progress charts and health statistics over time ">
+                </div>
+                <div class="step-text ">
+                    <span class="step-number ">3</span>
+                    <h4>See your progress over time</h4>
+                    <p>Stay motivated as you watch your health stats improve every week with detailed analytics and personalized insights.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ SECTION -->
+    <section class="faq">
+        <div class="container">
+            <h2 class="section-title">Frequently Asked Questions</h2>
+
+            <div class="faq-container">
+                <div class="faq-item">
+                    <button class="faq-question">Is FitPro a free calorie tracker app?<i class="fas fa-chevron-down"></i></button>
+                    <div class="faq-answer">
+                        <p>Yes, FitPro offers a free version that allows users to log meals, exercise, and track their progress. There is also a premium version that unlocks advanced insights, custom goals, and detailed nutrient tracking.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <button class="faq-question">How to track calories with a calorie counter app like FitPro?<i class="fas fa-chevron-down"></i></button>
+                    <div class="faq-answer">
+                        <p>Simply search for the food item or scan its barcode using the app. You can also add custom meals and recipes. The app will automatically calculate the calories and nutrients for you based on portion size.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <button class="faq-question">What nutrition data can I track besides calories?<i class="fas fa-chevron-down"></i></button>
+                    <div class="faq-answer">
+                        <p>You can track macronutrients (carbs, fats, protein), micronutrients (vitamins and minerals), fiber, sugar, water intake, and more. Premium users get access to detailed breakdowns of over 20 nutrients.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <button class="faq-question">Does FitPro use a BMI calculator or BMR calculator to set goals?<i class="fas fa-chevron-down"></i></button>
+                    <div class="faq-answer">
+                        <p>Yes. Based on your height, weight, age, gender, and activity level, it calculates your BMR (Basal Metabolic Rate) and uses it along with your BMI (Body Mass Index) to suggest personalized daily calorie goals.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- APP DOWNLOAD SECTION -->
+    <section class="download ">
+        <div class="container ">
+            <div class="download-content ">
+                <h2>Get Started Today</h2>
+                <p>Download the FitPro app and start your journey to a healthier lifestyle</p>
+                <div class="app-buttons ">
+                    <a href="# " class="app-btn ">
+                        <i class="fab fa-apple "></i>
+                        <div class="app-btn-text ">
+                            <span>Download on the</span>
+                            <span>App Store</span>
+                        </div>
+                    </a>
+                    <a href="# " class="app-btn ">
+                        <i class="fab fa-google-play "></i>
+                        <div class="app-btn-text ">
+                            <span>GET IT ON</span>
+                            <span>Google Play</span>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="container ">
+            <div class="footer-content ">
+                <div class="footer-column ">
+                    <h3>FitPro</h3>
+                    <p>The all-in-one fitness and nutrition tracker to help you achieve your health goals.</p>
+                    <div class="social-links ">
+                        <a href="# "><i class="fab fa-facebook-f "></i></a>
+                        <a href="# "><i class="fab fa-twitter "></i></a>
+                        <a href="# "><i class="fab fa-instagram "></i></a>
+                        <a href="# "><i class="fab fa-youtube "></i></a>
+                    </div>
+                </div>
+                <div class="footer-column ">
+                    <h3>Product</h3>
+                    <ul class="footer-links ">
+                        <li><a href="# ">Features</a></li>
+                        <li><a href="# ">Pricing</a></li>
+                        <li><a href="# ">Case Studies</a></li>
+                        <li><a href="# ">Reviews</a></li>
+                        <li><a href="# ">Updates</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column ">
+                    <h3>Company</h3>
+                    <ul class="footer-links ">
+                        <li><a href="# ">About</a></li>
+                        <li><a href="# ">Careers</a></li>
+                        <li><a href="# ">Contact</a></li>
+                        <li><a href="# ">Blog</a></li>
+                        <li><a href="# ">Press</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column ">
+                    <h3>Support</h3>
+                    <ul class="footer-links ">
+                        <li><a href="# ">Help Center</a></li>
+                        <li><a href="# ">Status</a></li>
+                        <li><a href="# ">Report a Bug</a></li>
+                        <li><a href="# ">Chat Support</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom ">
+                <p>© 2025 FitPro Tracker. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // FAQ accordion
+        // FAQ accordion functionality
+        const questions = document.querySelectorAll(".faq-question");
+
+        questions.forEach(question => {
+            question.addEventListener("click", () => {
+                const answer = question.nextElementSibling;
+
+                // Toggle active class on clicked question
+                question.classList.toggle("active");
+
+                // Toggle active class on corresponding answer
+                answer.classList.toggle("active");
+
+                // Close all other answers and remove active class from their questions
+                questions.forEach(otherQuestion => {
+                    if (otherQuestion !== question) {
+                        otherQuestion.classList.remove("active");
+                        otherQuestion.nextElementSibling.classList.remove("active");
+                    }
+                });
+            });
+        });
+
+
+        // Reviews carousel with dots
+        const carousel = document.querySelector(".review-carousel");
+        const cards = document.querySelectorAll(".review-card");
+        const prevBtn = document.getElementById("prevBtn");
+        const nextBtn = document.getElementById("nextBtn");
+        const dotsContainer = document.querySelector(".dots");
+
+        let index = 0;
+
+        // Create dots
+        cards.forEach((_, i) => {
+            const dot = document.createElement("div");
+            dot.classList.add("dot");
+            if (i === 0) dot.classList.add("active");
+            dot.addEventListener("click", () => {
+                index = i;
+                updateCarousel();
+                resetAutoPlay();
+            });
+            dotsContainer.appendChild(dot);
+        });
+
+        const dots = document.querySelectorAll(".dot");
+
+        function updateCarousel() {
+            carousel.style.transform = `translateX(-${index * 100}%)`;
+            dots.forEach((dot, i) => {
+                dot.classList.toggle("active", i === index);
+            });
+        }
+
+        nextBtn.addEventListener("click", () => {
+            index = (index + 1) % cards.length;
+            updateCarousel();
+            resetAutoPlay();
+        });
+
+        prevBtn.addEventListener("click", () => {
+            index = (index - 1 + cards.length) % cards.length;
+            updateCarousel();
+            resetAutoPlay();
+        });
+
+        let autoPlayInterval = setInterval(() => {
+            index = (index + 1) % cards.length;
+            updateCarousel();
+        }, 5000);
+
+        function resetAutoPlay() {
+            clearInterval(autoPlayInterval);
+            autoPlayInterval = setInterval(() => {
+                index = (index + 1) % cards.length;
+                updateCarousel();
+            }, 5000);
+        }
+    </script>
+</body>
+
+</html>

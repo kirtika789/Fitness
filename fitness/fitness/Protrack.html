@@ -1,0 +1,715 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Track your fitness progress with NutriFit Pro - Monitor weight, measurements, workouts, and goals to stay motivated.">
+    <meta name="keywords" content="progress tracking, fitness goals, workout log, nutri fit, supplements">
+    <title>NutriFit Pro - Progress Tracking</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="icon" href="https://via.placeholder.com/32?text=NF" type="image/x-icon">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: #f8f9fa;
+            color: #333;
+            line-height: 1.6;
+        }
+        /* Header */
+        
+        header {
+            background: linear-gradient(135deg, #0077cc 0%, #005fa3 100%);
+            color: white;
+            padding: 1rem 0;
+            box-shadow: 0 2px 10px rgba(0, 119, 204, 0.2);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .header-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+        }
+        
+        .logo {
+            font-size: 28px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo i {
+            margin-right: 10px;
+            color: #ffd700;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+        
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        nav a:hover {
+            color: #ffd700;
+        }
+        
+        .user-profile {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: #ffd700;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #0077cc;
+            font-weight: bold;
+        }
+        /* Hero Section */
+        
+        .hero {
+            background: linear-gradient(rgba(0, 119, 204, 0.8), rgba(0, 119, 204, 0.8)), url('https://images.unsplash.com/photo-1519710164239-da123dc03ef4?auto=format&fit=crop&w=1920&q=80');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            text-align: center;
+            padding: 80px 20px;
+        }
+        
+        .hero h1 {
+            font-size: 42px;
+            margin-bottom: 1rem;
+            font-weight: 300;
+        }
+        
+        .hero p {
+            font-size: 18px;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        /* Stats Overview */
+        
+        .stats-section {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+        
+        .section-title {
+            text-align: center;
+            font-size: 28px;
+            margin-bottom: 30px;
+            color: #333;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+        
+        .stat-card {
+            background: white;
+            padding: 20px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s;
+        }
+        
+        .stat-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .stat-icon {
+            font-size: 36px;
+            color: #0077cc;
+            margin-bottom: 10px;
+        }
+        
+        .stat-value {
+            font-size: 32px;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 5px;
+        }
+        
+        .stat-label {
+            color: #666;
+            font-size: 14px;
+        }
+        /* Progress Bars */
+        
+        .progress-section {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+        
+        .progress-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        
+        .progress-card {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .progress-card h3 {
+            margin-bottom: 20px;
+            color: #333;
+            font-size: 20px;
+        }
+        
+        .progress-bar {
+            width: 100%;
+            height: 20px;
+            background: #e9ecef;
+            border-radius: 10px;
+            overflow: hidden;
+            margin-bottom: 10px;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #0077cc, #005fa3);
+            transition: width 0.5s ease;
+            border-radius: 10px;
+        }
+        
+        .progress-text {
+            font-size: 14px;
+            color: #666;
+            text-align: right;
+        }
+        /* Log Form */
+        
+        .log-section {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+        
+        .log-form-container {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .log-form-container h3 {
+            margin-bottom: 20px;
+            color: #333;
+            font-size: 22px;
+        }
+        
+        .log-form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .form-group {
+            margin-bottom: 15px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 500;
+            color: #555;
+            font-size: 14px;
+        }
+        
+        .form-group input {
+            width: 100%;
+            padding: 8px 12px;
+            border: 2px solid #ddd;
+            border-radius: 6px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+        
+        .form-group input:focus {
+            border-color: #0077cc;
+            outline: none;
+        }
+        
+        .add-log-btn {
+            background: linear-gradient(135deg, #0077cc, #005fa3);
+            color: white;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .add-log-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 119, 204, 0.3);
+        }
+        /* Progress Log Table */
+        
+        .log-table-container {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            margin-top: 30px;
+        }
+        
+        .log-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        
+        .log-table th,
+        .log-table td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        .log-table th {
+            background: #f8f9fa;
+            font-weight: 600;
+            color: #333;
+        }
+        
+        .log-table tr:hover {
+            background: #f8f9fa;
+        }
+        
+        .date {
+            font-size: 14px;
+            color: #666;
+        }
+        
+        .no-logs {
+            text-align: center;
+            padding: 40px;
+            color: #666;
+            font-style: italic;
+        }
+        /* Goals Section */
+        
+        .goals-section {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+        
+        .goals-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+        
+        .goal-card {
+            background: white;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        
+        .goal-card.completed {
+            border-left: 5px solid #28a745;
+        }
+        
+        .goal-card.pending {
+            border-left: 5px solid #ffc107;
+        }
+        
+        .goal-title {
+            font-size: 18px;
+            margin-bottom: 10px;
+            color: #333;
+        }
+        
+        .goal-progress {
+            margin-bottom: 10px;
+        }
+        /* Footer */
+        
+        footer {
+            background: #222;
+            color: white;
+            padding: 40px 20px 20px;
+            margin-top: 60px;
+        }
+        
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-bottom: 20px;
+        }
+        
+        .footer-section h3 {
+            margin-bottom: 15px;
+            color: #ffd700;
+        }
+        
+        .footer-section p,
+        .footer-section ul {
+            color: #ccc;
+            line-height: 1.8;
+        }
+        
+        .footer-section ul {
+            list-style: none;
+        }
+        
+        .footer-section ul li a {
+            color: #ccc;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-section ul li a:hover {
+            color: #ffd700;
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 10px;
+        }
+        
+        .social-links a {
+            color: #ccc;
+            font-size: 20px;
+            transition: color 0.3s;
+        }
+        
+        .social-links a:hover {
+            color: #ffd700;
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid #444;
+            color: #999;
+            font-size: 14px;
+        }
+        /* Responsive */
+        
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 32px;
+            }
+            .header-container {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            nav ul {
+                gap: 1rem;
+            }
+            .stats-grid,
+            .progress-grid,
+            .goals-grid {
+                grid-template-columns: 1fr;
+            }
+            .log-form-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <i class="fas fa-dumbbell"></i> NutriFit Pro
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="products.html">Products</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                    <li><a href="login.html">Logout</a></li>
+                </ul>
+            </nav>
+            <div class="user-profile">
+                <span>Welcome, John!</span>
+                <div class="user-avatar">JD</div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <h1>Your Progress Journey</h1>
+        <p>Track your fitness milestones, monitor changes, and celebrate achievements. Stay consistent and see real results with NutriFit Pro.</p>
+    </section>
+
+    <!-- Stats Overview -->
+    <section class="stats-section">
+        <h2 class="section-title">Current Stats</h2>
+        <div class="stats-grid">
+            <div class="stat-card">
+                <i class="fas fa-weight-hanging stat-icon"></i>
+                <div class="stat-value">75kg</div>
+                <div class="stat-label">Current Weight</div>
+            </div>
+            <div class="stat-card">
+                <i class="fas fa-ruler-horizontal stat-icon"></i>
+                <div class="stat-value">175cm</div>
+                <div class="stat-label">Height</div>
+            </div>
+            <div class="stat-card">
+                <i class="fas fa-percentage stat-icon"></i>
+                <div class="stat-value">22%</div>
+                <div class="stat-label">Body Fat</div>
+            </div>
+            <div class="stat-card">
+                <i class="fas fa-dumbbell stat-icon"></i>
+                <div class="stat-value">15%</div>
+                <div class="stat-label">Muscle Gain</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Progress Bars -->
+    <section class="progress-section">
+        <h2 class="section-title">Progress Towards Goals</h2>
+        <div class="progress-grid">
+            <div class="progress-card">
+                <h3>Weight Loss Goal (Target: 70kg)</h3>
+                <div class="progress-bar">
+                    <div class="progress-fill" style="width: 60%;"></div>
+                </div>
+                <div class="progress-text">60% Complete (5kg lost)</div>
+            </div>
+            <div class="progress-card">
+                <h3>Workout Consistency</h3>
+                <div class="progress-bar">
+                    <div class="progress-fill" style="width: 85%;"></div>
+                </div>
+                <div class="progress-text">85% Complete (17/20 sessions)</div>
+            </div>
+            <div class="progress-card">
+                <h3>Nutrition Adherence</h3>
+                <div class="progress-bar">
+                    <div class="progress-fill" style="width: 75%;"></div>
+                </div>
+                <div class="progress-text">75% Complete (Macro goals met)</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Log New Progress -->
+    <section class="log-section">
+        <div class="log-form-container">
+            <h3>Log New Progress</h3>
+            <form id="progressForm">
+                <div class="log-form-grid">
+                    <div class="form-group">
+                        <label for="date">Date</label>
+                        <input type="date" id="date" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="weight">Weight (kg)</label>
+                        <input type="number" id="weight" step="0.1" placeholder="e.g., 75.5">
+                    </div>
+                    <div class="form-group">
+                        <label for="bodyFat">Body Fat (%)</label>
+                        <input type="number" id="bodyFat" step="0.1" placeholder="e.g., 22.0">
+                    </div>
+                    <div class="form-group">
+                        <label for="workouts">Workouts Today</label>
+                        <input type="number" id="workouts" placeholder="e.g., 1">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="notes">Notes</label>
+                    <input type="text" id="notes" placeholder="How did you feel? Any achievements?">
+                </div>
+                <button type="submit" class="add-log-btn">Add Entry</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Progress Log Table -->
+    <section class="log-section">
+        <div class="log-table-container">
+            <h3>Recent Progress Logs</h3>
+            <table class="log-table" id="progressTable">
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Weight (kg)</th>
+                        <th>Body Fat (%)</th>
+                        <th>Workouts</th>
+                        <th>Notes</th>
+                    </tr>
+                </thead>
+                <tbody id="logBody">
+                    <!-- Sample data - will be populated by JS -->
+                    <tr>
+                        <td class="date">2023-10-15</td>
+                        <td>76.2</td>
+                        <td>23.1</td>
+                        <td>1</td>
+                        <td>Great chest day! Felt strong.</td>
+                    </tr>
+                    <tr>
+                        <td class="date">2023-10-14</td>
+                        <td>76.5</td>
+                        <td>23.2</td>
+                        <td>0</td>
+                        <td>Rest day - focused on recovery.</td>
+                    </tr>
+                </tbody>
+            </table>
+            <div id="noLogs" class="no-logs" style="display: none;">No progress logs yet. Start by adding your first entry!</div>
+        </div>
+    </section>
+
+    <!-- Goals Section -->
+    <!-- Goals Section -->
+    <section class="goals-section">
+        <h2 class="section-title">Your Fitness Goals</h2>
+        <div class="goals-grid" id="goalsGrid">
+            <div class="goal-card completed">
+                <div class="goal-title">Lose 5kg</div>
+                <div class="goal-progress">
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 100%;"></div>
+                    </div>
+                    <div class="progress-text">Achieved</div>
+                </div>
+            </div>
+            <div class="goal-card pending">
+                <div class="goal-title">Workout 20 Sessions</div>
+                <div class="goal-progress">
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 85%;"></div>
+                    </div>
+                    <div class="progress-text">17/20 Sessions</div>
+                </div>
+            </div>
+            <div class="goal-card pending">
+                <div class="goal-title">Body Fat 20%</div>
+                <div class="goal-progress">
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 80%;"></div>
+                    </div>
+                    <div class="progress-text">Current 22%</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-container">
+            <div class="footer-section">
+                <h3>NutriFit Pro</h3>
+                <p>Your personalized fitness companion. Track progress, stay motivated, and reach your goals.</p>
+            </div>
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="products.html">Products</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                    <li><a href="login.html">Login</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Follow Us</h3>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            &copy; 2025 NutriFit Pro. All rights reserved.
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script>
+        const progressForm = document.getElementById('progressForm');
+        const logBody = document.getElementById('logBody');
+        const noLogs = document.getElementById('noLogs');
+
+        progressForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            const date = document.getElementById('date').value;
+            const weight = document.getElementById('weight').value || '-';
+            const bodyFat = document.getElementById('bodyFat').value || '-';
+            const workouts = document.getElementById('workouts').value || '-';
+            const notes = document.getElementById('notes').value || '-';
+
+            if (!date) {
+                alert('Please select a date.');
+                return;
+            }
+
+            // Hide "no logs" message
+            noLogs.style.display = 'none';
+
+            // Create new row
+            const newRow = document.createElement('tr');
+            newRow.innerHTML = `
+                <td class="date">${date}</td>
+                <td>${weight}</td>
+                <td>${bodyFat}</td>
+                <td>${workouts}</td>
+                <td>${notes}</td>
+            `;
+
+            // Append row to table
+            logBody.prepend(newRow);
+
+            // Reset form
+            progressForm.reset();
+        });
+    </script>
+</body>
+
+</html>

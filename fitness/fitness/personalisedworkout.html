@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Personalized Workout Plan</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet" />
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background: #16a085;
+            color: #fff;
+            margin: 0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 40px 20px;
+        }
+        
+        h1 {
+            margin-bottom: 10px;
+            font-weight: 700;
+            font-size: 2.5rem;
+            text-align: center;
+            text-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
+        }
+        
+        p.subtitle {
+            margin-bottom: 40px;
+            font-size: 1.2rem;
+            text-align: center;
+            max-width: 600px;
+            text-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
+        }
+        
+        form {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 30px 25px;
+            border-radius: 20px;
+            max-width: 500px;
+            width: 100%;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 700;
+            font-size: 1rem;
+        }
+        
+        input[type="number"],
+        select {
+            width: 100%;
+            padding: 10px 15px;
+            border-radius: 30px;
+            border: none;
+            font-size: 1rem;
+            margin-bottom: 25px;
+            outline: none;
+            transition: box-shadow 0.3s ease;
+        }
+        
+        input[type="number"]:focus,
+        select:focus {
+            box-shadow: 0 0 10px #fff;
+        }
+        
+        button {
+            background: #fff;
+            color: #16a085;
+            border: none;
+            padding: 14px 30px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            border-radius: 30px;
+            cursor: pointer;
+            width: 100%;
+            transition: background 0.3s ease, color 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            user-select: none;
+        }
+        
+        button:hover {
+            background: #13876f;
+            color: #fff;
+        }
+        
+        .workout-plan {
+            margin-top: 40px;
+            max-width: 600px;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 20px;
+            padding: 30px 25px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+            color: #fff;
+        }
+        
+        .workout-plan h2 {
+            margin-bottom: 20px;
+            font-size: 2rem;
+            text-align: center;
+            text-shadow: 0 2px 6px rgba(0, 0, 0, 0.5);
+        }
+        
+        .workout-plan ul {
+            list-style: none;
+            padding-left: 0;
+        }
+        
+        .workout-plan li {
+            background: rgba(255, 255, 255, 0.2);
+            margin-bottom: 12px;
+            padding: 12px 20px;
+            border-radius: 15px;
+            font-size: 1.1rem;
+            box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
+        }
+        
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 2rem;
+            }
+            .workout-plan h2 {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Personalized Workout Plan</h1>
+    <p class="subtitle">Fill in your details below to get a workout plan tailored just for you!</p>
+
+    <form id="workoutForm" aria-label="Personalized workout plan form">
+        <label for="age">Age</label>
+        <input type="number" id="age" name="age" min="10" max="100" required aria-required="true" aria-describedby="ageHelp" />
+        <small id="ageHelp" style="color:#ddd; font-size:0.85rem;">Enter your age (10-100)</small>
+
+        <label for="gender">Gender</label>
+        <select id="gender" name="gender" required aria-required="true">
+      <option value="" disabled selected>Select your gender</option>
+      <option value="male">Male</option>
+      <option value="female">Female</option>
+      <option value="other">Other / Prefer not to say</option>
+    </select>
+
+        <label for="fitnessLevel">Fitness Level</label>
+        <select id="fitnessLevel" name="fitnessLevel" required aria-required="true">
+      <option value="" disabled selected>Select your fitness level</option>
+      <option value="beginner">Beginner</option>
+      <option value="intermediate">Intermediate</option>
+      <option value="advanced">Advanced</option>
+    </select>
+
+        <label for="goal">Fitness Goal</label>
+        <select id="goal" name="goal" required aria-required="true">
+      <option value="" disabled selected>Select your goal</option>
+      <option value="lose_weight">Lose Weight</option>
+      <option value="build_muscle">Build Muscle</option>
+      <option value="increase_endurance">Increase Endurance</option>
+      <option value="general_fitness">General Fitness</option>
+    </select>
+
+        <button type="submit" aria-label="Generate personalized workout plan">Get My Workout Plan</button>
+    </form>
+
+    <section id="workoutPlan" class="workout-plan" aria-live="polite" aria-atomic="true" hidden>
+        <h2>Your Personalized Workout Plan</h2>
+        <ul id="planList"></ul>
+    </section>
+
+    <script>
+        const form = document.getElementById('workoutForm');
+        const workoutPlanSection = document.getElementById('workoutPlan');
+        const planList = document.getElementById('planList');
+
+        // Sample workout plans based on goal and fitness level
+        const workoutData = {
+            lose_weight: {
+                beginner: [
+                    "30 minutes brisk walking or light jogging",
+                    "Bodyweight squats - 3 sets of 12 reps",
+                    "Knee push-ups - 3 sets of 10 reps",
+                    "Plank - 3 sets of 20 seconds",
+                    "Jumping jacks - 3 sets of 30 seconds"
+                ],
+                intermediate: [
+                    "40 minutes interval running (1 min sprint, 2 min walk)",
+                    "Dumbbell lunges - 4 sets of 12 reps",
+                    "Standard push-ups - 4 sets of 15 reps",
+                    "Plank - 4 sets of 40 seconds",
+                    "Burpees - 3 sets of 15 reps"
+                ],
+                advanced: [
+                    "50 minutes HIIT session",
+                    "Barbell squats - 5 sets of 8 reps",
+                    "Weighted push-ups - 5 sets of 20 reps",
+                    "Plank with leg lifts - 5 sets of 1 minute",
+                    "Mountain climbers - 4 sets of 40 seconds"
+                ]
+            },
+            build_muscle: {
+                beginner: [
+                    "Bodyweight squats - 3 sets of 12 reps",
+                    "Knee push-ups - 3 sets of 10 reps",
+                    "Dumbbell rows - 3 sets of 12 reps",
+                    "Glute bridges - 3 sets of 15 reps",
+                    "Plank - 3 sets of 20 seconds"
+                ],
+                intermediate: [
+                    "Barbell squats - 4 sets of 10 reps",
+                    "Standard push-ups - 4 sets of 15 reps",
+                    "Dumbbell bench press - 4 sets of 12 reps",
+                    "Deadlifts - 4 sets of 8 reps",
+                    "Plank - 4 sets of 45 seconds"
+                ],
+                advanced: [
+                    "Barbell squats - 5 sets of 8 reps",
+                    "Weighted push-ups - 5 sets of 20 reps",
+                    "Barbell bench press - 5 sets of 8 reps",
+                    "Deadlifts - 5 sets of 6 reps",
+                    "Hanging leg raises - 4 sets of 15 reps"
+                ]
+            },
+            increase_endurance: {
+                beginner: [
+                    "20 minutes steady cycling or jogging",
+                    "Jumping jacks - 3 sets of 30 seconds",
+                    "Bodyweight lunges - 3 sets of 12 reps",
+                    "Plank - 3 sets of 20 seconds",
+                    "Step-ups - 3 sets of 15 reps"
+                ],
+                intermediate: [
+                    "30 minutes running or cycling intervals",
+                    "Burpees - 4 sets of 15 reps",
+                    "Jump squats - 4 sets of 12 reps",
+                    "Mountain climbers - 4 sets of 30 seconds",
+                    "Plank - 4 sets of 1 minute"
+                ],
+                advanced: [
+                    "45 minutes HIIT cardio session",
+                    "Box jumps - 5 sets of 15 reps",
+                    "Sprint intervals - 10 x 30 seconds sprints",
+                    "Mountain climbers - 5 sets of 45 seconds",
+                    "Plank with arm/leg lifts - 5 sets of 1 minute"
+                ]
+            },
+            general_fitness: {
+                beginner: [
+                    "20 minutes brisk walking",
+                    "Bodyweight squats - 3 sets of 12 reps",
+                    "Knee push-ups - 3 sets of 10 reps",
+                    "Glute bridges - 3 sets of 15 reps",
+                    "Plank - 3 sets of 20 seconds"
+                ],
+                intermediate: [
+                    "30 minutes jogging or cycling",
+                    "Standard push-ups - 4 sets of 15 reps",
+                    "Dumbbell rows - 4 sets of 12 reps",
+                    "Lunges - 4 sets of 12 reps",
+                    "Plank - 4 sets of 45 seconds"
+                ],
+                advanced: [
+                    "40 minutes mixed cardio and strength circuit",
+                    "Barbell squats - 5 sets of 8 reps",
+                    "Weighted push-ups - 5 sets of 20 reps",
+                    "Deadlifts - 5 sets of 6 reps",
+                    "Plank with leg lifts - 5 sets of 1 minute"
+                ]
+            }
+        };
+
+        form.addEventListener('submit', e => {
+            e.preventDefault();
+
+            // Get form values
+            const age = parseInt(form.age.value, 10);
+            const gender = form.gender.value;
+            const fitnessLevel = form.fitnessLevel.value;
+            const goal = form.goal.value;
+
+            // Basic validation (age already constrained by input)
+            if (age < 10 || age > 100) {
+                alert('Please enter a valid age between 10 and 100.');
+                return;
+            }
+
+            // Generate workout plan based on goal and fitness level
+            const plan = workoutData[goal][fitnessLevel];
+
+            // Clear previous plan
+            planList.innerHTML = '';
+
+            // Add a personalized greeting
+            const greeting = document.createElement('p');
+            greeting.style.fontWeight = '700';
+            greeting.style.fontSize = '1.1rem';
+            greeting.style.marginBottom = '20px';
+            greeting.textContent = `Hi${gender === 'male' ? ' Sir' : gender === 'female' ? ' Ma\'am' : ''}, here is your workout plan:`;
+            workoutPlanSection.insertBefore(greeting, planList);
+
+            // Populate the plan list
+            plan.forEach(item => {
+                const li = document.createElement('li');
+                li.textContent = item;
+                planList.appendChild(li);
+            });
+
+            // Show the workout plan section
+            workoutPlanSection.hidden = false;
+
+            // Scroll to workout plan
+            workoutPlanSection.scrollIntoView({
+                behavior: 'smooth'
+            });
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NutriTrack - Meal Tracking</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+         :root {
+            --primary: #3b82f6;
+            --primary-dark: #2563eb;
+            --secondary: #10b981;
+            --accent: #f59e0b;
+            --danger: #ef4444;
+            --light: #f8fafc;
+            --dark: #1e293b;
+            --gray: #64748b;
+            --border: #e2e8f0;
+        }
+        
+        body {
+            background-color: #f1f5f9;
+            color: var(--dark);
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        header {
+            background-color: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+        
+        nav a {
+            text-decoration: none;
+            color: var(--dark);
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        nav a:hover,
+        nav a.active {
+            color: var(--primary);
+        }
+        
+        .main-content {
+            display: grid;
+            grid-template-columns: 1fr 350px;
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+        
+        .card {
+            background-color: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            animation: fadeIn 0.4s ease-in-out;
+        }
+        
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .card-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--dark);
+        }
+        
+        .meal-form {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+        
+        .form-group {
+            margin-bottom: 1rem;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            font-size: 1rem;
+        }
+        
+        .btn {
+            padding: 0.6rem 1.2rem;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .btn-primary {
+            background-color: var(--primary);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background-color: var(--primary-dark);
+        }
+        
+        .btn-danger {
+            background-color: var(--danger);
+            color: white;
+        }
+        
+        .btn-danger:hover {
+            background-color: #dc2626;
+        }
+        
+        .btn-edit {
+            background-color: var(--accent);
+            color: white;
+            margin-right: 0.5rem;
+        }
+        
+        .btn-edit:hover {
+            background-color: #d97706;
+        }
+        
+        .meal-list {
+            list-style: none;
+        }
+        
+        .meal-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem;
+            border-bottom: 1px solid var(--border);
+            transition: background 0.2s;
+        }
+        
+        .meal-item:hover {
+            background: #f9fafb;
+        }
+        
+        .meal-info {
+            flex: 1;
+        }
+        
+        .meal-name {
+            font-weight: 600;
+        }
+        
+        .meal-details {
+            font-size: 0.9rem;
+            color: var(--gray);
+        }
+        
+        .meal-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+        
+        .meal-calories {
+            font-weight: 600;
+            color: var(--accent);
+            margin-left: 1rem;
+        }
+        
+        .summary-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.75rem;
+        }
+        
+        .progress-bar {
+            height: 12px;
+            background-color: var(--border);
+            border-radius: 5px;
+            margin-top: 0.5rem;
+            overflow: hidden;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            border-radius: 5px;
+            background: linear-gradient(90deg, var(--secondary), var(--primary));
+            width: 0%;
+            transition: width 0.6s ease;
+        }
+        
+        .chart-container {
+            height: 220px;
+            display: flex;
+            align-items: flex-end;
+            gap: 1rem;
+            margin-top: 1.5rem;
+            padding-bottom: 1rem;
+        }
+        
+        .chart-bar {
+            flex: 1;
+            background-color: var(--primary);
+            border-radius: 5px 5px 0 0;
+            position: relative;
+            transition: height 0.5s ease;
+        }
+        
+        .chart-label {
+            position: absolute;
+            bottom: -22px;
+            left: 0;
+            right: 0;
+            text-align: center;
+            font-size: 0.8rem;
+            color: var(--gray);
+        }
+        
+        .empty-state {
+            text-align: center;
+            padding: 2rem;
+            color: var(--gray);
+        }
+        
+        .empty-state img {
+            max-width: 200px;
+            margin-bottom: 1rem;
+            opacity: 0.7;
+        }
+        
+        @media (max-width: 768px) {
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+            .meal-form {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">NutriTrack</div>
+                <nav>
+                    <ul>
+                        <li><a href="#">Dashboard</a></li>
+                        <li><a href="#" class="active">Meals</a></li>
+                        <li><a href="#">Progress</a></li>
+                        <li><a href="#">Settings</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="main-content">
+            <!-- Left column -->
+            <div class="left-column">
+                <div class="card">
+                    <h2 class="card-title">Add New Meal</h2>
+                    <form id="mealForm" class="meal-form">
+                        <div class="form-group">
+                            <label for="mealName">Meal Name</label>
+                            <input type="text" id="mealName" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="mealCategory">Category</label>
+                            <select id="mealCategory" class="form-control" required>
+                <option value="">Select Category</option>
+                <option value="Breakfast">Breakfast</option>
+                <option value="Lunch">Lunch</option>
+                <option value="Dinner">Dinner</option>
+                <option value="Snack">Snack</option>
+              </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="calories">Calories</label>
+                            <input type="number" id="calories" class="form-control" min="0" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="protein">Protein (g)</label>
+                            <input type="number" id="protein" class="form-control" min="0" step="0.1">
+                        </div>
+                        <div class="form-group">
+                            <label for="carbs">Carbs (g)</label>
+                            <input type="number" id="carbs" class="form-control" min="0" step="0.1">
+                        </div>
+                        <div class="form-group">
+                            <label for="fat">Fat (g)</label>
+                            <input type="number" id="fat" class="form-control" min="0" step="0.1">
+                        </div>
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-primary">Add Meal</button>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="card">
+                    <h2 class="card-title">Today's Meals</h2>
+                    <ul id="mealList" class="meal-list">
+                        <li class="empty-state">
+                            <img src="https://img.icons8.com/ios/452/no-food.png" alt="Empty plate">
+                            <p>No meals logged today. Add your first meal!</p>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Right column -->
+            <div class="right-column">
+                <div class="card">
+                    <h2 class="card-title">Daily Summary</h2>
+                    <div class="summary-item"><span>Total Calories:</span><span id="totalCalories">0</span></div>
+                    <div class="summary-item"><span>Protein:</span><span id="totalProtein">0g</span></div>
+                    <div class="summary-item"><span>Carbs:</span><span id="totalCarbs">0g</span></div>
+                    <div class="summary-item"><span>Fat:</span><span id="totalFat">0g</span></div>
+                    <div class="summary-item"><span>Goal Progress:</span><span id="calorieProgress">0/2000</span></div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="calorieProgressBar"></div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h2 class="card-title">Meal Distribution</h2>
+                    <div class="chart-container" id="mealChart">
+                        <div class="chart-bar" data-category="Breakfast" style="height:0%">
+                            <div class="chart-label">Breakfast</div>
+                        </div>
+                        <div class="chart-bar" data-category="Lunch" style="height:0%">
+                            <div class="chart-label">Lunch</div>
+                        </div>
+                        <div class="chart-bar" data-category="Dinner" style="height:0%">
+                            <div class="chart-label">Dinner</div>
+                        </div>
+                        <div class="chart-bar" data-category="Snack" style="height:0%">
+                            <div class="chart-label">Snack</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            let meals = JSON.parse(localStorage.getItem("meals")) || [];
+
+            const mealForm = document.getElementById("mealForm");
+            const mealList = document.getElementById("mealList");
+            const totalCalories = document.getElementById("totalCalories");
+            const totalProtein = document.getElementById("totalProtein");
+            const totalCarbs = document.getElementById("totalCarbs");
+            const totalFat = document.getElementById("totalFat");
+            const calorieProgress = document.getElementById("calorieProgress");
+            const calorieProgressBar = document.getElementById("calorieProgressBar");
+            const mealChart = document.getElementById("mealChart");
+
+            const GOAL = 2000;
+
+            mealForm.addEventListener("submit", function(e) {
+                e.preventDefault();
+                const meal = {
+                    id: Date.now(),
+                    name: document.getElementById("mealName").value,
+                    category: document.getElementById("mealCategory").value,
+                    calories: parseInt(document.getElementById("calories").value),
+                    protein: parseFloat(document.getElementById("protein").value) || 0,
+                    carbs: parseFloat(document.getElementById("carbs").value) || 0,
+                    fat: parseFloat(document.getElementById("fat").value) || 0,
+                    timestamp: new Date().toDateString(),
+                };
+                meals.push(meal);
+                localStorage.setItem("meals", JSON.stringify(meals));
+                renderMeals();
+                updateSummary();
+                mealForm.reset();
+            });
+
+            function renderMeals() {
+                const today = new Date().toDateString();
+                const todayMeals = meals.filter(m => m.timestamp === today);
+
+                if (todayMeals.length === 0) {
+                    mealList.innerHTML = `
+            <li class="empty-state">
+              <img src="https://img.icons8.com/ios/452/no-food.png" alt="Empty plate">
+              <p>No meals logged today. Add your first meal!</p>
+            </li>`;
+                    return;
+                }
+
+                mealList.innerHTML = "";
+                todayMeals.forEach(meal => {
+                    const li = document.createElement("li");
+                    li.className = "meal-item";
+                    li.innerHTML = `
+            <div class="meal-info">
+              <div class="meal-name">${meal.name}</div>
+              <div class="meal-details">${meal.category} • ${meal.calories} cal</div>
+            </div>
+            <div class="meal-actions">
+              <div class="meal-calories">${meal.calories}</div>
+              <button class="btn btn-edit" onclick="editMeal(${meal.id})">Edit</button>
+              <button class="btn btn-danger" onclick="deleteMeal(${meal.id})">Delete</button>
+            </div>`;
+                    mealList.appendChild(li);
+                });
+            }
+
+            function updateSummary() {
+                const today = new Date().toDateString();
+                const todayMeals = meals.filter(m => m.timestamp === today);
+
+                let totalCal = 0,
+                    totalProt = 0,
+                    totalCarb = 0,
+                    totalF = 0;
+                let categoryTotals = {
+                    Breakfast: 0,
+                    Lunch: 0,
+                    Dinner: 0,
+                    Snack: 0
+                };
+
+                todayMeals.forEach(m => {
+                    totalCal += m.calories;
+                    totalProt += m.protein;
+                    totalCarb += m.carbs;
+                    totalF += m.fat;
+                    categoryTotals[m.category] += m.calories;
+                });
+
+                totalCalories.textContent = totalCal;
+                totalProtein.textContent = `${totalProt.toFixed(1)}g`;
+                totalCarbs.textContent = `${totalCarb.toFixed(1)}g`;
+                totalFat.textContent = `${totalF.toFixed(1)}g`;
+
+                calorieProgress.textContent = `${totalCal}/${GOAL}`;
+                calorieProgressBar.style.width = `${Math.min((totalCal / GOAL) * 100, 100)}%`;
+
+                [...mealChart.children].forEach(bar => {
+                    const category = bar.getAttribute("data-category");
+                    const height = GOAL ? (categoryTotals[category] / GOAL) * 100 : 0;
+                    bar.style.height = `${height}%`;
+                });
+            }
+
+            window.deleteMeal = function(id) {
+                meals = meals.filter(m => m.id !== id);
+                localStorage.setItem("meals", JSON.stringify(meals));
+                renderMeals();
+                updateSummary();
+            };
+
+            window.editMeal = function(id) {
+                const meal = meals.find(m => m.id === id);
+                if (!meal) return;
+                document.getElementById("mealName").value = meal.name;
+                document.getElementById("mealCategory").value = meal.category;
+                document.getElementById("calories").value = meal.calories;
+                document.getElementById("protein").value = meal.protein;
+                document.getElementById("carbs").value = meal.carbs;
+                document.getElementById("fat").value = meal.fat;
+                deleteMeal(id); // remove and re-add on save
+            };
+
+            renderMeals();
+            updateSummary();
+        });
+    </script>
+</body>
+
+</html>

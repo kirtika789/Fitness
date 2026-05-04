@@ -1,0 +1,813 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Leg Exercises</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+        
+        body {
+            background: #f4f6f9;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        h1 {
+            text-align: center;
+            font-size: 42px;
+            margin: 20px 0 10px;
+            color: #222;
+        }
+        
+        p {
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 18px;
+            color: #555;
+        }
+        /* Search Bar */
+        
+        .search-container {
+            max-width: 1200px;
+            margin: 0 auto 20px;
+            padding: 0 20px;
+            text-align: center;
+        }
+        
+        .search-box {
+            width: 100%;
+            max-width: 500px;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 25px;
+            font-size: 16px;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+        
+        .search-box:focus {
+            border-color: #0077cc;
+        }
+        /* Filter Buttons */
+        
+        .filter-buttons {
+            text-align: center;
+            margin: 20px 0;
+            max-width: 1200px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .filter-btn {
+            background: #f1f1f1;
+            border: 2px solid #ddd;
+            padding: 10px 20px;
+            margin: 0 5px;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background 0.3s, border-color 0.3s;
+        }
+        
+        .filter-btn.active,
+        .filter-btn:hover {
+            background: #0077cc;
+            color: white;
+            border-color: #0077cc;
+        }
+        /* Tabs */
+        
+        .tabs {
+            display: flex;
+            justify-content: center;
+            background: #f1f1f1;
+            border-bottom: 2px solid #ddd;
+            margin-bottom: 20px;
+            max-width: 1200px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .tab {
+            flex: 1;
+            max-width: 200px;
+            text-align: center;
+            padding: 14px;
+            cursor: pointer;
+            font-size: 15px;
+            font-weight: bold;
+            border-right: 1px solid #ddd;
+            transition: background 0.3s, color 0.3s;
+        }
+        
+        .tab:last-child {
+            border-right: none;
+        }
+        
+        .tab:hover,
+        .tab.active {
+            background: #fff;
+            color: #0077cc;
+        }
+        /* Exercise Grid */
+        
+        .exercise-section {
+            max-width: 1200px;
+            margin: 0 auto 40px;
+            padding: 0 20px;
+        }
+        
+        .section-title {
+            text-align: center;
+            font-size: 28px;
+            margin-bottom: 30px;
+            color: #222;
+        }
+        
+        .exercise-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+        
+        .exercise-card {
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            text-align: center;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .exercise-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+        }
+        
+        .exercise-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+        
+        .exercise-card h3 {
+            padding: 15px;
+            font-size: 20px;
+            color: #333;
+        }
+        
+        .btn {
+            display: inline-block;
+            background: #0077cc;
+            color: white;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 5px;
+            margin: 10px 0 20px;
+            transition: background 0.3s;
+        }
+        
+        .btn:hover {
+            background: #005fa3;
+        }
+        /* Workout Plans Section */
+        
+        .workout-plans {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+        
+        .workout-plans .section-title {
+            margin-bottom: 20px;
+        }
+        
+        .plan-card {
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        
+        .plan-card h3 {
+            color: #222;
+            margin-bottom: 10px;
+        }
+        
+        .plan-card ul {
+            list-style: none;
+            text-align: left;
+        }
+        
+        .plan-card li {
+            padding: 5px 0;
+            border-bottom: 1px solid #eee;
+        }
+        /* Tips Section */
+        
+        .tips-section {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 20px;
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .tips-section .section-title {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        
+        .tips-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            padding: 20px;
+        }
+        
+        .tip-card {
+            padding: 15px;
+            border-left: 4px solid #0077cc;
+            background: #f9f9f9;
+            border-radius: 5px;
+        }
+        
+        .tip-card i {
+            color: #0077cc;
+            margin-right: 10px;
+        }
+        /* Detailed Exercise Container */
+        
+        .exercise-container {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            padding: 20px;
+            max-width: 1200px;
+            margin: auto;
+        }
+        
+        .exercise-card-detailed {
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            transition: transform 0.3s;
+        }
+        
+        .exercise-card-detailed:hover {
+            transform: translateY(-5px);
+        }
+        
+        .exercise-card-detailed img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+        
+        .exercise-info {
+            padding: 15px;
+        }
+        
+        .exercise-title {
+            font-size: 22px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #222;
+        }
+        
+        .meta {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 10px;
+            color: #777;
+            font-size: 14px;
+        }
+        
+        .tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        
+        .tag {
+            background: #f1f1f1;
+            padding: 6px 12px;
+            border-radius: 4px;
+            font-size: 13px;
+            font-weight: bold;
+            color: #555;
+        }
+        
+        .tag span {
+            display: block;
+            font-size: 11px;
+            color: #999;
+            font-weight: normal;
+        }
+        /* Modal */
+        
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            animation: fadeIn 0.3s;
+        }
+        
+        .modal-content {
+            background-color: #fff;
+            margin: 5% auto;
+            padding: 20px;
+            border-radius: 10px;
+            width: 80%;
+            max-width: 600px;
+            text-align: center;
+            position: relative;
+            animation: slideIn 0.3s;
+        }
+        
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+            position: absolute;
+            top: 10px;
+            right: 15px;
+        }
+        
+        .close:hover {
+            color: #000;
+        }
+        
+        .modal img {
+            width: 100%;
+            max-height: 300px;
+            object-fit: cover;
+            border-radius: 5px;
+            margin-bottom: 15px;
+        }
+        
+        .modal h2 {
+            color: #222;
+            margin-bottom: 10px;
+        }
+        
+        .modal p {
+            color: #555;
+            margin-bottom: 15px;
+        }
+        
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+        
+        @keyframes slideIn {
+            from {
+                transform: translateY(-50px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+        /* Footer */
+        
+        footer {
+            background: #222;
+            color: #fff;
+            padding: 40px 20px;
+            margin-top: 40px;
+        }
+        
+        .footer-container {
+            max-width: 1200px;
+            margin: auto;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            gap: 20px;
+        }
+        
+        .footer-about,
+        .footer-links,
+        .footer-contact {
+            flex: 1;
+            min-width: 250px;
+        }
+        
+        .footer-about h3,
+        .footer-links h4,
+        .footer-contact h4 {
+            margin-bottom: 10px;
+        }
+        
+        .footer-links ul {
+            list-style: none;
+            padding: 0;
+            line-height: 2;
+        }
+        
+        .footer-links ul li a,
+        .footer-contact .social-links a {
+            color: #fff;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-links ul li a:hover,
+        .footer-contact .social-links a:hover {
+            color: #0077cc;
+        }
+        
+        .footer-contact .social-links a {
+            margin-right: 10px;
+            font-size: 20px;
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            margin-top: 30px;
+            font-size: 14px;
+            color: #aaa;
+        }
+        
+        @media (max-width: 768px) {
+            .exercise-container,
+            .exercise-grid,
+            .tips-grid {
+                grid-template-columns: 1fr;
+            }
+            .tabs {
+                flex-direction: column;
+            }
+            .tab {
+                border-right: none;
+                border-bottom: 1px solid #ddd;
+            }
+            .meta {
+                flex-direction: column;
+                gap: 5px;
+            }
+            .footer-container {
+                flex-direction: column;
+                gap: 30px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Leg Exercises</h1>
+    <p>Strengthen and tone your legs with these effective exercises. Filter by level, search for specific moves, or explore trending workouts below.</p>
+
+    <!-- Search Bar -->
+    <div class="search-container">
+        <input type="text" class="search-box" id="searchInput" placeholder="Search for leg exercises (e.g., Squat, Lunge)...">
+    </div>
+
+    <!-- Filter Buttons -->
+    <div class="filter-buttons">
+        <button class="filter-btn active" onclick="filterExercises('all')">All Levels</button>
+        <button class="filter-btn" onclick="filterExercises('beginner')">Beginner</button>
+        <button class="filter-btn" onclick="filterExercises('intermediate')">Intermediate</button>
+        <button class="filter-btn" onclick="filterExercises('advanced')">Advanced</button>
+    </div>
+
+    <div class="exercise-section">
+        <h2 class="section-title">BEST LEG EXERCISES</h2>
+        <div class="exercise-grid">
+            <div class="exercise-card" data-level="beginner">
+                <img src="https://hips.hearstapps.com/hmg-prod/images/whl-evergreen-2137-r-682ce60a0fc96.jpg?crop=1.00xw:0.898xh;0,0.0947xh&resize=640:*" alt="Bodyweight Squat">
+                <h3>Bodyweight Squat</h3>
+                <a href="#" class="btn" onclick="openModal('Bodyweight Squat', 'https://www.bodybuilding.com/images/2017/june/squat-header-830x467.jpg', 'Perfect for beginners to build leg strength. Stand with feet shoulder-width apart, lower as if sitting back into a chair, then stand up.')">View Exercise</a>
+            </div>
+
+            <div class="exercise-card" data-level="intermediate">
+                <img src="data:image/jpeg;base64,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"
+                    alt="Lunges">
+                <h3>Lunges</h3>
+                <a href="#" class="btn" onclick="openModal('Lunges', 'https://www.bodybuilding.com/images/2017/june/lunge-header-830x467.jpg', 'Targets quads, glutes, and hamstrings. Step forward with one leg, lower until both knees are bent at 90 degrees, then push back to start.')">View Exercise</a>
+            </div>
+
+            <div class="exercise-card" data-level="advanced">
+                <img src="data:image/jpeg;base64,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"
+                    alt="Deadlift">
+                <h3>Deadlift</h3>
+                <a href="#" class="btn" onclick="openModal('Deadlift', 'https://www.bodybuilding.com/images/2017/june/deadlift-header-830x467.jpg', 'Advanced move for hamstrings and glutes. Hinge at hips to lower barbell, keeping back straight, then drive hips forward to stand.')">View Exercise</a>
+            </div>
+
+            <div class="exercise-card" data-level="intermediate">
+                <img src="https://hips.hearstapps.com/hmg-prod/images/leg-press-67b8637749b94.jpg" alt=" Leg Press ">
+                <h3>Leg Press</h3>
+                <a href="# " class="btn " onclick="openModal( 'Leg Press', 'https://www.bodybuilding.com/images/2017/june/leg-press-header-830x467.jpg',
+                    'Strengthens quads and glutes safely. Sit in machine, push platform away with feet, then lower controlled.') ">View Exercise</a>
+            </div>
+
+            <div class="exercise-card " data-level="beginner ">
+                <img src="https://media.gq.com/photos/5a4fe56aefd792474cf8ce17/4:3/w_2532,h_1899,c_limit/2018-01_GQ_FITNESS-Ask-a-Trainer-Calfs.jpg" alt="Calf Raises ">
+                <h3>Calf Raises</h3>
+                <a href="# " class="btn " onclick="openModal( 'Calf Raises', 'https://www.bodybuilding.com/images/2017/june/calf-raise-header-830x467.jpg', 'Builds lower leg strength. Rise onto toes, hold, then lower heels below step level.') ">View Exercise</a>
+            </div>
+
+            <div class="exercise-card " data-level="intermediate ">
+                <img src="https://intowellness.in/wp-content/uploads/2024/10/Leg_Exercise_Machine.jpg" alt="Leg Extensions ">
+                <h3>Leg Extensions</h3>
+                <a href="# " class="btn " onclick="openModal( 'Leg Extensions', 'https://www.bodybuilding.com/images/2017/june/leg-extension-header-830x467.jpg', 'Isolates quadriceps. Sit in machine, extend legs to lift pad, then lower slowly.') ">View Exercise</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tabs -->
+    <div class="tabs ">
+        <div class="tab active " onclick="switchTab( 'trending') ">TRENDING</div>
+
+    </div>
+
+    <!-- Detailed Exercise Cards (20 total) -->
+    <div class="exercise-container " id="trending ">
+        <!-- 1 -->
+        <div class="exercise-card-detailed " data-level="beginner " data-search="bodyweight squat ">
+            <img src="https://hips.hearstapps.com/hmg-prod/images/whl-evergreen-2137-r-682ce60a0fc96.jpg?crop=1.00xw:0.898xh;0,0.0947xh&resize=640:* " alt="Bodyweight Squat ">
+            <div class="exercise-info ">
+                <div class="exercise-title ">Bodyweight Squat</div>
+                <div class="meta ">
+                    <div>8.5M Views</div>
+                    <div>120 Comments</div>
+                </div>
+                <div class="tags ">
+                    <div class="tag "><span>TYPE</span> STRENGTH</div>
+                    <div class="tag "><span>EQUIPMENT</span> NONE</div>
+                    <div class="tag "><span>LEVEL</span> BEGINNER</div>
+                </div>
+            </div>
+        </div>
+        <!-- 2 -->
+        <div class="exercise-card-detailed " data-level="intermediate " data-search="lunges ">
+            <img src="data:image/jpeg;base64,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"
+                alt=" Lunges ">
+            <div class="exercise-info ">
+                <div class="exercise-title ">Lunges</div>
+                <div class="meta ">
+                    <div>6.2M Views</div>
+                    <div>95 Comments</div>
+                </div>
+                <div class="tags ">
+                    <div class="tag "><span>TYPE</span> STRENGTH</div>
+                    <div class="tag "><span>EQUIPMENT</span> NONE</div>
+                    <div class="tag "><span>LEVEL</span> INTERMEDIATE</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 3 -->
+        <div class="exercise-card-detailed " data-level="advanced " data-search="deadlift ">
+            <img src="https://t3.ftcdn.net/jpg/04/85/64/08/360_F_485640894_Ek9L59TH3BBBCNhFDjNNEMibaxOzK3Cj.jpg" alt="Deadlift ">
+            <div class="exercise-info ">
+                <div class="exercise-title ">Deadlift</div>
+                <div class="meta ">
+                    <div>5.8M Views</div>
+                    <div>80 Comments</div>
+                </div>
+                <div class="tags ">
+                    <div class="tag "><span>TYPE</span> STRENGTH</div>
+                    <div class="tag "><span>EQUIPMENT</span> BARBELL</div>
+                    <div class="tag "><span>LEVEL</span> ADVANCED</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 4 -->
+        <div class="exercise-card-detailed " data-level="intermediate " data-search="leg press ">
+            <img src="https://www.hevyapp.com/wp-content/uploads/nate-johnston-SMSpk9fprcU-unsplash.jpg" alt="Leg Press ">
+            <div class="exercise-info ">
+                <div class="exercise-title ">Leg Press</div>
+                <div class="meta ">
+                    <div>4.1M Views</div>
+                    <div>60 Comments</div>
+                </div>
+                <div class="tags ">
+                    <div class="tag "><span>TYPE</span> STRENGTH</div>
+                    <div class="tag "><span>EQUIPMENT</span> MACHINE</div>
+                    <div class="tag "><span>LEVEL</span> INTERMEDIATE</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 5 -->
+        <div class="exercise-card-detailed " data-level="beginner " data-search="calf raises ">
+            <img src="https://media.gq.com/photos/5a4fe56aefd792474cf8ce17/4:3/w_2532,h_1899,c_limit/2018-01_GQ_FITNESS-Ask-a-Trainer-Calfs.jpg" alt="Calf Raises ">
+            <div class="exercise-info ">
+                <div class="exercise-title ">Calf Raises</div>
+                <div class="meta ">
+                    <div>3.7M Views</div>
+                    <div>50 Comments</div>
+                </div>
+                <div class="tags ">
+                    <div class="tag "><span>TYPE</span> STRENGTH</div>
+                    <div class="tag "><span>EQUIPMENT</span> NONE</div>
+                    <div class="tag "><span>LEVEL</span> BEGINNER</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 6 -->
+        <div class="exercise-card-detailed " data-level="intermediate " data-search="leg extensions ">
+            <img src="https://intowellness.in/wp-content/uploads/2024/10/Leg_Exercise_Machine.jpg" alt="Leg Extensions ">
+            <div class="exercise-info ">
+                <div class="exercise-title ">Leg Extensions</div>
+                <div class="meta ">
+                    <div>2.9M Views</div>
+                    <div>35 Comments</div>
+                </div>
+                <div class="tags ">
+                    <div class="tag "><span>TYPE</span> ISOLATION</div>
+                    <div class="tag "><span>EQUIPMENT</span> MACHINE</div>
+                    <div class="tag "><span>LEVEL</span> INTERMEDIATE</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 7 -->
+        <div class="exercise-card-detailed " data-level="advanced " data-search="bulgarian split squat ">
+            <img src="https://www.verywellfit.com/thmb/6LNzgASrs_NS0IrqEfXVRET4S84=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/60-4589307-Bulgarian-Split-Squat-GIF-c8dea887b8c54e8281a662c3c3975cee.jpg" alt="Bulgarian Split Squat ">
+            <div class="exercise-info ">
+                <div class="exercise-title ">Bulgarian Split Squat</div>
+                <div class="meta ">
+                    <div>2.5M Views</div>
+                    <div>28 Comments</div>
+                </div>
+                <div class="tags ">
+                    <div class="tag "><span>TYPE</span> STRENGTH</div>
+                    <div class="tag "><span>EQUIPMENT</span> DUMBELL</div>
+                    <div class="tag "><span>LEVEL</span> ADVANCED</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 8 -->
+        <div class="exercise-card-detailed " data-level="beginner " data-search="glute bridge ">
+            <img src="https://julielohre.com/wp-content/uploads/2018/02/Weighted-Glute-Bridge.jpg " alt="Glute Bridge ">
+            <div class="exercise-info ">
+                <div class="exercise-title ">Glute Bridge</div>
+                <div class="meta ">
+                    <div>3.0M Views</div>
+                    <div>40 Comments</div>
+                </div>
+                <div class="tags ">
+                    <div class="tag "><span>TYPE</span> STRENGTH</div>
+                    <div class="tag "><span>EQUIPMENT</span> NONE</div>
+                    <div class="tag "><span>LEVEL</span> BEGINNER</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 9 -->
+        <div class="exercise-card-detailed " data-level="intermediate " data-search="step ups ">
+            <img src="https://hips.hearstapps.com/hmg-prod/images/v-sit-crunch-1585734647.jpg " alt="Step Ups ">
+            <div class="exercise-info ">
+                <div class="exercise-title ">Step Ups</div>
+                <div class="meta ">
+                    <div>2.7M Views</div>
+                    <div>30 Comments</div>
+                </div>
+                <div class="tags ">
+                    <div class="tag "><span>TYPE</span> CARDIO/LEG</div>
+                    <div class="tag "><span>EQUIPMENT</span> BENCH</div>
+                    <div class="tag "><span>LEVEL</span> INTERMEDIATE</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 10 -->
+        <div class="exercise-card-detailed " data-level="advanced " data-search="pistol squat ">
+            <img src="https://hips.hearstapps.com/hmg-prod/images/heromoves-3-index-1548352348.png?crop=0.888888888888889xw:1xh;0,0" alt="Pistol Squat ">
+            <div class="exercise-info ">
+                <div class="exercise-title ">Pistol Squat</div>
+                <div class="meta ">
+                    <div>1.8M Views</div>
+                    <div>22 Comments</div>
+                </div>
+                <div class="tags ">
+                    <div class="tag "><span>TYPE</span> STRENGTH</div>
+                    <div class="tag "><span>EQUIPMENT</span> NONE</div>
+                    <div class="tag "><span>LEVEL</span> ADVANCED</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Add remaining 10 exercises similarly... -->
+
+    </div>
+
+    <!-- Modal -->
+    <div class="modal " id="exerciseModal ">
+        <div class="modal-content ">
+            <span class="close " onclick="closeModal() ">&times;</span>
+            <img id="modalImg " src=" " alt=" ">
+            <h2 id="modalTitle "></h2>
+            <p id="modalDesc "></p>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-container ">
+            <div class="footer-about ">
+                <h3>FitLegs</h3>
+                <p>Your complete guide for strong and toned legs. Explore exercises, tips, and tutorials.</p>
+            </div>
+            <div class="footer-links ">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="#trending ">Exercises</a></li>
+                    <li><a href="#workout-plans ">Workout Plans</a></li>
+                </ul>
+            </div>
+            <div class="footer-contact ">
+                <h4>Contact Us</h4>
+                <p>Email: support@fitlegs.com</p>
+                <p>Phone: +91 1234567890</p>
+                <div class="social-links ">
+                    <a href="# "><i class="fab fa-facebook "></i></a>
+                    <a href="# "><i class="fab fa-instagram "></i></a>
+                    <a href="# "><i class="fab fa-twitter "></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom ">&copy; 2025 FitLegs. All Rights Reserved.</div>
+    </footer>
+
+    <script>
+        // Filter Exercises
+        function filterExercises(level) {
+            document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+            event.currentTarget.classList.add('active');
+            document.querySelectorAll('.exercise-card, .exercise-card-detailed').forEach(card => {
+                if (level === 'all' || card.dataset.level === level) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+
+        // Search
+        document.getElementById('searchInput').addEventListener('input', function() {
+            let value = this.value.toLowerCase();
+            document.querySelectorAll('.exercise-card-detailed').forEach(card => {
+                if (card.dataset.search.includes(value)) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        });
+
+        // Modal
+        function openModal(title, img, desc) {
+            document.getElementById('modalTitle').textContent = title;
+            document.getElementById('modalImg').src = img;
+            document.getElementById('modalDesc').textContent = desc;
+            document.getElementById('exerciseModal').style.display = 'block';
+        }
+
+        function closeModal() {
+            document.getElementById('exerciseModal').style.display = 'none';
+        }
+
+        // Tabs
+        function switchTab(tabId) {
+            document.querySelectorAll('.tab').forEach(tab => tab.classList.remove('active'));
+            event.currentTarget.classList.add('active');
+            document.querySelectorAll('.exercise-container').forEach(container => container.style.display = 'none');
+            document.getElementById(tabId).style.display = 'grid';
+        }
+        // Default: show trending tab
+        switchTab('trending');
+    </script>
+</body>
+
+</html>

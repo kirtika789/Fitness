@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FitTrack Pro</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(120deg, #2c3e50, #3498db);
+            color: #fff;
+            margin: 0;
+            padding: 0;
+        }
+        
+        .tracker {
+            max-width: 900px;
+            margin: 2rem auto;
+            background: rgba(0, 0, 0, 0.6);
+            padding: 2rem;
+            border-radius: 1rem;
+        }
+        
+        h1,
+        h2 {
+            text-align: center;
+        }
+        
+        label {
+            display: block;
+            margin-top: 1rem;
+        }
+        
+        input,
+        select,
+        button {
+            width: 100%;
+            padding: 0.6rem;
+            margin-top: 0.3rem;
+            border-radius: 0.4rem;
+            border: none;
+        }
+        
+        button {
+            background: #27ae60;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 1rem;
+        }
+        
+        table {
+            width: 100%;
+            margin-top: 2rem;
+            border-collapse: collapse;
+        }
+        
+        table,
+        th,
+        td {
+            border: 1px solid #555;
+        }
+        
+        th,
+        td {
+            padding: 0.6rem;
+            text-align: center;
+        }
+        
+        .progress-container {
+            background: #555;
+            border-radius: 1rem;
+            overflow: hidden;
+            margin-top: 1rem;
+        }
+        
+        .progress-bar {
+            height: 20px;
+            background: #27ae60;
+            width: 0%;
+            transition: width 0.5s;
+        }
+        
+        .exercise-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 1rem;
+            border-radius: 0.5rem;
+        }
+        
+        .exercise-grid label {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: rgba(0, 0, 0, 0.3);
+            padding: 0.4rem 0.6rem;
+            border-radius: 0.4rem;
+            cursor: pointer;
+            user-select: none;
+        }
+        
+        .exercise-grid input[type="checkbox"] {
+            accent-color: #27ae60;
+            transform: scale(1.2);
+        }
+        
+        #workoutChart {
+            display: block;
+            margin: 1rem auto;
+            max-width: 300px;
+            max-height: 300px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="tracker">
+        <h1>FitTrack Pro</h1>
+        <p style="text-align:center; font-style:italic;">Make progress with the all-in-one food, exercise, and calorie tracker</p>
+
+        <!-- Goal Section -->
+        <h2>Set Your Monthly Goal</h2>
+        <label for="goal">Target Workout Days:</label>
+        <input type="number" id="goal" min="1" max="31" placeholder="e.g. 20" />
+        <button id="saveGoal">Save Goal</button>
+
+        <!-- Date -->
+        <label for="date">Date:</label>
+        <input type="date" id="date" />
+
+        <!-- Workout -->
+        <label for="workoutType">Workout Type:</label>
+        <select id="workoutType">
+            <option value="">-- Select Workout --</option>
+            <option value="Cardio">Cardio</option>
+            <option value="Strength">Strength</option>
+            <option value="Yoga">Yoga</option>
+            <option value="HIIT">HIIT</option>
+        </select>
+
+        <!-- Exercises -->
+        <label>Exercises Done (select multiple):</label>
+        <div id="exerciseContainer" class="exercise-grid"></div>
+
+        <!-- Water -->
+        <label for="water">Water Intake (Litres):</label>
+        <input type="number" id="water" placeholder="e.g. 2.5" step="0.1" />
+
+        <!-- Calories -->
+        <label for="calories">Calories Burned:</label>
+        <input type="number" id="calories" placeholder="e.g. 300" step="1" />
+
+        <button id="logWorkoutBtn">Log Workout</button>
+
+        <!-- Progress -->
+        <h2>Progress</h2>
+        <div class="progress-container">
+            <div id="progressBar" class="progress-bar"></div>
+        </div>
+        <p id="progressText"></p>
+
+        <!-- History Table -->
+        <h2>Workout History</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Date</th>
+                    <th>Workout</th>
+                    <th>Exercises</th>
+                    <th>Water (L)</th>
+                    <th>Calories</th>
+                </tr>
+            </thead>
+            <tbody id="historyTable"></tbody>
+        </table>
+
+        <!-- Chart -->
+        <h2>Workout Distribution</h2>
+        <canvas id="workoutChart"></canvas>
+    </div>
+
+    <script>
+        const goalInput = document.getElementById("goal");
+        const saveGoal = document.getElementById("saveGoal");
+        const logWorkoutBtn = document.getElementById("logWorkoutBtn");
+        const historyTable = document.getElementById("historyTable");
+        const progressBar = document.getElementById("progressBar");
+        const progressText = document.getElementById("progressText");
+        const workoutType = document.getElementById("workoutType");
+        const exerciseContainer = document.getElementById("exerciseContainer");
+        let workoutChart;
+
+        const exerciseOptions = {
+            Cardio: ["Running", "Cycling", "Jump Rope", "Rowing", "Swimming", "Dancing", "Walking", "Elliptical"],
+            Strength: ["Pushups", "Squats", "Lunges", "Deadlifts", "Bench Press", "Pullups", "Plank", "Bicep Curls"],
+            Yoga: ["Sun Salutation", "Tree Pose", "Warrior", "Cobra", "Bridge", "Child Pose", "Seated Twist", "Boat Pose"],
+            HIIT: ["Burpees", "Jump Squats", "Mountain Climbers", "High Knees", "Pushup Jacks", "Lunge Jumps", "Plank Jacks", "Skater Jumps"]
+        };
+
+        let workouts = JSON.parse(localStorage.getItem("workouts")) || [];
+        let monthlyGoal = localStorage.getItem("monthlyGoal") || 0;
+
+        // Show exercises as checkboxes
+        workoutType.addEventListener("change", () => {
+            const type = workoutType.value;
+            exerciseContainer.innerHTML = "";
+            if (!type) {
+                exerciseContainer.innerHTML = `<p style="color:#ccc;">Select a workout type first</p>`;
+                return;
+            }
+            exerciseOptions[type].forEach((ex) => {
+                const wrapper = document.createElement("label");
+                wrapper.innerHTML = `<input type="checkbox" value="${ex}"> ${ex}`;
+                exerciseContainer.appendChild(wrapper);
+            });
+        });
+
+        saveGoal.addEventListener("click", () => {
+            monthlyGoal = goalInput.value;
+            localStorage.setItem("monthlyGoal", monthlyGoal);
+            updateProgress();
+        });
+
+        logWorkoutBtn.addEventListener("click", () => {
+            const date = document.getElementById("date").value;
+            const workout = workoutType.value;
+            const selectedExercises = Array.from(exerciseContainer.querySelectorAll("input[type='checkbox']:checked")).map(cb => cb.value);
+            const water = document.getElementById("water").value;
+            const calories = document.getElementById("calories").value;
+
+            if (!date || !workout || selectedExercises.length === 0 || !water || !calories) {
+                alert("Please fill all fields");
+                return;
+            }
+
+            workouts.push({
+                date,
+                workout,
+                exercises: selectedExercises,
+                water,
+                calories
+            });
+            localStorage.setItem("workouts", JSON.stringify(workouts));
+
+            renderTable();
+            renderChart();
+            updateProgress();
+        });
+
+        function renderTable() {
+            historyTable.innerHTML = "";
+            if (workouts.length === 0) {
+                const row = document.createElement("tr");
+                row.innerHTML = `<td colspan="6">No workout data logged yet</td>`;
+                historyTable.appendChild(row);
+                return;
+            }
+
+            workouts.forEach((w, i) => {
+                const row = document.createElement("tr");
+                row.innerHTML = `
+                    <td>${i + 1}</td>
+                    <td>${w.date}</td>
+                    <td>${w.workout}</td>
+                    <td>${w.exercises.join(", ")}</td>
+                    <td>${w.water}</td>
+                    <td>${w.calories}</td>
+                `;
+                historyTable.appendChild(row);
+            });
+        }
+
+        function renderChart() {
+            const counts = {};
+            workouts.forEach(w => {
+                counts[w.workout] = (counts[w.workout] || 0) + 1;
+            });
+
+            const labels = Object.keys(counts).length ? Object.keys(counts) : ["No Data"];
+            const data = Object.values(counts).length ? Object.values(counts) : [1];
+
+            const ctx = document.getElementById("workoutChart").getContext("2d");
+
+            if (workoutChart) workoutChart.destroy();
+
+            workoutChart = new Chart(ctx, {
+                type: "pie",
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        data: data,
+                        backgroundColor: ["#27ae60", "#2980b9", "#f39c12", "#8e44ad", "#e74c3c"],
+                        borderColor: "#222",
+                        borderWidth: 1,
+                    }],
+                },
+                options: {
+                    plugins: {
+                        legend: {
+                            labels: {
+                                color: "#fff"
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        function updateProgress() {
+            const goal = parseInt(monthlyGoal);
+            const done = workouts.length;
+            const percent = goal ? Math.min((done / goal) * 100, 100) : 0;
+            progressBar.style.width = percent + "%";
+            progressText.textContent = goal ?
+                `You have completed ${done} of ${goal} goal days.` :
+                "Set a monthly goal to track progress.";
+        }
+
+        // On load
+        renderTable();
+        renderChart();
+        updateProgress();
+    </script>
+</body>
+
+</html>

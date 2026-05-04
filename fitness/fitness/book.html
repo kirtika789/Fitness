@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Book a Free Assessment | NutriTrack</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet" />
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        body {
+            font-family: 'Roboto', sans-serif;
+            background: #f4f7fa;
+            color: #333;
+        }
+        
+        header {
+            background: linear-gradient(135deg, #2575fc, #6a11cb);
+            padding: 50px 20px;
+            color: white;
+            text-align: center;
+        }
+        
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+        
+        header p {
+            font-size: 1.2rem;
+        }
+        
+        .container {
+            max-width: 600px;
+            background: #fff;
+            margin: 40px auto;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        .container h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #2575fc;
+        }
+        
+        form label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+        
+        form input,
+        form textarea,
+        form select {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+            font-size: 1rem;
+        }
+        
+        form button {
+            width: 100%;
+            padding: 14px;
+            background: #2575fc;
+            color: white;
+            font-size: 1.1rem;
+            font-weight: bold;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        
+        form button:hover {
+            background: #1e60d1;
+        }
+        
+        .success-message {
+            display: none;
+            text-align: center;
+            margin-top: 20px;
+            padding: 15px;
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+            border-radius: 8px;
+        }
+        
+        footer {
+            background: #111;
+            color: #ccc;
+            text-align: center;
+            padding: 20px;
+            margin-top: 50px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <h1>Book a Free Assessment</h1>
+        <p>Get expert advice and a personalized plan for your injury recovery.</p>
+    </header>
+
+    <div class="container">
+        <h2>Assessment Form</h2>
+        <form id="assessmentForm">
+            <label for="name">Full Name</label>
+            <input type="text" id="name" name="name" required />
+
+            <label for="email">Email Address</label>
+            <input type="email" id="email" name="email" required />
+
+            <label for="phone">Phone Number</label>
+            <input type="tel" id="phone" name="phone" required />
+
+            <label for="state">Your State</label>
+            <input type="text" id="state" name="state" required />
+
+            <label for="injury">Type of Injury or Concern</label>
+            <textarea id="injury" name="injury" rows="4" required></textarea>
+
+            <label for="mode">Preferred Mode</label>
+            <select id="mode" name="mode" required>
+        <option value="">--Select--</option>
+        <option value="online">Online Session</option>
+        <option value="in-clinic">In-Clinic Visit</option>
+      </select>
+
+            <button type="submit">Submit Request</button>
+        </form>
+
+        <div class="success-message" id="successMessage">
+            ✅ Your assessment request has been submitted! We will contact you shortly.
+        </div>
+    </div>
+
+    <footer>
+        © 2025 NutriTrack. All rights reserved.
+    </footer>
+
+    <script>
+        const form = document.getElementById('assessmentForm');
+        const successMessage = document.getElementById('successMessage');
+
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            // Simulate form processing
+            successMessage.style.display = 'block';
+            form.reset();
+
+            setTimeout(() => {
+                successMessage.style.display = 'none';
+            }, 5000);
+        });
+    </script>
+
+</body>
+
+</html>

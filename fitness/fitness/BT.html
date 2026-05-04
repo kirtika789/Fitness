@@ -1,0 +1,910 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Biceps and Triceps Exercises</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+        
+        body {
+            background: #f4f6f9;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        h1 {
+            text-align: center;
+            font-size: 42px;
+            margin: 20px 0 10px;
+            color: #222;
+        }
+        
+        p {
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 18px;
+            color: #555;
+        }
+        /* Search Bar */
+        
+        .search-container {
+            max-width: 1200px;
+            margin: 0 auto 20px;
+            padding: 0 20px;
+            text-align: center;
+        }
+        
+        .search-box {
+            width: 100%;
+            max-width: 500px;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 25px;
+            font-size: 16px;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+        
+        .search-box:focus {
+            border-color: #0077cc;
+        }
+        /* Filter Buttons */
+        
+        .filter-buttons {
+            text-align: center;
+            margin: 20px 0;
+            max-width: 1200px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .filter-btn {
+            background: #f1f1f1;
+            border: 2px solid #ddd;
+            padding: 10px 20px;
+            margin: 0 5px;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background 0.3s, border-color 0.3s;
+        }
+        
+        .filter-btn.active,
+        .filter-btn:hover {
+            background: #0077cc;
+            color: white;
+            border-color: #0077cc;
+        }
+        /* Tabs */
+        
+        .tabs {
+            display: flex;
+            justify-content: center;
+            background: #f1f1f1;
+            border-bottom: 2px solid #ddd;
+            margin-bottom: 20px;
+            max-width: 1200px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .tab {
+            flex: 1;
+            max-width: 200px;
+            text-align: center;
+            padding: 14px;
+            cursor: pointer;
+            font-size: 15px;
+            font-weight: bold;
+            border-right: 1px solid #ddd;
+            transition: background 0.3s, color 0.3s;
+        }
+        
+        .tab:last-child {
+            border-right: none;
+        }
+        
+        .tab:hover,
+        .tab.active {
+            background: #fff;
+            color: #0077cc;
+        }
+        /* Exercise Grid */
+        
+        .exercise-section {
+            max-width: 1200px;
+            margin: 0 auto 40px;
+            padding: 0 20px;
+        }
+        
+        .section-title {
+            text-align: center;
+            font-size: 28px;
+            margin-bottom: 30px;
+            color: #222;
+        }
+        
+        .exercise-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+        
+        .exercise-card {
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            text-align: center;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .exercise-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+        }
+        
+        .exercise-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+        
+        .exercise-card h3 {
+            padding: 15px;
+            font-size: 20px;
+            color: #333;
+        }
+        
+        .btn {
+            display: inline-block;
+            background: #0077cc;
+            color: white;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 5px;
+            margin: 10px 0 20px;
+            transition: background 0.3s;
+        }
+        
+        .btn:hover {
+            background: #005fa3;
+        }
+        /* Workout Plans Section */
+        
+        .workout-plans {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+        
+        .workout-plans .section-title {
+            margin-bottom: 20px;
+        }
+        
+        .plan-card {
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        
+        .plan-card h3 {
+            color: #222;
+            margin-bottom: 10px;
+        }
+        
+        .plan-card ul {
+            list-style: none;
+            text-align: left;
+        }
+        
+        .plan-card li {
+            padding: 5px 0;
+            border-bottom: 1px solid #eee;
+        }
+        /* Tips Section */
+        
+        .tips-section {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 20px;
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .tips-section .section-title {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        
+        .tips-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            padding: 20px;
+        }
+        
+        .tip-card {
+            padding: 15px;
+            border-left: 4px solid #0077cc;
+            background: #f9f9f9;
+            border-radius: 5px;
+        }
+        
+        .tip-card i {
+            color: #0077cc;
+            margin-right: 10px;
+        }
+        /* Detailed Exercise Container */
+        
+        .exercise-container {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            padding: 20px;
+            max-width: 1200px;
+            margin: auto;
+        }
+        
+        .exercise-card-detailed {
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            transition: transform 0.3s;
+        }
+        
+        .exercise-card-detailed:hover {
+            transform: translateY(-5px);
+        }
+        
+        .exercise-card-detailed img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+        
+        .exercise-info {
+            padding: 15px;
+        }
+        
+        .exercise-title {
+            font-size: 22px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #222;
+        }
+        
+        .meta {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 10px;
+            color: #777;
+            font-size: 14px;
+        }
+        
+        .tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        
+        .tag {
+            background: #f1f1f1;
+            padding: 6px 12px;
+            border-radius: 4px;
+            font-size: 13px;
+            font-weight: bold;
+            color: #555;
+        }
+        
+        .tag span {
+            display: block;
+            font-size: 11px;
+            color: #999;
+            font-weight: normal;
+        }
+        /* Modal */
+        
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            animation: fadeIn 0.3s;
+        }
+        
+        .modal-content {
+            background-color: #fff;
+            margin: 5% auto;
+            padding: 20px;
+            border-radius: 10px;
+            width: 80%;
+            max-width: 600px;
+            text-align: center;
+            position: relative;
+            animation: slideIn 0.3s;
+        }
+        
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+            position: absolute;
+            top: 10px;
+            right: 15px;
+        }
+        
+        .close:hover {
+            color: #000;
+        }
+        
+        .modal img {
+            width: 100%;
+            max-height: 300px;
+            object-fit: cover;
+            border-radius: 5px;
+            margin-bottom: 15px;
+        }
+        
+        .modal h2 {
+            color: #222;
+            margin-bottom: 10px;
+        }
+        
+        .modal p {
+            color: #555;
+            margin-bottom: 15px;
+        }
+        
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+        
+        @keyframes slideIn {
+            from {
+                transform: translateY(-50px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+        /* Footer */
+        
+        footer {
+            background: #222;
+            color: #fff;
+            padding: 40px 20px;
+            margin-top: 40px;
+        }
+        
+        .footer-container {
+            max-width: 1200px;
+            margin: auto;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            gap: 20px;
+        }
+        
+        .footer-about,
+        .footer-links,
+        .footer-contact {
+            flex: 1;
+            min-width: 250px;
+        }
+        
+        .footer-about h3,
+        .footer-links h4,
+        .footer-contact h4 {
+            margin-bottom: 10px;
+        }
+        
+        .footer-links ul {
+            list-style: none;
+            padding: 0;
+            line-height: 2;
+        }
+        
+        .footer-links ul li a,
+        .footer-contact .social-links a {
+            color: #fff;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-links ul li a:hover,
+        .footer-contact .social-links a:hover {
+            color: #0077cc;
+        }
+        
+        .footer-contact .social-links a {
+            margin-right: 10px;
+            font-size: 20px;
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            margin-top: 30px;
+            font-size: 14px;
+            color: #aaa;
+        }
+        
+        @media (max-width: 768px) {
+            .exercise-container,
+            .exercise-grid,
+            .tips-grid {
+                grid-template-columns: 1fr;
+            }
+            .tabs {
+                flex-direction: column;
+            }
+            .tab {
+                border-right: none;
+                border-bottom: 1px solid #ddd;
+            }
+            .meta {
+                flex-direction: column;
+                gap: 5px;
+            }
+            .footer-container {
+                flex-direction: column;
+                gap: 30px;
+            }
+        }
+        /* Footer Styles */
+        
+        footer {
+            background: #222;
+            color: #fff;
+            padding: 40px 20px;
+            margin-top: 40px;
+            font-size: 15px;
+        }
+        
+        .footer-container {
+            max-width: 1200px;
+            margin: auto;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            gap: 20px;
+        }
+        
+        .footer-about,
+        .footer-links,
+        .footer-contact {
+            flex: 1;
+            min-width: 250px;
+        }
+        
+        .footer-about h3,
+        .footer-links h4,
+        .footer-contact h4 {
+            margin-bottom: 10px;
+            font-size: 18px;
+            color: #fff;
+        }
+        
+        .footer-about p {
+            line-height: 1.6;
+            color: #ccc;
+        }
+        
+        .footer-links ul {
+            list-style: none;
+            padding: 0;
+            line-height: 2;
+        }
+        
+        .footer-links ul li a,
+        .footer-contact .social-links a {
+            color: #fff;
+            text-decoration: none;
+            transition: color 0.3s, transform 0.3s;
+        }
+        
+        .footer-links ul li a:hover,
+        .footer-contact .social-links a:hover {
+            color: #0077cc;
+            transform: scale(1.1);
+        }
+        
+        .footer-contact .social-links a {
+            margin-right: 10px;
+            font-size: 20px;
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            margin-top: 30px;
+            font-size: 14px;
+            color: #aaa;
+        }
+        /* Responsive Footer */
+        
+        @media (max-width: 768px) {
+            .footer-container {
+                flex-direction: column;
+                gap: 30px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Biceps and Triceps Exercises</h1>
+    <p>Build powerful arms with targeted biceps and triceps workouts. Filter by level, search for specific moves, or explore trending exercises below.</p>
+
+    <!-- Search Bar -->
+    <div class="search-container">
+        <input type="text" class="search-box" id="searchInput" placeholder="Search for arm exercises (e.g., Bicep Curl, Tricep Dip)...">
+    </div>
+
+    <!-- Filter Buttons -->
+    <div class="filter-buttons">
+        <button class="filter-btn active" onclick="filterExercises('all')">All Levels</button>
+        <button class="filter-btn" onclick="filterExercises('beginner')">Beginner</button>
+        <button class="filter-btn" onclick="filterExercises('intermediate')">Intermediate</button>
+        <button class="filter-btn" onclick="filterExercises('advanced')">Advanced</button>
+    </div>
+
+    <div class="exercise-section">
+        <h2 class="section-title">BEST ARM EXERCISES</h2>
+        <div class="exercise-grid">
+            <div class="exercise-card" data-level="beginner" data-search="bicep curls">
+                <img src="https://cdn.jefit.com/assets/img/exercises/gifs/116.gif" alt="Bicep Curls">
+                <h3>Bicep Curls</h3>
+                <a href="#" class="btn" onclick="openModal('Bicep Curls', 'https://www.bodybuilding.com/images/2017/june/bicep-curl-header-830x467.jpg', 'Classic isolation for biceps. Stand with dumbbells, curl weights to shoulders, lower slowly.')">View Exercise</a>
+            </div>
+
+            <div class="exercise-card" data-level="intermediate" data-search="hammer curls">
+                <img src=" https://www.garagegymreviews.com/wp-content/uploads/2022/07/1_0_GIF_1_1.gif" alt="Hammer Curls ">
+                <h3>Hammer Curls</h3>
+                <a href="# " class="btn " onclick="openModal( 'Hammer Curls', 'https://www.bodybuilding.com/images/2017/june/hammer-curl-header-830x467.jpg', 'Targets brachialis. Curl dumbbells with neutral grip, thumbs up.') ">View Exercise</a>
+            </div>
+
+            <div class="exercise-card " data-level="intermediate " data-search="tricep dips ">
+                <img src="https://cdn.jefit.com/assets/img/exercises/gifs/229.gif " alt="Tricep Dips ">
+                <h3>Tricep Dips</h3>
+                <a href="# " class="btn " onclick="openModal( 'Tricep Dips', 'https://www.bodybuilding.com/images/2017/june/tricep-dip-header-830x467.jpg', 'Bodyweight for triceps. Lower body between bars, push up focusing on triceps.') ">View Exercise</a>
+            </div>
+
+            <div class="exercise-card " data-level="beginner " data-search="overhead tricep extension ">
+                <img src=" https://hips.hearstapps.com/hmg-prod/images/workouts/2017/04/overheadtricepspress-1491253283.gif" alt="Overhead Tricep Extension ">
+                <h3>Overhead Tricep Extension</h3>
+                <a href="# " class="btn " onclick="openModal( 'Overhead Tricep Extension', 'https://www.bodybuilding.com/images/2017/june/overhead-tricep-extension-header-830x467.jpg',
+                    'Isolates long head of triceps. Extend dumbbell overhead, lower behind head.') ">View Exercise</a>
+            </div>
+
+            <div class="exercise-card " data-level="intermediate " data-search="concentration curls ">
+                <img src=" https://www.indianbodybuilding.co.in/wp-content/uploads/2014/11/Biceps-Concentration-Curl-Workout-Movement.gif" alt="Concentration Curls ">
+                <h3>Concentration Curls</h3>
+                <a href="# " class="btn " onclick="openModal( 'Concentration Curls', 'https://www.bodybuilding.com/images/2017/june/concentration-curl-header-830x467.jpg',
+                    'Peak contraction for biceps. Sit, elbow on thigh, curl dumbbell toward shoulder.') ">View Exercise</a>
+            </div>
+
+            <div class="exercise-card " data-level="advanced " data-search="skull crushers ">
+                <img src="https://barbend.com/wp-content/uploads/2022/05/barbell-skull-crusher-barbend-movement-gif-masters.gif " alt="Skull Crushers ">
+                <h3>Skull Crushers</h3>
+                <a href="# " class="btn " onclick="openModal( 'Skull Crushers', 'https://www.bodybuilding.com/images/2017/june/skull-crusher-header-830x467.jpg', 'Lying tricep extension. Lower barbell to forehead, extend arms.') ">View Exercise</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tabs -->
+    <div class="tabs ">
+        <div class="tab active " onclick="switchTab( 'trending') ">TRENDING</div>
+
+    </div>
+
+    <!-- Detailed Exercise Cards (20 total) -->
+    <div class="exercise-container " id="trending ">
+        <!-- 1 -->
+        <div class="exercise-card-detailed " data-level="beginner " data-search="bicep curls ">
+            <img src="https://cdn.jefit.com/assets/img/exercises/gifs/116.gif " alt="Bicep Curls ">
+            <div class="exercise-info ">
+                <div class="exercise-title ">Bicep Curls</div>
+                <div class="meta ">
+                    <div>9.5M Views</div>
+                    <div>180 Comments</div>
+                </div>
+                <div class="tags ">
+                    <div class="tag "><span>TYPE</span> ISOLATION</div>
+                    <div class="tag "><span>EQUIPMENT</span> DUMBBELL</div>
+                    <div class="tag "><span>LEVEL</span> BEGINNER </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 2 -->
+        <div class="exercise-card-detailed " data-level="intermediate " data-search="hammer curls ">
+            <img src=" https://www.garagegymreviews.com/wp-content/uploads/2022/07/1_0_GIF_1_1.gif " alt="Hammer Curls ">
+            <div class="exercise-info ">
+                <div class="exercise-title ">Hammer Curls</div>
+                <div class="meta ">
+                    <div>7.8M Views</div>
+                    <div>140 Comments</div>
+                </div>
+                <div class="tags ">
+                    <div class="tag "><span>TYPE</span> ISOLATION</div>
+                    <div class="tag "><span>EQUIPMENT</span> DUMBBELL</div>
+                    <div class="tag "><span>LEVEL</span> INTERMEDIATE</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 3 -->
+        <div class="exercise-card-detailed " data-level="intermediate " data-search="tricep dips ">
+            <img src="https://cdn.jefit.com/assets/img/exercises/gifs/229.gif" alt="Tricep Dips ">
+            <div class="exercise-info ">
+                <div class="exercise-title ">Tricep Dips</div>
+                <div class="meta ">
+                    <div>8.1M Views</div>
+                    <div>160 Comments</div>
+                </div>
+                <div class="tags ">
+                    <div class="tag "><span>TYPE</span> COMPOUND</div>
+                    <div class="tag "><span>EQUIPMENT</span> BODYWEIGHT</div>
+                    <div class="tag "><span>LEVEL</span> INTERMEDIATE</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 4 -->
+        <div class="exercise-card-detailed " data-level="beginner " data-search="overhead tricep extension ">
+            <img src=" https://hips.hearstapps.com/hmg-prod/images/workouts/2017/04/overheadtricepspress-1491253283.gif" alt="Overhead Tricep Extension ">
+            <div class="exercise-info ">
+                <div class="exercise-title ">Overhead Tricep Extension</div>
+                <div class="meta ">
+                    <div>6.9M Views</div>
+                    <div>120 Comments</div>
+                </div>
+                <div class="tags ">
+                    <div class="tag "><span>TYPE</span> ISOLATION</div>
+                    <div class="tag "><span>EQUIPMENT</span> DUMBBELL</div>
+                    <div class="tag "><span>LEVEL</span> BEGINNER</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 5 -->
+        <div class="exercise-card-detailed " data-level="intermediate " data-search="concentration curls ">
+            <img src=" https://www.indianbodybuilding.co.in/wp-content/uploads/2014/11/Biceps-Concentration-Curl-Workout-Movement.gif " alt="Concentration Curls ">
+            <div class="exercise-info ">
+                <div class="exercise-title ">Concentration Curls</div>
+                <div class="meta ">
+                    <div>7.2M Views</div>
+                    <div>130 Comments</div>
+                </div>
+                <div class="tags ">
+                    <div class="tag "><span>TYPE</span> ISOLATION</div>
+                    <div class="tag "><span>EQUIPMENT</span> DUMBBELL</div>
+                    <div class="tag "><span>LEVEL</span> INTERMEDIATE</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 6 -->
+        <div class="exercise-card-detailed " data-level="advanced " data-search="skull crushers ">
+            <img src="https://barbend.com/wp-content/uploads/2022/05/barbell-skull-crusher-barbend-movement-gif-masters.gif  " alt="Skull Crushers ">
+            <div class="exercise-info ">
+                <div class="exercise-title ">Skull Crushers</div>
+                <div class="meta ">
+                    <div>5.5M Views</div>
+                    <div>90 Comments</div>
+                </div>
+                <div class="tags ">
+                    <div class="tag "><span>TYPE</span> ISOLATION</div>
+                    <div class="tag "><span>EQUIPMENT</span> BARBELL</div>
+                    <div class="tag "><span>LEVEL</span> ADVANCED</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 7 -->
+        <div class="exercise-card-detailed " data-level="beginner " data-search="cable tricep pushdown ">
+            <img src=" https://cdn.jefit.com/assets/img/exercises/gifs/159.gif" alt="Cable Tricep Pushdown ">
+            <div class="exercise-info ">
+                <div class="exercise-title ">Cable Tricep Pushdown</div>
+                <div class="meta ">
+                    <div>6.1M Views</div>
+                    <div>100 Comments</div>
+                </div>
+                <div class="tags ">
+                    <div class="tag "><span>TYPE</span> ISOLATION</div>
+                    <div class="tag "><span>EQUIPMENT</span> CABLE</div>
+                    <div class="tag "><span>LEVEL</span> BEGINNER</div>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- Continue with 8–20 following the same structure with other bicep and tricep exercises -->
+
+    </div>
+
+    <!-- Modal -->
+    <div class="modal " id="exerciseModal ">
+        <div class="modal-content ">
+            <span class="close " onclick="closeModal() ">&times;</span>
+            <img id="modalImg " src=" " alt=" ">
+            <h2 id="modalTitle "></h2>
+            <p id="modalDesc "></p>
+        </div>
+    </div>
+    <!-- Footer -->
+    <footer>
+        <div class="footer-container ">
+            <!-- About -->
+            <div class="footer-about ">
+                <h3>FitArms</h3>
+                <p>Your ultimate guide to building strong, defined arms with expert exercises and tips.</p>
+            </div>
+
+            <!-- Quick Links -->
+            <div class="footer-links ">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="#trending ">Trending</a></li>
+                    <li><a href="#new ">What's New</a></li>
+                    <li><a href="#discussed ">Discussed</a></li>
+                    <li><a href="#az ">A-Z Exercises</a></li>
+                    <li><a href="#workout-plans ">Workout Plans</a></li>
+                </ul>
+            </div>
+
+            <!-- Contact & Social -->
+            <div class="footer-contact ">
+                <h4>Contact Us</h4>
+                <p>Email: support@fitarms.com</p>
+                <p>Phone: +91 12345 67890</p>
+                <div class="social-links ">
+                    <a href="# "><i class="fab fa-facebook-f "></i></a>
+                    <a href="# "><i class="fab fa-twitter "></i></a>
+                    <a href="# "><i class="fab fa-instagram "></i></a>
+                    <a href="# "><i class="fab fa-youtube "></i></a>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-bottom ">
+            &copy; 2025 FitArms. All Rights Reserved.
+        </div>
+    </footer>
+
+
+    <script>
+        function openModal(title, img, desc) {
+            document.getElementById('modalTitle').innerText = title;
+            document.getElementById('modalImg').src = img;
+            document.getElementById('modalDesc').innerText = desc;
+            document.getElementById('exerciseModal').style.display = 'block';
+        }
+
+        function closeModal() {
+            document.getElementById('exerciseModal').style.display = 'none';
+        }
+
+        // Filter exercises
+        function filterExercises(level) {
+            const cards = document.querySelectorAll('.exercise-card, .exercise-card-detailed');
+            cards.forEach(card => {
+                if (level === 'all' || card.dataset.level === level) {
+                    card.style.display = '';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+            const buttons = document.querySelectorAll('.filter-btn');
+            buttons.forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+        }
+
+        // Search exercises
+        document.getElementById('searchInput').addEventListener('input', function() {
+            const query = this.value.toLowerCase();
+            const cards = document.querySelectorAll('.exercise-card, .exercise-card-detailed');
+            cards.forEach(card => {
+                if (card.dataset.search.includes(query)) {
+                    card.style.display = '';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        });
+
+        // Tabs
+        function switchTab(tabId) {
+            const tabs = document.querySelectorAll('.tab');
+            tabs.forEach(tab => tab.classList.remove('active'));
+            event.target.classList.add('active');
+            const containers = document.querySelectorAll('.exercise-container');
+            containers.forEach(c => c.style.display = 'none');
+            const activeContainer = document.getElementById(tabId);
+            if (activeContainer) activeContainer.style.display = 'grid';
+        }
+
+        // Initialize first tab
+        switchTab('trending');
+        // ----- Dynamic Current Year -----
+        document.addEventListener('DOMContentLoaded', () => {
+            const yearSpan = document.getElementById('currentYear');
+            if (yearSpan) {
+                yearSpan.textContent = new Date().getFullYear();
+            }
+        });
+
+        // ----- Scroll to Top Button -----
+        const scrollBtn = document.createElement('button');
+        scrollBtn.textContent = '↑ Top';
+        scrollBtn.id = 'scrollTopBtn';
+        scrollBtn.style.cssText = `
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    padding: 10px 15px;
+    background: #0077cc;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    display: none;
+    z-index: 999;
+`;
+        document.body.appendChild(scrollBtn);
+
+        // Show/hide button on scroll
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 300) {
+                scrollBtn.style.display = 'block';
+            } else {
+                scrollBtn.style.display = 'none';
+            }
+        });
+
+        // Scroll to top on click
+        scrollBtn.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+
+        // ----- Optional: Social Links Click Alert -----
+        document.querySelectorAll('.footer-contact .social-links a').forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                alert(`You clicked the ${link.textContent.trim()} link!`);
+                // Remove alert if you want actual navigation:
+                // window.location.href = link.href;
+            });
+        });
+    </script>
+</body>
+
+</html>
